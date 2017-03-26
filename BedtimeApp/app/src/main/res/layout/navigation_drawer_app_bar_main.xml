@@ -22,4 +22,6 @@
 
     <include layout="@layout/navigation_drawer_content" />
 
+    <include layout="@layout/sleep_graph_input" />
+
 </android.support.design.widget.CoordinatorLayout>
