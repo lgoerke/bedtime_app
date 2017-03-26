@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textViewdummy"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:text="Dummy" />
+        android:layout_height="?attr/actionBarSize" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/graph_height"
-        android:layout_margin="@dimen/double_fab_margin"/>
+        android:layout_height="@dimen/fab_margin"
+        android:orientation="horizontal">
 
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="@dimen/graph_size"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/double_fab_margin" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:max="10"
+            android:minHeight="600dp"
+            android:rotation="90" />
+
+    </LinearLayout>
     <SeekBar
         android:id="@+id/seekBar"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:max="10"
-        android:layout_margin="@dimen/double_fab_margin"
-        />
+        android:minHeight="600dp"
+        android:rotation="90" />
 
 </LinearLayout>

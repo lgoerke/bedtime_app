@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -128,6 +129,9 @@ public class NavigationDrawerActivity extends AppCompatActivity
         chart.setDrawBorders(true);
 
         chart.invalidate(); // refresh
+
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setProgress(4);
 
     }
 
