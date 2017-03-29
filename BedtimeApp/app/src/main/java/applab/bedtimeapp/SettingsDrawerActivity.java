@@ -54,20 +54,6 @@ public class SettingsDrawerActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -83,6 +69,11 @@ public class SettingsDrawerActivity extends AppCompatActivity
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
 
+        } else if (id == R.id.nav_alarm) {
+            finish();
+            Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
+            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent_alarm);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
