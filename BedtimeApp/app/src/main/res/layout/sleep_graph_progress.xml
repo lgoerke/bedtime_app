@@ -10,23 +10,15 @@
         android:layout_height="?attr/actionBarSize" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="500dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
-            android:layout_width="@dimen/graph_size"
-            android:layout_height="match_parent"
-            />
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:max="10"
-            android:rotation="90" />
+            />
 
     </LinearLayout>
 

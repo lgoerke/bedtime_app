@@ -1,11 +1,8 @@
 package applab.bedtimeapp;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,13 +29,13 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationDrawerActivity extends AppCompatActivity
+public class ProgressDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation_drawer_activity_drawer);
+        setContentView(R.layout.drawer_activity_progress);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -130,9 +127,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         chart.invalidate(); // refresh
 
-        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
-        seekBar.setProgress(4);
-
     }
 
     @Override
@@ -145,12 +139,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation_drawer_activity_menu_dots, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -174,10 +162,12 @@ public class NavigationDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_progress) {
-            // Handle the action
-            Toast.makeText(this, "You have selected progress", Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "You have selected settings", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent intent_settings = new Intent(this, SettingsDrawerActivity.class);
+            intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent_settings);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

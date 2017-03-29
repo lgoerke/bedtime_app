@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_alarm"
+            android:icon="@mipmap/ic_trending_up_black_24dp"
+            android:title="@string/menu_entry_progress" />
+        <item
             android:id="@+id/nav_progress"
             android:icon="@mipmap/ic_trending_up_black_24dp"
             android:title="@string/menu_entry_progress" />
