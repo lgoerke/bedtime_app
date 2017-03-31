@@ -1,8 +1,9 @@
 package applab.bedtimeapp;
 
+import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,25 +11,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AlarmDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static String ALARM_TYPE = "ALARM_TYPE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +43,20 @@ public class AlarmDrawerActivity extends AppCompatActivity
         tv.setText("Yoo Lisa");
         tv = (TextView) hv.findViewById(R.id.textViewUnderline);
         tv.setText("You have been using this app for 42 days");
+    }
+
+    public void showTimePicker(View v){
+        DialogFragment PickerFragment = new TimePickerFragment();
+        Bundle bdl = new Bundle(1);
+        String message;
+        if (v.getId() == R.id.clockBedtime){
+            message = "bedtime";
+        } else {
+            message = "morning";
+        }
+        bdl.putString(ALARM_TYPE, message);
+        PickerFragment.setArguments(bdl);
+        PickerFragment.show(getFragmentManager(),"TimePicker");
     }
 
     @Override

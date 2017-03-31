@@ -4,24 +4,42 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/small_margin">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <TextClock
+        <TextView
             android:id="@+id/clockBedtime"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <TextClock
+            android:onClick="showTimePicker"
+            android:text="00:00"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Large" />
+        <TextView
             android:id="@+id/clockMorning"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:onClick="showTimePicker"
+            android:text="00:00"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Large"/>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
