@@ -13,12 +13,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class AlarmDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static String ALARM_TYPE = "ALARM_TYPE";
+    public static int current_bedtime = 21;
+    public static int current_bedtime_m = 0;
+    public static int current_alarm = 3;
+    public static int current_alarm_m = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,11 @@ public class AlarmDrawerActivity extends AppCompatActivity
         tv.setText("Yoo Lisa");
         tv = (TextView) hv.findViewById(R.id.textViewUnderline);
         tv.setText("You have been using this app for 42 days");
+
+        LinearLayout ac = (LinearLayout) findViewById(R.id.alarm_content);
+        ProgressBar pb = (ProgressBar) ac.findViewById(R.id.progressBar);
+        pb.setProgress(270);
+
     }
 
     public void showTimePicker(View v){

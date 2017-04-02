@@ -22,6 +22,7 @@
 
     <include layout="@layout/drawer_content" />
 
-    <include layout="@layout/alarm_layout" />
+    <include layout="@layout/alarm_layout"
+        android:id="@+id/alarm_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

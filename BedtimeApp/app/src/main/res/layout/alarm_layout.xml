@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/small_margin">
+    android:layout_margin="@dimen/small_margin"
+
+    >
 
     <TextView
         android:layout_width="match_parent"
@@ -19,9 +21,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:onClick="showTimePicker"
             android:text="00:00"
-            android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large" />
         <TextView
             android:id="@+id/clockMorning"
@@ -35,11 +37,57 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/progress_circle"
+        android:background="@drawable/alarm_circle"
+        android:max="360"
+        />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center|top"
+                android:text="12"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:textAppearance="@android:style/TextAppearance.Large" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="6"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:textColor="@color/colorAccent"
+                android:textAppearance="@android:style/TextAppearance.Large"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>
