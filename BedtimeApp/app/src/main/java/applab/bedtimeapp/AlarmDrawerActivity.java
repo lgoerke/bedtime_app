@@ -16,14 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class AlarmDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static String ALARM_TYPE = "ALARM_TYPE";
     public static int current_bedtime = 21;
     public static int current_bedtime_m = 0;
-    public static int current_alarm = 3;
+    public static float last_degree = 0;
+    public static int current_alarm = 6;
     public static int current_alarm_m = 0;
+    public static boolean first_time = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,13 @@ public class AlarmDrawerActivity extends AppCompatActivity
         ProgressBar pb = (ProgressBar) ac.findViewById(R.id.progressBar);
         pb.setProgress(270);
 
+    }
+
+    public void changeSleepDuration(int prog){
+        int hour = prog/30;
+        int m = ((prog%30)*2);
+        TextView tv = (TextView) findViewById(R.id.sleep_duration);
+        tv.setText("You will sleep " + Integer.toString(hour) + " hours and " + Integer.toString(m) + " minutes");
     }
 
     public void showTimePicker(View v){
