@@ -50,8 +50,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
-        tv = (TextView) hv.findViewById(R.id.textViewUnderline);
-        tv.setText("You have been using this app for 42 days");
 
         LinearLayout ac = (LinearLayout) findViewById(R.id.alarm_content);
         ProgressBar pb = (ProgressBar) ac.findViewById(R.id.progressBar);

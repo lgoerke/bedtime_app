@@ -2,10 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/small_margin"
-    android:orientation="vertical"
-
-    >
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,35 +12,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="8"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="8">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal"
             android:layout_weight="2"
+            android:orientation="horizontal"
             android:weightSum="2">
 
-            <TextView
-                android:id="@+id/clockBedtime"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/fab_margin"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="showTimePicker"
-                android:text="00:00"
-                android:textAppearance="@android:style/TextAppearance.Large" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/clockMorning"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:gravity="center"
+                    android:text="Bedtime" />
+
+                <TextView
+                    android:id="@+id/clockBedtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:onClick="showTimePicker"
+                    android:text="00:00"
+                    android:textAppearance="@android:style/TextAppearance.Large" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/fab_margin"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="showTimePicker"
-                android:text="00:00"
-                android:textAppearance="@android:style/TextAppearance.Large" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:gravity="center"
+                    android:text="Alarm" />
+
+                <TextView
+                    android:id="@+id/clockMorning"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:onClick="showTimePicker"
+                    android:text="00:00"
+                    android:textAppearance="@android:style/TextAppearance.Large" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -84,7 +118,7 @@
                     android:shadowRadius="1"
                     android:text="12"
                     android:textAppearance="@android:style/TextAppearance.Large"
-                    android:textColor="@color/gold"
+                    android:textColor="@color/moon"
                     android:textStyle="bold" />
 
                 <TextView
@@ -98,7 +132,7 @@
                     android:shadowRadius="1"
                     android:text="6"
                     android:textAppearance="@android:style/TextAppearance.Large"
-                    android:textColor="@color/gold"
+                    android:textColor="@color/moon"
                     android:textStyle="bold" />
 
                 <TextView
@@ -113,10 +147,12 @@
             android:id="@+id/sleep_duration"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center"
             android:layout_weight="1"
-            android:textAppearance="@android:style/TextAppearance.Large"/>
-
+            android:gravity="center"
+            android:textColor="@color/darkblue"
+            android:textAppearance="@android:style/TextAppearance.Large" />
 
     </LinearLayout>
+
+
 </LinearLayout>

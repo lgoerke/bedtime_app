@@ -93,6 +93,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 //            prog = prog - 90;
             AlarmDrawerActivity.last_degree = angle;
             Log.d("progress", Integer.toString(prog));
+            Log.e("hallo","willem");
             pb.setProgress(prog);
             ((AlarmDrawerActivity)getActivity()).changeSleepDuration(prog);
         } else {

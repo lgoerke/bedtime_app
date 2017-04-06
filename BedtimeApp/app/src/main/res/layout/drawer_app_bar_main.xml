@@ -22,6 +22,6 @@
 
     <include layout="@layout/drawer_content" />
 
-    <include layout="@layout/sleep_graph_input" />
+    <include layout="@layout/landing_screen" />
 
 </android.support.design.widget.CoordinatorLayout>

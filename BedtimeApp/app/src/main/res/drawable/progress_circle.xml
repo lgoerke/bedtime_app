@@ -13,12 +13,21 @@
                 android:shape="ring"
                 android:thicknessRatio="6.0">
                 <gradient
-                    android:endColor="@color/lightyellow"
-                    android:startColor="@color/lightlightyellow"
+                    android:endColor="@color/colorPrimary"
+                    android:startColor="@color/colorPrimaryDark"
                     android:type="sweep"
                     android:useLevel="true" />
             </shape>
         </rotate>
+    </item>
+    <item>
+        <path
+            android:strokeColor="@android:color/holo_red_dark"
+            android:strokeWidth="2"
+            android:pathData="M 50,50
+                                m -48,0
+                                a 48,48 0 1,0 96,0
+                                a 48,48 0 1,0 -96,0"/>
     </item>
     <!--<item>-->
     <!--<rotate-->
