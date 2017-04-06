@@ -1,7 +1,80 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:innerRadiusRatio="2000"
-    android:shape="ring"
-    android:thicknessRatio="2.5"
-    android:useLevel="false" >
-    <solid android:color="@color/clock" />
-</shape>
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:innerRadiusRatio="2000"
+            android:shape="ring"
+            android:thicknessRatio="2"
+            android:useLevel="false">
+            <solid android:color="@color/clock" />
+        </shape>
+    </item>
+    <item>
+        <vector xmlns:android="http://schemas.android.com/apk/res/android"
+            android:width="50dp"
+            android:height="50dp"
+            android:viewportHeight="100"
+            android:viewportWidth="100">
+            <!--12-->
+            <path
+                android:pathData="M 50 0 L 50 25 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--1-->
+            <path
+                android:pathData="M 75,6.6987 L 62.5, 28.3494 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--2-->
+            <path
+                android:pathData="M 93.3013 25 L 71.6506 37.5 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--3-->
+            <path
+                android:pathData="M 100,50 L 75 50 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--4-->
+            <path
+                android:pathData="M 93.3013 75 L 71.6506 62.5 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--5-->
+            <path
+                android:pathData="M 62.5 71.6506 L 75 93.3013 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--6-->
+            <path
+                android:pathData="M 50,100 L 50 75 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--7-->
+            <path
+                android:pathData="M 37.5 71.6506  L 25 93.3013 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--8-->
+            <path
+                android:pathData="M 6.6987 75 L 28.3494 62.5 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--9-->
+            <path
+                android:pathData="M 0,50 L 25 50 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--10-->
+            <path
+                android:pathData="M 6.6987 25 L 28.3494 37.5 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+            <!--11-->
+            <path
+                android:pathData="M 25,6.6987 L 37.5, 28.3494 z"
+                android:strokeColor="@color/colorPrimaryDark"
+                android:strokeWidth="2" />
+        </vector>
+    </item>
+</layer-list>
