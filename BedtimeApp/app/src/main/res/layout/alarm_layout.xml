@@ -85,12 +85,18 @@
             android:layout_height="0dp"
             android:layout_weight="5">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/alarm_circle"
+                android:layout_margin="@dimen/fab_margin"
+                />
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/alarm_circle"
                 android:indeterminate="false"
                 android:max="360"
                 android:progressDrawable="@drawable/progress_circle" />
