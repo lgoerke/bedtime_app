@@ -19,6 +19,8 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
 import applab.bedtimeapp.utils.utils;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
@@ -52,13 +54,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         tv.setText(utils.getFullTime(hourOfDay, minute));
 
         LinearLayout ac = (LinearLayout) getActivity().findViewById(R.id.alarm_content);
-        ProgressBar pb = (ProgressBar) ac.findViewById(R.id.progressBar);
+        DonutProgress pb = (DonutProgress) ac.findViewById(R.id.progressBar);
         if (message == "bedtime") {
-            Log.d("progress before", Integer.toString(pb.getProgress()));
-            AnimationSet animSet = new AnimationSet(true);
-            animSet.setInterpolator(new DecelerateInterpolator());
-            animSet.setFillAfter(true);
-            animSet.setFillEnabled(true);
+            Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
+//            AnimationSet animSet = new AnimationSet(true);
+//            animSet.setInterpolator(new DecelerateInterpolator());
+//            animSet.setFillAfter(true);
+//            animSet.setFillEnabled(true);
 
             if (hourOfDay == 0){
                 hourOfDay = 24;
@@ -72,17 +74,18 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             AlarmDrawerActivity.current_bedtime = hourOfDay;
             AlarmDrawerActivity.current_bedtime_m = minute;
 
-            // Is not continous, always in relation to 21:00
-            final RotateAnimation animRotate = new RotateAnimation(0.0f, angle,
-                    RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                    RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+//            // Is not continous, always in relation to 21:00
+//            final RotateAnimation animRotate = new RotateAnimation(0.0f, angle,
+//                    RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+//                    RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+//
+//            animRotate.setDuration(1500);
+//            animRotate.setFillAfter(true);
+//            animSet.addAnimation(animRotate);
 
-            animRotate.setDuration(1500);
-            animRotate.setFillAfter(true);
-            animSet.addAnimation(animRotate);
-
-            pb.startAnimation(animSet);
-            int prog = pb.getProgress();
+//            pb.startAnimation(animSet);
+            pb.setStartingDegree(90);
+            int prog = Math.round(pb.getProgress());
 
             if (AlarmDrawerActivity.first_time) {
                 prog = prog - Math.round(angle);
@@ -98,7 +101,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             ((AlarmDrawerActivity)getActivity()).changeSleepDuration(prog);
         } else {
 
-            Log.d("progress before", Integer.toString(pb.getProgress()));
+            Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
 
             if (hourOfDay == 0){
                 hourOfDay = 24;
@@ -112,7 +115,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             AlarmDrawerActivity.current_alarm = hourOfDay;
             AlarmDrawerActivity.current_alarm_m = minute;
 
-            int prog = pb.getProgress();
+            int prog = Math.round(pb.getProgress());
 
             prog = prog + Math.round(target_degree);
 

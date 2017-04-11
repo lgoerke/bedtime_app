@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -92,14 +93,19 @@
                 android:layout_margin="@dimen/fab_margin"
                 />
 
-            <ProgressBar
+            <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/progressBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_margin="@dimen/double_fab_margin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:indeterminate="false"
-                android:max="360"
-                android:progressDrawable="@drawable/progress_circle" />
+                custom:donut_finished_stroke_width="@dimen/double_fab_margin"
+                custom:donut_unfinished_stroke_width="@dimen/double_fab_margin"
+                custom:donut_max="360"
+                custom:donut_unfinished_color="@android:color/transparent"
+                custom:donut_finished_color="@color/colorPrimary"
+                custom:donut_show_text="false"
+                custom:donut_circle_starting_degree="180"
+                />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"

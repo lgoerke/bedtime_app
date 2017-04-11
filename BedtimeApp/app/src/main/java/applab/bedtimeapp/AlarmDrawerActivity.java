@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
 import org.w3c.dom.Text;
 
 public class AlarmDrawerActivity extends AppCompatActivity
@@ -52,7 +54,8 @@ public class AlarmDrawerActivity extends AppCompatActivity
         tv.setText("Yoo Lisa");
 
         LinearLayout ac = (LinearLayout) findViewById(R.id.alarm_content);
-        ProgressBar pb = (ProgressBar) ac.findViewById(R.id.progressBar);
+        DonutProgress pb = (DonutProgress) ac.findViewById(R.id.progressBar);
+        pb.setStartingDegree(180);
         pb.setProgress(270);
 
     }
