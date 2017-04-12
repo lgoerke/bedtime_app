@@ -20,17 +20,20 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
+        android:contentDescription="FloatingActionBtn"
         android:id="@+id/alert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/double_fab_margin"
+        android:layout_height="@dimen/double_fab_margin"
         android:layout_gravity="bottom|right"
+        android:srcCompat="@drawable/ic_error_outline_black_24dp"
         android:backgroundTint="@color/alert"
-        android:src="@drawable/ic_error_outline_black_24dp"
-        android:layout_margin="@dimen/double_fab_margin"/>
+        android:layout_margin="@dimen/double_fab_margin"
+        />
 
     <include layout="@layout/drawer_content" />
 
-    <include layout="@layout/landing_screen" />
+    <include layout="@layout/landing_screen"
+        android:id="@+id/include" />
 
 </android.support.design.widget.CoordinatorLayout>

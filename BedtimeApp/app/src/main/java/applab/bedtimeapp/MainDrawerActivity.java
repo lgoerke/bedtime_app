@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -33,6 +36,9 @@ import java.util.List;
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public boolean showAlert;
+    private static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,26 @@ public class MainDrawerActivity extends AppCompatActivity
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
 
+        showAlert = true;
+        ImageButton fab = (ImageButton) findViewById(R.id.alert);
+        if (showAlert) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openQuestionnaire();
+                }
+            });
+        } else {
+            fab.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    public void openQuestionnaire(){
+        Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
+        intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent_progress,REQUEST_CODE);
     }
 
     @Override
