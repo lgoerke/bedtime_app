@@ -53,8 +53,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
-        tv = (TextView) hv.findViewById(R.id.textViewUnderline);
-        tv.setText("You have been using this app for 42 days");
 
         // in this example, a LineChart is initialized from xml
         LineChart chart = (LineChart) findViewById(R.id.chart);

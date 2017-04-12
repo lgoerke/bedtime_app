@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/small_margin"
-
-    >
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -12,82 +12,159 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:gravity="center"
+                    android:text="Bedtime" />
+
+                <TextView
+                    android:id="@+id/clockBedtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:onClick="showTimePicker"
+                    android:text="00:00"
+                    android:textAppearance="@android:style/TextAppearance.Large" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:gravity="center"
+                    android:text="Alarm" />
+
+                <TextView
+                    android:id="@+id/clockMorning"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:onClick="showTimePicker"
+                    android:text="00:00"
+                    android:textAppearance="@android:style/TextAppearance.Large" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/alarm_circle"
+                android:layout_margin="@dimen/fab_margin"
+                />
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/progressBar"
+                android:layout_margin="@dimen/double_fab_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                custom:donut_finished_stroke_width="@dimen/double_fab_margin"
+                custom:donut_unfinished_stroke_width="@dimen/double_fab_margin"
+                custom:donut_max="360"
+                custom:donut_unfinished_color="@android:color/transparent"
+                custom:donut_finished_color="@color/colorPrimary"
+                custom:donut_show_text="false"
+                custom:donut_circle_starting_degree="180"
+                />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|top"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:text="12"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/moon"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|bottom"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1"
+                    android:text="6"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/moon"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/clockBedtime"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:id="@+id/sleep_duration"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:onClick="showTimePicker"
-            android:text="00:00"
+            android:textColor="@color/darkblue"
             android:textAppearance="@android:style/TextAppearance.Large" />
-        <TextView
-            android:id="@+id/clockMorning"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:onClick="showTimePicker"
-            android:text="00:00"
-            android:gravity="center"
-            android:textAppearance="@android:style/TextAppearance.Large"/>
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/progress_circle"
-        android:background="@drawable/alarm_circle"
-        android:max="360"
-        />
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="4">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|top"
-                android:text="12"
-                android:textStyle="bold"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="6"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:gravity="center|bottom"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"/>
-        </LinearLayout>
-    </RelativeLayout>
 
 
 </LinearLayout>

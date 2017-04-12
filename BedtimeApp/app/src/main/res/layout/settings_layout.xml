@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/small_margin">
+    android:background="@drawable/background">
 
-    <TextView
+    <LinearLayout
+        android:layout_margin="@dimen/fab_margin"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
-
-    <Switch
+        android:layout_height="wrap_content">
+    <android.support.v7.widget.SwitchCompat
         android:id="@+id/switch1"
+        android:padding="@dimen/small_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This switch is super nice!" />
+        android:textColor="@color/darkblue"
+        android:background="@color/colorAccent"
+        android:text="This switch is super nice!"
+        android:theme="@style/our_switch"/>
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
         android:id="@+id/switch2"
+        android:padding="@dimen/small_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/darkblue"
+        android:background="@color/colorAccent"
+        android:theme="@style/our_switch"
         android:text="Look at this second switch" />
 
-    <Switch
+    <android.support.v7.widget.SwitchCompat
         android:id="@+id/switch3"
+        android:padding="@dimen/small_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/darkblue"
+        android:background="@color/colorAccent"
         android:checked="true"
+        android:theme="@style/our_switch"
         android:text="This switched is turned on by you!" />
+    </LinearLayout>
 
 
 
-
-</LinearLayout>
+</RelativeLayout>
