@@ -20,6 +20,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:backgroundTint="@color/alert"
+        android:src="@drawable/ic_error_outline_black_24dp"
+        android:layout_margin="@dimen/double_fab_margin"/>
+
     <include layout="@layout/drawer_content" />
 
     <include layout="@layout/sleep_graph_progress" />
