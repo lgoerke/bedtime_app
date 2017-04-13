@@ -30,4 +30,5 @@ dependencies {
     compile 'com.github.paolorotolo:appintro:4.0.0'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.scalified:fab:1.1.3'
 }

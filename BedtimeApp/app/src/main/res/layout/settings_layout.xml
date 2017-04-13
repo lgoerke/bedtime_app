@@ -1,47 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/fab_margin"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/switch1"
-        android:padding="@dimen/small_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/darkblue"
-        android:background="@color/colorAccent"
-        android:text="This switch is super nice!"
-        android:theme="@style/our_switch"/>
+        >
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/switch2"
-        android:padding="@dimen/small_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/darkblue"
-        android:background="@color/colorAccent"
-        android:theme="@style/our_switch"
-        android:text="Look at this second switch" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal"
+            android:padding="@dimen/fab_margin"
+            >
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/switch3"
-        android:padding="@dimen/small_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/darkblue"
-        android:background="@color/colorAccent"
-        android:checked="true"
-        android:theme="@style/our_switch"
-        android:text="This switched is turned on by you!" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="Landing page"
+                android:textColor="@color/darkblue"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="vertical">
+
+
+                <CheckBox
+                    android:id="@+id/checkBoxAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:button="@null"
+                    android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="Alarm"
+                    android:textColor="@color/darkblue" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:padding="@dimen/fab_margin">
+
+            <CheckBox
+                android:id="@+id/checkBoxProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Progress"
+                android:textColor="@color/darkblue" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal"
+            android:padding="@dimen/fab_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="Landing page"
+                android:textColor="@color/darkblue"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/icon_array" />
+            </LinearLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
-
 
 
 </RelativeLayout>
