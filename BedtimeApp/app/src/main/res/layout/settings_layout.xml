@@ -11,16 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/fab_margin"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:orientation="horizontal"
-            android:padding="@dimen/fab_margin"
-            >
+            android:padding="@dimen/fab_margin">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -33,43 +31,36 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="right"
                 android:orientation="vertical">
 
-
-                <CheckBox
-                    android:id="@+id/checkBoxAlarm"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:button="@null"
-                    android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                    android:text="Alarm"
-                    android:textColor="@color/darkblue" />
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAlarm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAccent"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Alarm"
+                        android:textColor="@color/darkblue"
+                        android:onClick="onCheckboxClicked"/>
+
+                    <CheckBox
+                        android:id="@+id/checkBoxProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAccent"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Progress"
+                        android:textColor="@color/darkblue"
+                        android:onClick="onCheckboxClicked"/>
+                </LinearLayout>
             </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:gravity="right"
-            android:orientation="horizontal"
-            android:padding="@dimen/fab_margin">
-
-            <CheckBox
-                android:id="@+id/checkBoxProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Progress"
-                android:textColor="@color/darkblue" />
 
 
         </LinearLayout>
@@ -86,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:text="Landing page"
+                android:text="Avatar"
                 android:textColor="@color/darkblue"
 
                 />

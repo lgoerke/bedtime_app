@@ -38,6 +38,11 @@ public class ProgressDrawerActivity extends AppCompatActivity
     private static final String TAG = "ProgressDrawerActivity";
 
     private boolean showAlert = true;
+    private int whichLanding = 0;
+
+    private static int LANDING_ALARM = 1;
+    private static int LANDING_PROGRESS = 2;
+
     private static int REQUEST_CODE = 1;
 
 
@@ -54,6 +59,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
             for (String key : b.keySet()) {
                 if (key.equals("showAlert")) {
                     showAlert = (boolean) b.get(key);
+                } else if (key.equals("whichLanding")){
+                    whichLanding = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
@@ -201,11 +208,15 @@ public class ProgressDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_settings = new Intent(this, SettingsDrawerActivity.class);
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_settings.putExtra("showAlert", showAlert);
+            intent_settings.putExtra("whichLanding", whichLanding);
             startActivity(intent_settings);
         } else if (id == R.id.nav_alarm) {
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         }
 
