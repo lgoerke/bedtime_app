@@ -19,7 +19,7 @@
             android:background="@color/colorAccent"
             android:gravity="center"
             android:text="Questionnaire"
-            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textSize="30dp"
             android:textColor="@color/darkblue" />
 
         <TextView
@@ -61,7 +61,6 @@
                     android:id="@+id/ratingBarRested"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
                     android:numStars="5"
                     android:stepSize="1.0"
                     android:theme="@style/our_rating_bar"/>
@@ -109,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
-                    style="?android:attr/ratingBarStyleSmall"
+
                     android:stepSize="1"
                     android:theme="@style/our_rating_bar"/>
             </LinearLayout>
@@ -153,16 +152,18 @@
                 android:layout_margin="@dimen/small_margin"
                 android:background="@drawable/customized_button"
                 android:onClick="onBtnClicked"
-                android:text="Yes" />
+                android:textOn="Yes"
+                android:textOff="Yes"/>
 
             <ToggleButton
                 android:id="@+id/btn_no"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:layout_margin="@dimen/small_margin"
-                android:background="@drawable/customized_button"
                 android:onClick="onBtnClicked"
-                android:text="No" />
+                android:background="@drawable/customized_button"
+                android:textOn="No"
+                android:textOff="No"/>
 
         </LinearLayout>
 
@@ -187,8 +188,10 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            android:background="@drawable/customized_button"
+            android:background="@drawable/hover"
             android:text="Complete"
+            android:id="@+id/complete"
+            android:enabled="false"
             android:onClick="goToMain"/>
 
         <TextView

@@ -135,6 +135,11 @@ public class AlarmDrawerActivity extends AppCompatActivity
         PickerFragment.show(getFragmentManager(),"TimePicker");
     }
 
+    // handle extras from QuestionnaireActivity if wanted
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+    }
 
     public void openQuestionnaire(){
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
