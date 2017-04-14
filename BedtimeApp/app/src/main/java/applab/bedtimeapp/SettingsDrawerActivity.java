@@ -84,7 +84,6 @@ public class SettingsDrawerActivity extends AppCompatActivity
         }
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn", actionButton.toString());
         if (showAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +119,7 @@ public class SettingsDrawerActivity extends AppCompatActivity
         }
     }
 
-    public void onCheckboxClicked(View view) {
+    private void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
@@ -138,7 +137,6 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
                     //  Create a new boolean and preference and set it to true
                     int savedLanding = getPrefs.getInt("whichLanding", 0);
-                    Log.d("yo prgoress",Integer.toString(savedLanding));
                 }
                 break;
             case R.id.checkBoxAlarm:
@@ -153,7 +151,6 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
                     //  Create a new boolean and preference and set it to true
                     int savedLanding = getPrefs.getInt("whichLanding", 0);
-                    Log.d("yo alarm",Integer.toString(savedLanding));
                 }
                 break;
 
