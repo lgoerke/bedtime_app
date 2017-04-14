@@ -42,12 +42,49 @@ public class MainDrawerActivity extends AppCompatActivity
 
     private static final String TAG = "MainDrawerActivity";
     private boolean showAlert = true;
+    private int whichLanding = 0;
+
+    private static int LANDING_ALARM = 1;
+    private static int LANDING_PROGRESS = 2;
     private static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_main);
+
+        //  Declare a new thread to do a preference check
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
+
+                    //  Apply changes
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
 
 
         //get showAlert bool from other Activity
@@ -58,6 +95,8 @@ public class MainDrawerActivity extends AppCompatActivity
             for (String key : b.keySet()) {
                 if (key.equals("showAlert")) {
                     showAlert = (boolean) b.get(key);
+                }else if (key.equals("whichLanding")){
+                    whichLanding = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
@@ -66,39 +105,31 @@ public class MainDrawerActivity extends AppCompatActivity
             }
         }
 
-//        //  Declare a new thread to do a preference check
-//        Thread t = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //  Initialize SharedPreferences
-//                SharedPreferences getPrefs = PreferenceManager
-//                        .getDefaultSharedPreferences(getBaseContext());
-//
-//                //  Create a new boolean and preference and set it to true
-//                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
-//
-//                //  If the activity has never started before...
-//                if (isFirstStart) {
-//
-//                    //  Launch app intro
-//                    Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
-//                    startActivity(i);
-//
-//                    //  Make a new preferences editor
-//                    SharedPreferences.Editor e = getPrefs.edit();
-//
-//                    //  Edit preference to make it false because we don't want this to run again
-//                    e.putBoolean("firstStart", false);
-//
-//                    //  Apply changes
-//                    e.apply();
-//                }
-//            }
-//        });
-//
-//        // Start the thread
-//        t.start();
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
 
+        //  Create a new boolean and preference and set it to true
+        int savedLanding = getPrefs.getInt("whichLanding", 0);
+        Log.d("yo",Integer.toString(savedLanding));
+
+        whichLanding = savedLanding;
+
+        if (whichLanding == LANDING_ALARM) {
+            finish();
+            Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
+            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
+            startActivity(intent_alarm);
+        } else if (whichLanding == LANDING_PROGRESS) {
+            finish();
+            Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
+            intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("whichLanding", whichLanding);
+            startActivity(intent_progress);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -138,6 +169,19 @@ public class MainDrawerActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Get data from questionnaire intent
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            //mViewMode = data.getIntExtra(VIEW_MODE_STR, VIEW_MODE_CLEAR);
+        }
+    }
+
     public void openQuestionnaire(){
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
         intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -165,17 +209,23 @@ public class MainDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("whichLanding", whichLanding);
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
             finish();
             Intent intent_settings = new Intent(this, SettingsDrawerActivity.class);
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_settings.putExtra("showAlert", showAlert);
+            intent_settings.putExtra("whichLanding", whichLanding);
             startActivity(intent_settings);
 
         } else if (id == R.id.nav_alarm) {
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         }
 

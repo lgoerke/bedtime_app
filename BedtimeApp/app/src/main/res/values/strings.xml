@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">BedtimeApp</string>
-    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="app_name">iSleepOnTime</string>
+    <string name="title_activity_navigation_drawer">iSleepOnTime</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

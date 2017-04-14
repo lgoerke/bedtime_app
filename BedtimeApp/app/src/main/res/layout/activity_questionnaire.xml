@@ -63,7 +63,6 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/ratingBarStyleSmall"
                     android:numStars="5"
-                    android:rating="2.0"
                     android:stepSize="1.0"
                     android:theme="@style/our_rating_bar"/>
             </LinearLayout>
@@ -110,7 +109,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
-                    android:rating="2"
                     style="?android:attr/ratingBarStyleSmall"
                     android:stepSize="1"
                     android:theme="@style/our_rating_bar"/>
@@ -148,18 +146,22 @@
             android:orientation="horizontal"
             android:paddingRight="@dimen/fab_margin">
 
-            <Button
+            <ToggleButton
+                android:id="@+id/btn_yes"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:layout_margin="@dimen/small_margin"
                 android:background="@drawable/customized_button"
+                android:onClick="onBtnClicked"
                 android:text="Yes" />
 
-            <Button
+            <ToggleButton
+                android:id="@+id/btn_no"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:layout_margin="@dimen/small_margin"
                 android:background="@drawable/customized_button"
+                android:onClick="onBtnClicked"
                 android:text="No" />
 
         </LinearLayout>

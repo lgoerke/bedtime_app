@@ -57,47 +57,21 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         DonutProgress pb = (DonutProgress) ac.findViewById(R.id.progressBar);
         if (message == "bedtime") {
             Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
-//            AnimationSet animSet = new AnimationSet(true);
-//            animSet.setInterpolator(new DecelerateInterpolator());
-//            animSet.setFillAfter(true);
-//            animSet.setFillEnabled(true);
 
             if (hourOfDay == 0){
                 hourOfDay = 24;
             }
 
-            //So far this works only for 21-24:59
-
-            Float angle = utils.getRotAngleClockBegin(hourOfDay, minute, 21, 00);
-            Log.d("angle", Float.toString(angle));
+            Float starting_angle = utils.getStartingAngle(hourOfDay,minute);
+            pb.setStartingDegree(Math.round(starting_angle));
+            Float stop_progress = utils.getProgress(hourOfDay,minute,AlarmDrawerActivity.current_alarm,AlarmDrawerActivity.current_alarm_m);
+            pb.setProgress(stop_progress);
 
             AlarmDrawerActivity.current_bedtime = hourOfDay;
             AlarmDrawerActivity.current_bedtime_m = minute;
 
-//            // Is not continous, always in relation to 21:00
-//            final RotateAnimation animRotate = new RotateAnimation(0.0f, angle,
-//                    RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-//                    RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-//
-//            animRotate.setDuration(1500);
-//            animRotate.setFillAfter(true);
-//            animSet.addAnimation(animRotate);
-
-//            pb.startAnimation(animSet);
-            pb.setStartingDegree(90);
             int prog = Math.round(pb.getProgress());
 
-            if (AlarmDrawerActivity.first_time) {
-                prog = prog - Math.round(angle);
-                AlarmDrawerActivity.first_time = false;
-            } else {
-                prog = prog - Math.round(angle) + Math.round(AlarmDrawerActivity.last_degree);
-            }
-//            prog = prog - 90;
-            AlarmDrawerActivity.last_degree = angle;
-            Log.d("progress", Integer.toString(prog));
-            Log.e("hallo","willem");
-            pb.setProgress(prog);
             ((AlarmDrawerActivity)getActivity()).changeSleepDuration(prog);
         } else {
 
@@ -107,24 +81,19 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
                 hourOfDay = 24;
             }
 
-            Float target_degree = (hourOfDay - AlarmDrawerActivity.current_alarm) * 30.0f - AlarmDrawerActivity.current_alarm_m*0.5f;
-            target_degree = target_degree + minute * 0.5f;
+            Float prog = pb.getProgress();
+            prog = prog + (hourOfDay - AlarmDrawerActivity.current_alarm)*30.0f;
+            prog = prog - AlarmDrawerActivity.current_alarm_m*0.5f;
+            prog = prog + minute*0.5f;
 
-            Log.d("angle", Float.toString(target_degree));
+            pb.setProgress(prog);
 
             AlarmDrawerActivity.current_alarm = hourOfDay;
             AlarmDrawerActivity.current_alarm_m = minute;
 
-            int prog = Math.round(pb.getProgress());
+            int p = Math.round(pb.getProgress());
 
-            prog = prog + Math.round(target_degree);
-
-//            prog = prog - 90;
-
-            Log.d("progress", Integer.toString(prog));
-            pb.setProgress(prog);
-
-            ((AlarmDrawerActivity)getActivity()).changeSleepDuration(prog);
+            ((AlarmDrawerActivity)getActivity()).changeSleepDuration(p);
 
 //            pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }

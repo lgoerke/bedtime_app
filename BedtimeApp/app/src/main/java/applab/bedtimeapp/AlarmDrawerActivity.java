@@ -31,15 +31,22 @@ public class AlarmDrawerActivity extends AppCompatActivity
     private static String ALARM_TYPE = "ALARM_TYPE";
     public static int current_bedtime = 21;
     public static int current_bedtime_m = 0;
+
     public static float last_degree = 0;
+
     public static int current_alarm = 6;
     public static int current_alarm_m = 0;
+
     public static boolean first_time = true;
 
 
     private static int REQUEST_CODE = 1;
 
     private boolean showAlert = true;
+    private int whichLanding = 0;
+
+    private static int LANDING_ALARM = 1;
+    private static int LANDING_PROGRESS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,9 @@ public class AlarmDrawerActivity extends AppCompatActivity
             for (String key : b.keySet()) {
                 if (key.equals("showAlert")) {
                     showAlert = (boolean) b.get(key);
-                } else {
+                } else if (key.equals("whichLanding")){
+                    whichLanding = (int) b.get(key);
+                }else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
                             value.toString(), value.getClass().getName()));
@@ -155,11 +164,15 @@ public class AlarmDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("whichLanding", whichLanding);
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
             finish();
             Intent intent_settings = new Intent(this, SettingsDrawerActivity.class);
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_settings.putExtra("showAlert", showAlert);
+            intent_settings.putExtra("whichLanding", whichLanding);
             startActivity(intent_settings);
 
         }

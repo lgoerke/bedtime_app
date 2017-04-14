@@ -17,8 +17,10 @@ public class TutorialIntro extends AppIntro {
         // Add your slide's fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
         addSlide(FragmentSlide.newInstance(R.layout.intro_slide01));
-        addSlide(FragmentSlide.newInstance(R.layout.intro_slide01));
-        addSlide(FragmentSlide.newInstance(R.layout.intro_slide01));
+        addSlide(FragmentSlide.newInstance(R.layout.intro_slide02));
+        addSlide(FragmentSlide.newInstance(R.layout.intro_slide03));
+        addSlide(FragmentSlide.newInstance(R.layout.intro_slide04));
+        addSlide(FragmentSlide.newInstance(R.layout.intro_slide05));
 
         // OPTIONAL METHODS
         // Override bar/separator color.

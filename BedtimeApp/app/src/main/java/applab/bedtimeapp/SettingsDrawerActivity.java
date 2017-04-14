@@ -1,7 +1,9 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,10 @@ public class SettingsDrawerActivity extends AppCompatActivity
     private static int REQUEST_CODE = 1;
 
     private boolean showAlert = true;
+    private int whichLanding = 0;
+
+    private static int LANDING_ALARM = 1;
+    private static int LANDING_PROGRESS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
             for (String key : b.keySet()) {
                 if (key.equals("showAlert")) {
                     showAlert = (boolean) b.get(key);
+                } else if (key.equals("whichLanding")){
+                    whichLanding = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
@@ -65,8 +74,17 @@ public class SettingsDrawerActivity extends AppCompatActivity
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
 
+        CheckBox cb;
+        if (whichLanding == LANDING_ALARM){
+            cb = (CheckBox) findViewById(R.id.checkBoxAlarm);
+            cb.setChecked(true);
+        } else if (whichLanding == LANDING_PROGRESS){
+            cb = (CheckBox) findViewById(R.id.checkBoxProgress);
+            cb.setChecked(true);
+        }
+
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn",actionButton.toString());
+        Log.d("btn", actionButton.toString());
         if (showAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
@@ -85,10 +103,10 @@ public class SettingsDrawerActivity extends AppCompatActivity
     }
 
 
-    public void openQuestionnaire(){
+    public void openQuestionnaire() {
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
         intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivityForResult(intent_question,REQUEST_CODE);
+        startActivityForResult(intent_question, REQUEST_CODE);
     }
 
 
@@ -100,6 +118,64 @@ public class SettingsDrawerActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch (view.getId()) {
+            case R.id.checkBoxProgress:
+                if (checked) {
+                    CheckBox cb = (CheckBox) findViewById(R.id.checkBoxAlarm);
+                    cb.setChecked(false);
+                    whichLanding = LANDING_PROGRESS;
+                    setLandingPreference(LANDING_PROGRESS);
+                    //  Initialize SharedPreferences
+                    SharedPreferences getPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getBaseContext());
+
+                    //  Create a new boolean and preference and set it to true
+                    int savedLanding = getPrefs.getInt("whichLanding", 0);
+                    Log.d("yo prgoress",Integer.toString(savedLanding));
+                }
+                break;
+            case R.id.checkBoxAlarm:
+                if (checked) {
+                    CheckBox cb = (CheckBox) findViewById(R.id.checkBoxProgress);
+                    cb.setChecked(false);
+                    whichLanding = LANDING_ALARM;
+                    setLandingPreference(LANDING_ALARM);
+                    //  Initialize SharedPreferences
+                    SharedPreferences getPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getBaseContext());
+
+                    //  Create a new boolean and preference and set it to true
+                    int savedLanding = getPrefs.getInt("whichLanding", 0);
+                    Log.d("yo alarm",Integer.toString(savedLanding));
+                }
+                break;
+
+        }
+    }
+
+    public void setLandingPreference(int pref){
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int savedLanding = getPrefs.getInt("whichLanding", 0);
+
+        //  Make a new preferences editor
+        SharedPreferences.Editor e = getPrefs.edit();
+
+        //  Edit preference to make it false because we don't want this to run again
+        e.putInt("whichLanding", pref);
+
+        //  Apply changes
+        e.apply();
     }
 
 
@@ -114,6 +190,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("whichLanding", whichLanding);
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
 
@@ -121,6 +199,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         }
 
