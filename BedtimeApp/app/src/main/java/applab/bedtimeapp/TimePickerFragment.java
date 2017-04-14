@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.IntentService;
 import android.app.TimePickerDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.IntegerRes;
@@ -21,15 +22,21 @@ import android.widget.TimePicker;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import applab.bedtimeapp.utils.DatabaseHelper;
 import applab.bedtimeapp.utils.utils;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     private String message;
+    private DatabaseHelper database;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         message = getArguments().getString("ALARM_TYPE");
+
+        // get database
+        //database = new DatabaseHelper(TimePickerFragment.this);
+        //SQLiteDatabase db_write = database.getWritableDatabase();
 
         //Use the current time as the default values for the time picker
         final Calendar c = Calendar.getInstance();

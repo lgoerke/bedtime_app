@@ -1,6 +1,7 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,9 +10,12 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.ToggleButton;
 
+import applab.bedtimeapp.utils.DatabaseHelper;
+
 public class QuestionnaireActivity extends AppCompatActivity {
 
     private boolean metBedtime = false;
+    private DatabaseHelper database;
     private boolean rested = false;
     private boolean busy = false;
     private boolean time = false;
@@ -25,6 +29,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
+
+        // get database
+        database = new DatabaseHelper(QuestionnaireActivity.this);
 
         RatingBar mBar = (RatingBar) findViewById(R.id.ratingBarRested);
         mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -64,6 +71,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 metBedtime = true;
                 time = true;
                 reasons = true;
+                SQLiteDatabase db_write = database.getWritableDatabase();
+                // do stuff to write question3 information in database
+
                 checkComplete();
                 break;
             case R.id.btn_no:
@@ -118,6 +128,12 @@ public class QuestionnaireActivity extends AppCompatActivity {
         Intent output = new Intent();
         setResult(RESULT_OK, output);
         finish();
+    }
+
+    @Override
+    protected void onStop() {
+        database.close();
+        super.onStop();
     }
 
 

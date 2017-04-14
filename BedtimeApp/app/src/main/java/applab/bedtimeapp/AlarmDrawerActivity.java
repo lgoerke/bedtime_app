@@ -2,6 +2,7 @@ package applab.bedtimeapp;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.CoordinatorLayout;
@@ -23,10 +24,17 @@ import com.scalified.fab.ActionButton;
 
 import org.w3c.dom.Text;
 
+import java.security.AccessController;
+
+import applab.bedtimeapp.utils.DatabaseHelper;
+
+
 public class AlarmDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "AlarmDrawerActivity";
+
+    private DatabaseHelper database;
 
     private static String ALARM_TYPE = "ALARM_TYPE";
     public static int current_bedtime = 21;
@@ -52,6 +60,8 @@ public class AlarmDrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_alarm);
+
+
 
 
         //get showAlert bool from other Activity
@@ -185,5 +195,11 @@ public class AlarmDrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onStop() {
+        database.close();
+        super.onStop();
     }
 }
