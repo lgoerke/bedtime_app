@@ -20,14 +20,6 @@
             android:layout_height="match_parent"
             />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:max="10"
-            android:rotation="90" />
-
     </LinearLayout>
 
 

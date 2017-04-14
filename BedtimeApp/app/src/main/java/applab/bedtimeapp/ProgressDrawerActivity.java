@@ -9,8 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +35,33 @@ import java.util.List;
 public class ProgressDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "ProgressDrawerActivity";
+
+    private boolean showAlert = true;
+    private static int REQUEST_CODE = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_progress);
+
+        //get showAlert bool from other Activity
+        Intent intent = getIntent();
+        Bundle b = intent.getExtras();
+
+        if (b != null) {
+            for (String key : b.keySet()) {
+                if (key.equals("showAlert")) {
+                    showAlert = (boolean) b.get(key);
+                } else {
+                    Object value = b.get(key);
+                    Log.d(TAG, String.format("%s %s (%s)", key,
+                            value.toString(), value.getClass().getName()));
+                }
+            }
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -125,6 +151,23 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         chart.invalidate(); // refresh
 
+        final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
+        Log.d("btn",actionButton.toString());
+        if (showAlert) {
+            actionButton.setVisibility(View.VISIBLE);
+            actionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    actionButton.setVisibility(View.INVISIBLE);
+                    showAlert = false;
+                    openQuestionnaire();
+
+                }
+            });
+        } else {
+            actionButton.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
@@ -135,6 +178,14 @@ public class ProgressDrawerActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+
+
+    public void openQuestionnaire(){
+        Intent intent_question = new Intent(this, QuestionnaireActivity.class);
+        intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent_question,REQUEST_CODE);
     }
 
 

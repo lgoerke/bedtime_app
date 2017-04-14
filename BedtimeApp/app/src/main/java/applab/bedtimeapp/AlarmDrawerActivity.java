@@ -4,12 +4,14 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,11 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.scalified.fab.ActionButton;
 
 import org.w3c.dom.Text;
 
 public class AlarmDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "AlarmDrawerActivity";
 
     private static String ALARM_TYPE = "ALARM_TYPE";
     public static int current_bedtime = 21;
@@ -31,10 +36,33 @@ public class AlarmDrawerActivity extends AppCompatActivity
     public static int current_alarm_m = 0;
     public static boolean first_time = true;
 
+
+    private static int REQUEST_CODE = 1;
+
+    private boolean showAlert = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_alarm);
+
+
+        //get showAlert bool from other Activity
+        Intent intent = getIntent();
+        Bundle b = intent.getExtras();
+
+        if (b != null) {
+            for (String key : b.keySet()) {
+                if (key.equals("showAlert")) {
+                    showAlert = (boolean) b.get(key);
+                } else {
+                    Object value = b.get(key);
+                    Log.d(TAG, String.format("%s %s (%s)", key,
+                            value.toString(), value.getClass().getName()));
+                }
+            }
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,6 +86,23 @@ public class AlarmDrawerActivity extends AppCompatActivity
         pb.setStartingDegree(180);
         pb.setProgress(270);
 
+
+        final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
+        Log.d("btn",actionButton.toString());
+        if (showAlert) {
+            actionButton.setVisibility(View.VISIBLE);
+            actionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    actionButton.setVisibility(View.INVISIBLE);
+                    showAlert = false;
+                    openQuestionnaire();
+
+                }
+            });
+        } else {
+            actionButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void changeSleepDuration(int prog){
@@ -80,6 +125,14 @@ public class AlarmDrawerActivity extends AppCompatActivity
         PickerFragment.setArguments(bdl);
         PickerFragment.show(getFragmentManager(),"TimePicker");
     }
+
+
+    public void openQuestionnaire(){
+        Intent intent_question = new Intent(this, QuestionnaireActivity.class);
+        intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent_question,REQUEST_CODE);
+    }
+
 
     @Override
     public void onBackPressed() {
