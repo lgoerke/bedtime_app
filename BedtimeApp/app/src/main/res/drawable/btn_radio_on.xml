@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportHeight="100"
+    android:viewportWidth="100">
+
+    <!--a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy-->
+    <path
+        android:pathData="M 50 20 a 30 30 0 1 0 0.00001 0"
+        android:strokeColor="@color/colorPrimary"
+        android:strokeWidth="10" />
+    <path
+        android:pathData="M 50 45 a 5 5 0 1 0 0.00001 0"
+        android:strokeColor="@color/colorPrimaryDark"
+        android:strokeWidth="10" />
+
+</vector>

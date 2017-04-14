@@ -15,8 +15,11 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private boolean rested = false;
     private boolean busy = false;
     private boolean time = false;
+    private boolean reasons = false;
     private int starsRested = 0;
     private int starsBusy = 0;
+
+    private static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 checkComplete();
             }
         });
-
 
 
         mBar = (RatingBar) findViewById(R.id.ratingBarBusy);
@@ -61,6 +63,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 btn.setChecked(false);
                 metBedtime = true;
                 time = true;
+                reasons = true;
                 checkComplete();
                 break;
             case R.id.btn_no:
@@ -70,10 +73,32 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 btn.setChecked(false);
                 metBedtime = false;
                 time = true;
+                reasons = false;
                 checkComplete();
+                goToReasons();
                 break;
         }
 
+    }
+
+    /**
+     * Get data from questionnaire intent
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            reasons = true;
+            checkComplete();
+        }
+    }
+
+    private void goToReasons(){
+        Intent intent = new Intent(this, ReasonsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
     private void checkComplete(){
