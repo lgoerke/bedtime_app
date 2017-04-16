@@ -2,6 +2,8 @@ package applab.bedtimeapp.utils;
 
 import android.util.Log;
 
+import java.util.Calendar;
+
 import static java.lang.Math.abs;
 
 public class utils {
@@ -25,6 +27,36 @@ public class utils {
 
     }
 
+    public static int getDelay(int hour, int minute){
+
+        final Calendar c;
+        int current_h;
+        int current_m;
+        int delay=0;
+        c = java.util.Calendar.getInstance();
+        current_h = c.get(Calendar.HOUR_OF_DAY);
+        current_m = c.get(Calendar.MINUTE);
+
+        Log.e("Hour",Integer.toString(hour));
+        Log.e("Hour Cur",Integer.toString(current_h));
+        Log.e("Min",Integer.toString(minute));
+        Log.e("Min Cur",Integer.toString(current_m));
+
+        //bedtime in future
+        if (hour >= current_h) {
+            //e.g. current_h - hour
+            //e.g. 18:05 - 22:16
+            //e.g 02:11 - 06:05
+            delay =  (hour - current_h)*60;
+            delay = delay - current_m + minute;
+        } else {
+            //e.g 18:05 - 1:11
+            //e.g 06:11 - 02:05
+            delay = (hour + 24 - current_h)*60;
+            delay = delay - current_m + minute;
+        }
+        return delay*60000;
+    }
 
     //normal starting degree is 15:00/03:00
     public static Float getStartingAngle(int hourOfDay, int minute) {

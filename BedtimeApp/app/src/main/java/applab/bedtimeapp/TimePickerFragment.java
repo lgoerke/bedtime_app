@@ -1,47 +1,46 @@
 package applab.bedtimeapp;
 
-
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.IntentService;
 import android.app.TimePickerDialog;
-import android.database.sqlite.SQLiteDatabase;
-import android.icu.util.Calendar;
+
+import java.util.Calendar;
+
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import applab.bedtimeapp.utils.DatabaseHelper;
+import applab.bedtimeapp.utils.NotificationHelper;
 import applab.bedtimeapp.utils.utils;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     private String message;
+    private boolean controlGroup;
     private DatabaseHelper database;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         message = getArguments().getString("ALARM_TYPE");
+        controlGroup = getArguments().getBoolean("controlGroup");
 
         // get database
         //database = new DatabaseHelper(TimePickerFragment.this);
         //SQLiteDatabase db_write = database.getWritableDatabase();
 
         //Use the current time as the default values for the time picker
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        final Calendar c;
+        int hour;
+        int minute;
+        c = java.util.Calendar.getInstance();
+        hour = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
 
         //Create and return a new instance of TimePickerDialog
         return new TimePickerDialog(getActivity(), this, hour, minute,
@@ -65,13 +64,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         if (message == "bedtime") {
             Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
 
-            if (hourOfDay == 0){
+            if (hourOfDay == 0) {
                 hourOfDay = 24;
             }
 
-            Float starting_angle = utils.getStartingAngle(hourOfDay,minute);
+            Float starting_angle = utils.getStartingAngle(hourOfDay, minute);
             pb.setStartingDegree(Math.round(starting_angle));
-            Float stop_progress = utils.getProgress(hourOfDay,minute,AlarmDrawerActivity.current_alarm,AlarmDrawerActivity.current_alarm_m);
+            Float stop_progress = utils.getProgress(hourOfDay, minute, AlarmDrawerActivity.current_alarm, AlarmDrawerActivity.current_alarm_m);
             pb.setProgress(stop_progress);
 
             AlarmDrawerActivity.current_bedtime = hourOfDay;
@@ -79,19 +78,22 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             int prog = Math.round(pb.getProgress());
 
-            ((AlarmDrawerActivity)getActivity()).changeSleepDuration(prog);
+            ((AlarmDrawerActivity) getActivity()).changeSleepDuration(prog);
+
+            ((AlarmDrawerActivity) getActivity()).setNotification(hourOfDay,minute);
+
         } else {
 
             Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
 
-            if (hourOfDay == 0){
+            if (hourOfDay == 0) {
                 hourOfDay = 24;
             }
 
             Float prog = pb.getProgress();
-            prog = prog + (hourOfDay - AlarmDrawerActivity.current_alarm)*30.0f;
-            prog = prog - AlarmDrawerActivity.current_alarm_m*0.5f;
-            prog = prog + minute*0.5f;
+            prog = prog + (hourOfDay - AlarmDrawerActivity.current_alarm) * 30.0f;
+            prog = prog - AlarmDrawerActivity.current_alarm_m * 0.5f;
+            prog = prog + minute * 0.5f;
 
             pb.setProgress(prog);
 
@@ -100,7 +102,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             int p = Math.round(pb.getProgress());
 
-            ((AlarmDrawerActivity)getActivity()).changeSleepDuration(p);
+            ((AlarmDrawerActivity) getActivity()).changeSleepDuration(p);
 
 //            pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }
