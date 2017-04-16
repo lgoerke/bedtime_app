@@ -1,7 +1,9 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +20,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -27,6 +30,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
@@ -87,45 +91,62 @@ public class ProgressDrawerActivity extends AppCompatActivity
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
 
+        LinearLayout ll = (LinearLayout) findViewById(R.id.ll_sleep_quality);
+        ll.setBackgroundColor(getResources().getColor(R.color.moon));
+        ll.setAlpha(0.8f);
+
         // in this example, a LineChart is initialized from xml
-        LineChart chart = (LineChart) findViewById(R.id.chart);
+        LineChart chart = (LineChart) findViewById(R.id.sleep_quality);
 
         List<Entry> entries = new ArrayList<Entry>();
 
-        entries.add(new Entry(1, 1));
-        entries.add(new Entry(2, 3));
-        entries.add(new Entry(3, 2));
-        entries.add(new Entry(4, 4));
-        entries.add(new Entry(5, 5));
-        entries.add(new Entry(6, 3));
-        entries.add(new Entry(7, 2));
+        entries.add(new Entry(0, 1));
+        entries.add(new Entry(1, 0));
+        entries.add(new Entry(2, 2));
+        entries.add(new Entry(3, 1));
+        entries.add(new Entry(4, 3));
+        entries.add(new Entry(5, 4));
+        entries.add(new Entry(6, 2));
 
-        LineDataSet dataSet = new LineDataSet(entries, "Your data"); // add entries to dataset
+        LineDataSet dataSet = new LineDataSet(entries, "Goodness of sleep"); // add entries to dataset
 
-        dataSet.setColor(Color.rgb(240, 238, 70));
-        dataSet.setLineWidth(2.5f);
-        dataSet.setCircleColor(Color.rgb(240, 238, 70));
-        dataSet.setCircleRadius(5f);
-        dataSet.setFillColor(Color.rgb(240, 238, 70));
-        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        dataSet.setDrawValues(true);
-        dataSet.setValueTextSize(10f);
-        dataSet.setValueTextColor(Color.DKGRAY);
+        putStyle(dataSet,getResources().getColor(R.color.gold));
 
-        LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
+        // use the interface ILineDataSet
+        List<ILineDataSet> lineData = new ArrayList<ILineDataSet>();
+        lineData.add(dataSet);
+
+        entries = new ArrayList<Entry>();
+
+        entries.add(new Entry(0, 0));
+        entries.add(new Entry(1, 2));
+        entries.add(new Entry(2, 1));
+        entries.add(new Entry(3, 0));
+        entries.add(new Entry(4, 1));
+        entries.add(new Entry(5, 2));
+        entries.add(new Entry(6, 2));
+
+
+        dataSet = new LineDataSet(entries, "Busy-ness of days"); // add entries to dataset
+
+        putStyle(dataSet,getResources().getColor(R.color.alert));
+
+        lineData.add(dataSet);
+
+        LineData data = new LineData(lineData);
+        chart.setData(data);
 
         Description d = new Description();
         d.setText("Sleep feedback last week");
         chart.setDescription(d);
 
         final String[] sentiment = new String[]{
-                "Very bad", "Bad", "A bit off", "Quite OK", "Good", "Very good"
+                "Very bad", "Bad", "Normal", "Good", "Very good"
         };
 
         YAxis yAxisLeft = chart.getAxisLeft();
         yAxisLeft.setAxisMinimum(0f);
-        yAxisLeft.setAxisMaximum(10f);
+        yAxisLeft.setAxisMaximum(4f);
         yAxisLeft.setGranularity(1f);
         yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
             @Override
@@ -134,10 +155,21 @@ public class ProgressDrawerActivity extends AppCompatActivity
             }
         });
 
+        final String[] busyNess = new String[]{
+                "Very busy", "Busy", "Normal", "Relaxed", "Very relaxed"
+        };
+
         YAxis yAxisRight = chart.getAxisRight();
         yAxisRight.setAxisMinimum(0f);
-        yAxisRight.setAxisMaximum(10f);
+        yAxisRight.setAxisMaximum(4f);
         yAxisRight.setGranularity(1f);
+        yAxisRight.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return busyNess[(int) value % busyNess.length];
+            }
+        });
+
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
@@ -155,7 +187,16 @@ public class ProgressDrawerActivity extends AppCompatActivity
         });
 
         chart.setDrawBorders(true);
+//        Paint p = new Paint(0);
+//        p.setColor(getResources().getColor(R.color.moon));
+//        p.setAlpha(150);
+//        chart.setPaint(p, Chart.PAINT_GRID_BACKGROUND);
+        chart.setDrawGridBackground(true);
 
+        chart.getXAxis().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.getAxisLeft().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.getAxisRight().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.getLegend().setTextColor(getResources().getColor(R.color.darkblue));
         chart.invalidate(); // refresh
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
@@ -175,6 +216,17 @@ public class ProgressDrawerActivity extends AppCompatActivity
             actionButton.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    private void putStyle(LineDataSet dataSet, int color){
+        dataSet.setColor(color);
+        dataSet.setLineWidth(2.5f);
+        dataSet.setCircleColor(color);
+        dataSet.setCircleRadius(5f);
+        dataSet.setFillColor(color);
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setDrawValues(false);
+        dataSet.setValueTextColor(getResources().getColor(R.color.darkblue));
     }
 
     @Override
