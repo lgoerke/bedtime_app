@@ -80,7 +80,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(prog);
 
-            ((AlarmDrawerActivity) getActivity()).setNotification(hourOfDay,minute);
+            int delayForNotification = utils.getDelay(hourOfDay,minute);
+            Log.d("Delay: ",String.valueOf(delayForNotification));
+            //
+            NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker"), delayForNotification);
 
         } else {
 

@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.scalified.fab.ActionButton;
 
+import applab.bedtimeapp.utils.NotificationHelper;
+
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -217,7 +219,7 @@ public class MainDrawerActivity extends AppCompatActivity
             startActivity(intent_alarm);
         } else if (id == R.id.nav_notify) {
             //finish();
-            scheduleNotification(getNotification("555"), 5000);
+            NotificationHelper.scheduleNotification(this,NotificationHelper.getNotification(this,"55455"), 5000);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -230,53 +232,5 @@ public class MainDrawerActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.notification_menu, menu);
         return true;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_5:
-                scheduleNotification(getNotification("5 second delay"), 5000);
-                return true;
-            case R.id.action_10:
-                scheduleNotification(getNotification("10 second delay"), 10000);
-                return true;
-            case R.id.action_30:
-                scheduleNotification(getNotification("30 second delay"), 30000);
-                return true;
-            default:
-                //return true;
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    private void scheduleNotification(Notification notification, int delay) {
 
-        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
-    }
-
-    private Notification getNotification(String content) {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Scheduled Notification");
-        builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.icon);
-        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        builder.setSound(uri);
-
-        // pending activity to call when the notification is clicked
-        Intent resultIntent = new Intent(this, QuestionnaireActivity.class);
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        this,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        builder.setContentIntent(resultPendingIntent);
-        return builder.build();
-    }
 }

@@ -1,4 +1,4 @@
-package applab.bedtimeapp;
+package applab.bedtimeapp.utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,19 +16,11 @@ public class NotificationPublisher extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
-       /* NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Notification notification = intent.getParcelableExtra(NOTIFICATION);
-        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        notificationManager.notify(id, notification);*/
-
-
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
         notificationManager.notify(id, notification);
-
 
         //notificationManager.cancel(intent.getExtras().getInt("id"));
         //Toast.makeText(context, "HEY HEY HEY", Toast.LENGTH_LONG).show();
