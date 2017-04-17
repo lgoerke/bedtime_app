@@ -215,6 +215,9 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
+        } else if (id == R.id.nav_notify) {
+            //finish();
+            scheduleNotification(getNotification("555"), 5000);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -263,6 +266,17 @@ public class MainDrawerActivity extends AppCompatActivity
         builder.setSmallIcon(R.drawable.icon);
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         builder.setSound(uri);
+
+        // pending activity to call when the notification is clicked
+        Intent resultIntent = new Intent(this, QuestionnaireActivity.class);
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                        this,
+                        0,
+                        resultIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        builder.setContentIntent(resultPendingIntent);
         return builder.build();
     }
 }

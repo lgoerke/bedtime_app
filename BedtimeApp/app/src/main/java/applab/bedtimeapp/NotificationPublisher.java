@@ -27,13 +27,14 @@ public class NotificationPublisher extends BroadcastReceiver {
 
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-       // notificationManager.notify(id, notification);
+        notificationManager.notify(id, notification);
 
-        notificationManager.cancel(intent.getExtras().getInt("id"));
-        Toast.makeText(context, "HEY HEY HEY", Toast.LENGTH_LONG).show();
-        intent= new Intent(context, QuestionnaireActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intent.putExtra("attachMedia",true);
-        context.startActivity(intent);
+
+        //notificationManager.cancel(intent.getExtras().getInt("id"));
+        //Toast.makeText(context, "HEY HEY HEY", Toast.LENGTH_LONG).show();
+        //intent= new Intent(context, QuestionnaireActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ////intent.putExtra("attachMedia",true);
+        //context.startActivity(intent);
     }
 }
