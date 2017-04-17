@@ -199,7 +199,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
     @Override
     protected void onStop() {
-        database.close();
+        //database.close();
         super.onStop();
     }
 }

@@ -35,7 +35,7 @@
         <activity android:name=".QuestionnaireActivity"></activity>
         <activity android:name=".ReasonsActivity"></activity>
 
-        <receiver android:name=".NotificationPublisher"/>
+        <receiver android:name=".utils.NotificationPublisher"/>
     </application>
 
 </manifest>

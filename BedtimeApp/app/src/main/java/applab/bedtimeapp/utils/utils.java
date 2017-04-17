@@ -27,35 +27,42 @@ public class utils {
 
     }
 
-    public static int getDelay(int hour, int minute){
+    public static int getDelay(int hour, int minute) {
 
         final Calendar c;
         int current_h;
         int current_m;
-        int delay=0;
+        int current_s;
+        int current_ms;
+        int delay = 0;
         c = java.util.Calendar.getInstance();
         current_h = c.get(Calendar.HOUR_OF_DAY);
         current_m = c.get(Calendar.MINUTE);
+        current_s = c.get(Calendar.SECOND);
+        current_ms = c.get(Calendar.MILLISECOND);
 
-        Log.e("Hour",Integer.toString(hour));
-        Log.e("Hour Cur",Integer.toString(current_h));
-        Log.e("Min",Integer.toString(minute));
-        Log.e("Min Cur",Integer.toString(current_m));
+
+        Log.e("Hour", Integer.toString(hour));
+        Log.e("Hour Cur", Integer.toString(current_h));
+        Log.e("Min", Integer.toString(minute));
+        Log.e("Min Cur", Integer.toString(current_m));
 
         //bedtime in future
         if (hour >= current_h) {
             //e.g. current_h - hour
             //e.g. 18:05 - 22:16
             //e.g 02:11 - 06:05
-            delay =  (hour - current_h)*60;
+            delay = (hour - current_h) * Constants.MINUTES_IN_AN_HOUR;
             delay = delay - current_m + minute;
         } else {
             //e.g 18:05 - 1:11
             //e.g 06:11 - 02:05
-            delay = (hour + 24 - current_h)*60;
+            delay = (hour + Constants.HOURS_IN_A_DAY - current_h) * Constants.MINUTES_IN_AN_HOUR;
             delay = delay - current_m + minute;
         }
-        return delay*60000;
+        return (delay * Constants.MILLISECONDS_IN_A_SECOND * Constants.SECONDS_IN_A_MINUTE)
+                - (current_s * Constants.MILLISECONDS_IN_A_SECOND)
+                - current_ms;
     }
 
     //normal starting degree is 15:00/03:00
@@ -72,11 +79,11 @@ public class utils {
         return target_degree;
     }
 
-    public static Float getProgress(int hourOfDay, int minute, int current_alarm, int current_alarm_m){
+    public static Float getProgress(int hourOfDay, int minute, int current_alarm, int current_alarm_m) {
 
-        Float prog = Math.abs(24 - hourOfDay + current_alarm)*30.0f;
-        prog = prog - minute*0.5f;
-        prog = prog + current_alarm_m*0.5f;
+        Float prog = Math.abs(24 - hourOfDay + current_alarm) * 30.0f;
+        prog = prog - minute * 0.5f;
+        prog = prog + current_alarm_m * 0.5f;
         return prog;
     }
 
