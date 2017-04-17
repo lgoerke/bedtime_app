@@ -25,11 +25,10 @@ public class ReasonsActivity extends AppCompatActivity {
         EditText et = (EditText) findViewById(R.id.editReason);
         et.setHint("Type here...");
 
-        Log.d("why","not");
         ArrayList<String> ary = new ArrayList<String>();
         ary.add("Facebook");
         ary.add("Flatmates");
-        ary.add("Whatevs");
+        ary.add("Laundry");
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
         rg.setOrientation(RadioGroup.VERTICAL);//or RadioGroup.VERTICAL

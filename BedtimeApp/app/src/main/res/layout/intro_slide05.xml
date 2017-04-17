@@ -5,7 +5,7 @@
     android:background="@drawable/background">
 
     <LinearLayout
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/double_fab_margin"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -15,7 +15,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/fab_margin"
             android:gravity="center_horizontal"
             android:text="Now let's get started!"
             android:textAppearance="?android:attr/textAppearanceMedium"

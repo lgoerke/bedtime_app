@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,13 +93,20 @@ public class ProgressDrawerActivity extends AppCompatActivity
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.ll_sleep_quality);
+
+
+        /* FIRST GRAPH */
+        /* Set background color of the graph to be slightly transparent */
+        LinearLayout ll = (LinearLayout) findViewById(R.id.ll_sleep_quality_duration);
         ll.setBackgroundColor(getResources().getColor(R.color.moon));
         ll.setAlpha(0.8f);
+        /* END Set background */
 
-        // in this example, a LineChart is initialized from xml
-        LineChart chart = (LineChart) findViewById(R.id.sleep_quality);
+        /* Create chart */
+        LineChart chart = (LineChart) findViewById(R.id.sleep_quality_duration);
+        /* END Create chart */
 
+        /* Example sleep quality data */
         List<Entry> entries = new ArrayList<Entry>();
 
         entries.add(new Entry(0, 1));
@@ -110,36 +119,41 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         LineDataSet dataSet = new LineDataSet(entries, "Goodness of sleep"); // add entries to dataset
 
-        putStyle(dataSet,getResources().getColor(R.color.gold));
+        dataSet = putStyleDataSet(dataSet,getResources().getColor(R.color.gold));
+        /* END Example sleep quality */
 
-        // use the interface ILineDataSet
+        /* Add to data set */
         List<ILineDataSet> lineData = new ArrayList<ILineDataSet>();
         lineData.add(dataSet);
+        /* END add data set */
 
+        /* Example duration data */
         entries = new ArrayList<Entry>();
 
-        entries.add(new Entry(0, 0));
-        entries.add(new Entry(1, 2));
-        entries.add(new Entry(2, 1));
-        entries.add(new Entry(3, 0));
-        entries.add(new Entry(4, 1));
-        entries.add(new Entry(5, 2));
-        entries.add(new Entry(6, 2));
+        entries.add(new Entry(0, 3.5f));
+        entries.add(new Entry(1, 3.0f));
+        entries.add(new Entry(2, 2.5f));
+        entries.add(new Entry(3, 3.0f));
+        entries.add(new Entry(4, 2.5f));
+        entries.add(new Entry(5, 3.5f));
+        entries.add(new Entry(6, 3.0f));
 
+        dataSet = new LineDataSet(entries, "Sleep duration"); // add entries to dataset
 
-        dataSet = new LineDataSet(entries, "Busy-ness of days"); // add entries to dataset
+        dataSet = putStyleDataSet(dataSet,getResources().getColor(R.color.alert));
+        /* END Example duration */
 
-        putStyle(dataSet,getResources().getColor(R.color.alert));
-
+        /* Add to data set and put in graph */
         lineData.add(dataSet);
-
         LineData data = new LineData(lineData);
         chart.setData(data);
 
         Description d = new Description();
         d.setText("Sleep feedback last week");
         chart.setDescription(d);
+        /* END add data set */
 
+        /* Put sleep quality on left X Axis */
         final String[] sentiment = new String[]{
                 "Very bad", "Bad", "Normal", "Good", "Very good"
         };
@@ -154,12 +168,111 @@ public class ProgressDrawerActivity extends AppCompatActivity
                 return sentiment[(int) value % sentiment.length];
             }
         });
+        /* END Put sleep quality */
 
+        /* Put busy-ness on right Y Axis */
+        /* 4 = 10h sleep, 3 = 8h sleep, ...*/
+        YAxis yAxisRight = chart.getAxisRight();
+        yAxisRight.setAxisMinimum(0f);
+        yAxisRight.setAxisMaximum(9f);
+        /* END Put busy-ness */
+
+        /* Put weekdays on X Axis of Graph */
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        xAxis.setGranularity(1f);
+        final String[] weekdays = new String[]{
+                "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+        };
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return weekdays[(int) value % weekdays.length];
+            }
+        });
+        /* END Put weekdays */
+
+        putStyleChart(chart);
+
+
+        /* SECOND GRAPH */
+        /* Set background color of the graph to be slightly transparent */
+        ll = (LinearLayout) findViewById(R.id.ll_sleep_quality_busy);
+        ll.setBackgroundColor(getResources().getColor(R.color.moon));
+        ll.setAlpha(0.8f);
+        /* END Set background */
+
+        /* Create chart */
+        chart = (LineChart) findViewById(R.id.sleep_quality_busy);
+        /* END Create chart */
+
+        /* Example sleep quality data */
+        entries = new ArrayList<Entry>();
+
+        entries.add(new Entry(0, 1));
+        entries.add(new Entry(1, 0));
+        entries.add(new Entry(2, 2));
+        entries.add(new Entry(3, 1));
+        entries.add(new Entry(4, 3));
+        entries.add(new Entry(5, 4));
+        entries.add(new Entry(6, 2));
+
+        dataSet = new LineDataSet(entries, "Goodness of sleep"); // add entries to dataset
+
+        putStyleDataSet(dataSet,getResources().getColor(R.color.gold));
+        /* END Example sleep quality */
+
+        /* Add to data set */
+        lineData = new ArrayList<ILineDataSet>();
+        lineData.add(dataSet);
+        /* END add data set */
+
+        /* Example busy-ness data */
+        entries = new ArrayList<Entry>();
+
+        entries.add(new Entry(0, 0));
+        entries.add(new Entry(1, 2));
+        entries.add(new Entry(2, 1));
+        entries.add(new Entry(3, 0));
+        entries.add(new Entry(4, 1));
+        entries.add(new Entry(5, 2));
+        entries.add(new Entry(6, 2));
+
+        dataSet = new LineDataSet(entries, "Busy-ness of days"); // add entries to dataset
+
+        putStyleDataSet(dataSet,getResources().getColor(R.color.alert));
+        /* END Example busy-ness */
+
+        /* Add to data set and put in graph */
+        lineData.add(dataSet);
+        data = new LineData(lineData);
+        chart.setData(data);
+
+        d = new Description();
+        d.setText("Sleep feedback last week");
+        chart.setDescription(d);
+        /* END add data set */
+
+        /* Put sleep quality on left X Axis */
+        yAxisLeft = chart.getAxisLeft();
+        yAxisLeft.setAxisMinimum(0f);
+        yAxisLeft.setAxisMaximum(4f);
+        yAxisLeft.setGranularity(1f);
+        yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return sentiment[(int) value % sentiment.length];
+            }
+        });
+        /* END Put sleep quality */
+
+
+        /* Put busy-ness on right Y Axis */
         final String[] busyNess = new String[]{
                 "Very busy", "Busy", "Normal", "Relaxed", "Very relaxed"
         };
 
-        YAxis yAxisRight = chart.getAxisRight();
+        yAxisRight = chart.getAxisRight();
         yAxisRight.setAxisMinimum(0f);
         yAxisRight.setAxisMaximum(4f);
         yAxisRight.setGranularity(1f);
@@ -169,36 +282,46 @@ public class ProgressDrawerActivity extends AppCompatActivity
                 return busyNess[(int) value % busyNess.length];
             }
         });
+        /* END Put busy-ness */
 
-
-        XAxis xAxis = chart.getXAxis();
+        /* Put weekdays on X Axis of Graph */
+        xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
         xAxis.setGranularity(1f);
-
-        final String[] weekdays = new String[]{
-                "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
-        };
-
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 return weekdays[(int) value % weekdays.length];
             }
         });
+        /* END Put weekdays */
 
-        chart.setDrawBorders(true);
-//        Paint p = new Paint(0);
-//        p.setColor(getResources().getColor(R.color.moon));
-//        p.setAlpha(150);
-//        chart.setPaint(p, Chart.PAINT_GRID_BACKGROUND);
-        chart.setDrawGridBackground(true);
+        putStyleChart(chart);
 
-        chart.getXAxis().setTextColor(getResources().getColor(R.color.darkblue));
-        chart.getAxisLeft().setTextColor(getResources().getColor(R.color.darkblue));
-        chart.getAxisRight().setTextColor(getResources().getColor(R.color.darkblue));
-        chart.getLegend().setTextColor(getResources().getColor(R.color.darkblue));
-        chart.invalidate(); // refresh
+        /* Set background color of the graph to be slightly transparent */
+        ll = (LinearLayout) findViewById(R.id.ll_proc_reasons);
+        ll.setBackgroundColor(getResources().getColor(R.color.moon));
+        ll.setAlpha(0.8f);
+        /* END Set background */
 
+        List<String> ary = new ArrayList<String>();
+        ary.add("Facebook");
+        ary.add("Flatmates");
+        ary.add("Laundry");
+
+        ListView lv = (ListView) findViewById(R.id.lv_reasons);
+
+        // This is the array adapter, it takes the context of the activity as a
+        // first parameter, the type of list view as a second parameter and your
+        // array as a third parameter.
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                R.layout.reason_item,
+                ary );
+
+        lv.setAdapter(arrayAdapter);
+
+        /* Connect FAB to opening the pending questionnaire */
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         Log.d("btn",actionButton.toString());
         if (showAlert) {
@@ -215,10 +338,21 @@ public class ProgressDrawerActivity extends AppCompatActivity
         } else {
             actionButton.setVisibility(View.INVISIBLE);
         }
+        /* END Connect FAB */
 
     }
 
-    private void putStyle(LineDataSet dataSet, int color){
+    private void putStyleChart(LineChart chart){
+        chart.setDrawBorders(true);
+        chart.setDrawGridBackground(true);
+        chart.getXAxis().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.getAxisLeft().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.getAxisRight().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.getLegend().setTextColor(getResources().getColor(R.color.darkblue));
+        chart.invalidate(); // refresh
+    }
+
+    private LineDataSet putStyleDataSet(LineDataSet dataSet, int color){
         dataSet.setColor(color);
         dataSet.setLineWidth(2.5f);
         dataSet.setCircleColor(color);
@@ -227,6 +361,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setDrawValues(false);
         dataSet.setValueTextColor(getResources().getColor(R.color.darkblue));
+        return dataSet;
     }
 
     @Override

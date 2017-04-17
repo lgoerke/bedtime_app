@@ -215,6 +215,8 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
+        } else if (id == R.id.nav_notification){
+            scheduleNotification(getNotification("5 second delay"), 5000);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -260,7 +262,7 @@ public class MainDrawerActivity extends AppCompatActivity
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Scheduled Notification");
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.icon);
+        builder.setSmallIcon(R.drawable.ic_error_outline_black_24dp);
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         builder.setSound(uri);
         return builder.build();
