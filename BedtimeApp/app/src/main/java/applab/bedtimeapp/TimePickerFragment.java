@@ -15,7 +15,7 @@ import android.widget.TimePicker;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
-import applab.bedtimeapp.utils.DatabaseHelper;
+import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.utils.NotificationHelper;
 import applab.bedtimeapp.utils.utils;
 

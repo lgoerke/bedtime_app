@@ -2,10 +2,7 @@ package applab.bedtimeapp;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,17 +13,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.scalified.fab.ActionButton;
 
-import org.w3c.dom.Text;
-
-import java.security.AccessController;
-
-import applab.bedtimeapp.utils.DatabaseHelper;
+import applab.bedtimeapp.db.DatabaseHelper;
 
 
 public class AlarmDrawerActivity extends AppCompatActivity

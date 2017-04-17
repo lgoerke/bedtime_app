@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="30dp"
+    android:weightSum="1">
+
+    <EditText
+        android:id="@+id/edit_text_user_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Id"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/small_margin">
+
+        <EditText
+            android:id="@+id/edit_text_date"
+            android:layout_width="293dp"
+            android:layout_height="wrap_content"
+            android:hint="Date"
+            android:padding="@dimen/small_margin"
+            android:textSize="@dimen/text_size" />
+
+        <ImageView
+            android:id="@+id/image_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:src="@android:drawable/ic_menu_my_calendar" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_text_question1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Question 1"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_question2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Question 2"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_question3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Question 3"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_morning_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Morning Alarm"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_evening_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Evening Alarm"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_number_of_snoozes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number of Snoozes"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_landing_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Landing Page"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:id="@+id/edit_text_refusal_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Refusal Reason"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/text_size" />
+
+    <Button
+        android:id="@+id/button_add_update_feedback"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/button_padding"
+        android:text="Add Feedback" />
+
+</LinearLayout>

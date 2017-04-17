@@ -219,7 +219,13 @@ public class MainDrawerActivity extends AppCompatActivity
             startActivity(intent_alarm);
         } else if (id == R.id.nav_notify) {
             //finish();
-            NotificationHelper.scheduleNotification(this,NotificationHelper.getNotification(this,"55455"), 5000);
+            //NotificationHelper.scheduleNotification(this,NotificationHelper.getNotification(this,"55455"), 5000);
+            //finish();
+            Intent intent_feedback = new Intent(this, FeedbackActivity.class);
+            intent_feedback.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //intent_feedback.putExtra("showAlert", showAlert);
+            //intent_feedback.putExtra("whichLanding", whichLanding);
+            startActivity(intent_feedback);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

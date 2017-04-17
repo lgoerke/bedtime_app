@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.ToggleButton;
 
-import applab.bedtimeapp.utils.DatabaseHelper;
+import applab.bedtimeapp.db.DatabaseHelper;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
