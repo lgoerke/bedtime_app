@@ -34,6 +34,9 @@
         <activity android:name=".TutorialIntro" />
         <activity android:name=".QuestionnaireActivity"></activity>
         <activity android:name=".ReasonsActivity"></activity>
+        <activity android:name=".FeedbackActivity"></activity>
+        <activity android:name=".AddUpdateFeedback"></activity>
+        <activity android:name=".ViewAllFeedbacks"></activity>
 
         <receiver android:name=".utils.NotificationPublisher"/>
     </application>

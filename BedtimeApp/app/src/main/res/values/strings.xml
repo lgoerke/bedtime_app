@@ -14,7 +14,6 @@
     <string-array name="icon_array">
         <item>Sheep</item>
         <item>Cat</item>
-        <item>Bee</item>
     </string-array>
 
 </resources>

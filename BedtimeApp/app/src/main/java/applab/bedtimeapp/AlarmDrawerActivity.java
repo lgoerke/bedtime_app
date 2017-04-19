@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
     private boolean showAlert = true;
     private int whichLanding = 0;
+    // Sheep = 1, Cat = 2
+    private int whichIcon = 1;
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
@@ -66,7 +69,9 @@ public class AlarmDrawerActivity extends AppCompatActivity
                     showAlert = (boolean) b.get(key);
                 } else if (key.equals("whichLanding")){
                     whichLanding = (int) b.get(key);
-                }else {
+                } else if (key.equals("whichIcon")){
+                    whichIcon = (int) b.get(key);
+                } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
                             value.toString(), value.getClass().getName()));
@@ -91,6 +96,12 @@ public class AlarmDrawerActivity extends AppCompatActivity
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
+        ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
+        if (whichIcon == 1) {
+            iv.setImageResource(R.drawable.sheep);
+        } else if (whichIcon == 2 ) {
+            iv.setImageResource(R.drawable.cat);
+        }
 
         LinearLayout ac = (LinearLayout) findViewById(R.id.alarm_content);
         DonutProgress pb = (DonutProgress) ac.findViewById(R.id.progressBar);
@@ -173,6 +184,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_progress.putExtra("showAlert", showAlert);
             intent_progress.putExtra("whichLanding", whichLanding);
+            intent_progress.putExtra("whichIcon", whichIcon);
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
             finish();
@@ -180,6 +192,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_settings.putExtra("showAlert", showAlert);
             intent_settings.putExtra("whichLanding", whichLanding);
+            intent_settings.putExtra("whichIcon", whichIcon);
             startActivity(intent_settings);
 
         }

@@ -14,8 +14,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
     private boolean showAlert = true;
     private int whichLanding = 0;
+    // Sheep = 1, Cat = 2
+    private int whichIcon = 1;
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
@@ -48,6 +53,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
                     showAlert = (boolean) b.get(key);
                 } else if (key.equals("whichLanding")){
                     whichLanding = (int) b.get(key);
+                } else if (key.equals("whichIcon")){
+                    whichIcon = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
@@ -73,6 +80,13 @@ public class SettingsDrawerActivity extends AppCompatActivity
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
+        ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
+        if (whichIcon == 1) {
+            iv.setImageResource(R.drawable.sheep);
+        } else if (whichIcon == 2 ) {
+            iv.setImageResource(R.drawable.cat);
+        }
+
 
         CheckBox cb;
         if (whichLanding == LANDING_ALARM){
@@ -82,6 +96,31 @@ public class SettingsDrawerActivity extends AppCompatActivity
             cb = (CheckBox) findViewById(R.id.checkBoxProgress);
             cb.setChecked(true);
         }
+
+
+        Spinner iconSpinner = (Spinner) findViewById(R.id.spinner);
+        iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedIcon = adapterView.getItemAtPosition(i).toString();
+                //writing name and alias in drawer header
+                NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+                LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
+                ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
+                if (selectedIcon.equals("Sheep")) {
+                    iv.setImageResource(R.drawable.sheep);
+                    whichIcon = 1;
+                } else if (selectedIcon.equals("Cat")) {
+                    iv.setImageResource(R.drawable.cat);
+                    whichIcon = 2;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         if (showAlert) {
@@ -100,7 +139,6 @@ public class SettingsDrawerActivity extends AppCompatActivity
         }
 
     }
-
 
     public void openQuestionnaire() {
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
@@ -189,6 +227,7 @@ public class SettingsDrawerActivity extends AppCompatActivity
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_progress.putExtra("showAlert", showAlert);
             intent_progress.putExtra("whichLanding", whichLanding);
+            intent_progress.putExtra("whichIcon", whichIcon);
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
 
@@ -198,8 +237,19 @@ public class SettingsDrawerActivity extends AppCompatActivity
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
+            intent_alarm.putExtra("whichIcon", whichIcon);
             startActivity(intent_alarm);
+        }else if (id == R.id.nav_notify) {
+            //finish();
+            //NotificationHelper.scheduleNotification(this,NotificationHelper.getNotification(this,"55455"), 5000);
+            //finish();
+            Intent intent_feedback = new Intent(this, FeedbackActivity.class);
+            intent_feedback.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //intent_feedback.putExtra("showAlert", showAlert);
+            //intent_feedback.putExtra("whichLanding", whichLanding);
+            startActivity(intent_feedback);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

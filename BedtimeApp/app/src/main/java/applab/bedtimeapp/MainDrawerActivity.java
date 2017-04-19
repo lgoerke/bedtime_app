@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.scalified.fab.ActionButton;
@@ -33,6 +34,8 @@ public class MainDrawerActivity extends AppCompatActivity
     private static final String TAG = "MainDrawerActivity";
     private boolean showAlert = true;
     private int whichLanding = 0;
+    // Sheep = 1, Cat = 2
+    private int whichIcon = 1;
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
@@ -87,6 +90,8 @@ public class MainDrawerActivity extends AppCompatActivity
                     showAlert = (boolean) b.get(key);
                 }else if (key.equals("whichLanding")){
                     whichLanding = (int) b.get(key);
+                } else if (key.equals("whichIcon")){
+                    whichIcon = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
@@ -101,7 +106,6 @@ public class MainDrawerActivity extends AppCompatActivity
 
         //  Create a new boolean and preference and set it to true
         int savedLanding = getPrefs.getInt("whichLanding", 0);
-        Log.d("yo",Integer.toString(savedLanding));
 
         whichLanding = savedLanding;
 
@@ -121,6 +125,11 @@ public class MainDrawerActivity extends AppCompatActivity
             startActivity(intent_progress);
         }
 
+        //  Create a new boolean and preference and set it to true
+        int savedIcon = getPrefs.getInt("whichIcon", 1);
+
+        whichLanding = savedIcon;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -138,7 +147,12 @@ public class MainDrawerActivity extends AppCompatActivity
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
-
+        ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
+        if (whichIcon == 1) {
+            iv.setImageResource(R.drawable.sheep);
+        } else if (whichIcon == 2 ) {
+            iv.setImageResource(R.drawable.cat);
+        }
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         Log.d("btn",actionButton.toString());

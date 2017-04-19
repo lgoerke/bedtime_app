@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -45,6 +46,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
     private boolean showAlert = true;
     private int whichLanding = 0;
+    // Sheep = 1, Cat = 2
+    private int whichIcon = 1;
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
@@ -67,6 +70,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
                     showAlert = (boolean) b.get(key);
                 } else if (key.equals("whichLanding")){
                     whichLanding = (int) b.get(key);
+                } else if (key.equals("whichIcon")){
+                    whichIcon = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
                     Log.d(TAG, String.format("%s %s (%s)", key,
@@ -92,6 +97,12 @@ public class ProgressDrawerActivity extends AppCompatActivity
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
+        ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
+        if (whichIcon == 1) {
+            iv.setImageResource(R.drawable.sheep);
+        } else if (whichIcon == 2 ) {
+            iv.setImageResource(R.drawable.cat);
+        }
 
 
 
@@ -397,6 +408,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_settings.putExtra("showAlert", showAlert);
             intent_settings.putExtra("whichLanding", whichLanding);
+            intent_settings.putExtra("whichIcon", whichIcon);
             startActivity(intent_settings);
         } else if (id == R.id.nav_alarm) {
             finish();
@@ -404,6 +416,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
+            intent_alarm.putExtra("whichIcon", whichIcon);
             startActivity(intent_alarm);
         }
 
