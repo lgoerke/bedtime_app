@@ -38,7 +38,9 @@
         <activity android:name=".AddUpdateFeedback"></activity>
         <activity android:name=".ViewAllFeedbacks"></activity>
 
-        <receiver android:name=".utils.NotificationPublisher"/>
+        <receiver android:name=".utils.NotificationPublisher" />
+
+
     </application>
 
 </manifest>
