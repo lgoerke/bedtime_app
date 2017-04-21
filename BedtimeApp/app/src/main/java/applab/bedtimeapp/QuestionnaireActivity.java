@@ -19,9 +19,13 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private boolean rested = false;
     private boolean busy = false;
     private boolean time = false;
+    private boolean mood = false;
+    private boolean concentration = false;
     private boolean reasons = false;
     private int starsRested = 0;
     private int starsBusy = 0;
+    private int starsMood = 0;
+    private int starsConcentration = 0;
 
     private static int REQUEST_CODE = 1;
 
@@ -44,6 +48,27 @@ public class QuestionnaireActivity extends AppCompatActivity {
             }
         });
 
+        mBar = (RatingBar) findViewById(R.id.ratingBarMood);
+        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                mood = true;
+                starsMood = Math.round(v);
+                Log.d("bar", Float.toString(Math.round(v)));
+                checkComplete();
+            }
+        });
+
+        mBar = (RatingBar) findViewById(R.id.ratingBarConcentration);
+        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                concentration = true;
+                starsConcentration = Math.round(v);
+                Log.d("bar", Float.toString(Math.round(v)));
+                checkComplete();
+            }
+        });
 
         mBar = (RatingBar) findViewById(R.id.ratingBarBusy);
         mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -112,7 +137,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     }
 
     private void checkComplete(){
-        if (time && busy && rested) {
+        if (time && busy && rested && mood && concentration) {
             Button btn = (Button) findViewById(R.id.complete);
             btn.setEnabled(true);
         }
