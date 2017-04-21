@@ -37,6 +37,7 @@
         <activity android:name=".FeedbackActivity"></activity>
         <activity android:name=".AddUpdateFeedback"></activity>
         <activity android:name=".ViewAllFeedbacks"></activity>
+        <activity android:name=".SelfEfficacyActivity"></activity>
 
         <receiver android:name=".utils.NotificationPublisher" />
 
