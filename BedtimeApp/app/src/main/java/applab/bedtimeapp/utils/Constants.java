@@ -6,6 +6,7 @@ package applab.bedtimeapp.utils;
 
 public final class Constants {
 
+    public static final int DAYS_IN_A_WEEK = 7;
     public static final int HOURS_IN_A_DAY = 24;
     public static final int MINUTES_IN_AN_HOUR = 60;
     public static final int SECONDS_IN_A_MINUTE = 60;
