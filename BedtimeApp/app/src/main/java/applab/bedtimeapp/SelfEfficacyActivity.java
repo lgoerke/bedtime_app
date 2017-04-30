@@ -18,7 +18,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
     private int answers[] = new int[QUESTIONS];
 
     private static int REQUEST_CODE = 1;
-    private static int QUESTIONS = 21;
+    private static int QUESTIONS = 10;
 
 
     @Override
@@ -138,7 +138,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 checkComplete();
             }
         });
-
+        /*
         mBar = (RatingBar) findViewById(R.id.ratingBarQ11);
         mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -257,7 +257,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 Log.d("bar", Float.toString(Math.round(v)));
                 checkComplete();
             }
-        });
+        });*/
     }
 
 

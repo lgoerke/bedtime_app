@@ -43,7 +43,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q1"
+                android:text="I can always manage to solve difficult problems if I try hard enough."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -67,7 +67,7 @@
                         android:id="@+id/ratingBarQ1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -90,7 +90,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q2"
+                android:text="If someone opposes me, I can find the means and ways to get what I want."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -114,7 +114,7 @@
                         android:id="@+id/ratingBarQ2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -137,7 +137,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q3"
+                android:text="It is easy for me to stick to my aims and accomplish my goals."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -161,7 +161,7 @@
                         android:id="@+id/ratingBarQ3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -184,7 +184,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q4"
+                android:text="I am confident that I could deal efficiently with unexpected events."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -208,7 +208,7 @@
                         android:id="@+id/ratingBarQ4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -231,7 +231,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q5"
+                android:text="Thanks to my resourcefulness, I know how to handle unforeseen situations."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -255,7 +255,7 @@
                         android:id="@+id/ratingBarQ5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -278,7 +278,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q6"
+                android:text="I can solve most problems if I invest the necessary effort."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -302,7 +302,7 @@
                         android:id="@+id/ratingBarQ6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -325,7 +325,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q7"
+                android:text="I can remain calm when facing difficulties because I can rely on my coping abilities."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -349,7 +349,7 @@
                         android:id="@+id/ratingBarQ7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -372,7 +372,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q8"
+                android:text="When I am confronted with a problem, I can usually find several solutions."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -396,7 +396,7 @@
                         android:id="@+id/ratingBarQ8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -419,7 +419,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q9"
+                android:text="If I am in trouble, I can usually think of a solution."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -443,7 +443,7 @@
                         android:id="@+id/ratingBarQ9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -466,7 +466,7 @@
                 android:layout_marginRight="@dimen/fab_margin"
                 android:background="@color/colorAccent"
                 android:padding="@dimen/small_margin"
-                android:text="q10"
+                android:text="I can usually handle whatever comes my way."
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/darkblue"
                 android:textSize="14dp" />
@@ -490,13 +490,13 @@
                         android:id="@+id/ratingBarQ10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
 
             </LinearLayout>
-
+<!--
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
@@ -537,7 +537,7 @@
                         android:id="@+id/ratingBarQ11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -584,7 +584,7 @@
                         android:id="@+id/ratingBarQ12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -631,7 +631,7 @@
                         android:id="@+id/ratingBarQ13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -678,7 +678,7 @@
                         android:id="@+id/ratingBarQ14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -725,7 +725,7 @@
                         android:id="@+id/ratingBarQ15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -772,7 +772,7 @@
                         android:id="@+id/ratingBarQ16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -819,7 +819,7 @@
                         android:id="@+id/ratingBarQ17"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -866,7 +866,7 @@
                         android:id="@+id/ratingBarQ18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -913,7 +913,7 @@
                         android:id="@+id/ratingBarQ19"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -960,7 +960,7 @@
                         android:id="@+id/ratingBarQ20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
@@ -1007,12 +1007,12 @@
                         android:id="@+id/ratingBarQ21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:numStars="5"
+                        android:numStars="4"
                         android:stepSize="1.0"
                         android:theme="@style/our_rating_bar" />
                 </LinearLayout>
 
-            </LinearLayout>
+            </LinearLayout>-->
 
             <Button
                 android:id="@+id/complete"
