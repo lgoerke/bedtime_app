@@ -32,16 +32,16 @@
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TutorialIntro" />
-        <activity android:name=".QuestionnaireActivity"></activity>
-        <activity android:name=".ReasonsActivity"></activity>
-        <activity android:name=".FeedbackActivity"></activity>
-        <activity android:name=".AddUpdateFeedback"></activity>
-        <activity android:name=".ViewAllFeedbacks"></activity>
-        <activity android:name=".SelfEfficacyActivity"></activity>
+        <activity android:name=".QuestionnaireActivity" />
+        <activity android:name=".ReasonsActivity" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".AddUpdateFeedback" />
+        <activity android:name=".ViewAllFeedbacks" />
+        <activity android:name=".SelfEfficacyActivity" />
 
         <receiver android:name=".utils.NotificationPublisher" />
 
-
+        <activity android:name=".CoachActivity"></activity>
     </application>
 
 </manifest>

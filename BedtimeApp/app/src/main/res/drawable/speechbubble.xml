@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportHeight="100"
+    android:viewportWidth="100">
+
+    <!--a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy-->
+    <path
+        android:pathData="M 20,0 L 40,20 80,20 A10,10 0 0 1 90,30 L90,80 A10,10 0 0 1 80,90 L 20,90  A10,10 0 0 1 10,80 L 10,30 A10,10 0 0 1 20,20 L 20,20 Z20,0"
+        android:strokeColor="#CCd3d2c0"
+        android:strokeWidth="4"
+        android:fillColor="#CCd3d2c0"/>
+
+</vector>
