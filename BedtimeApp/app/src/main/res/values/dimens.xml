@@ -8,6 +8,8 @@
 
     <!-- Set by us -->
     <dimen name="graph_size">200dp</dimen>
+    <dimen name="speech_margin">200dp</dimen>
+    <dimen name="zero_margin">0dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="double_fab_margin">32dp</dimen>
     <dimen name="small_margin">2dp</dimen>

@@ -248,6 +248,10 @@ public class SettingsDrawerActivity extends AppCompatActivity
             //intent_feedback.putExtra("showAlert", showAlert);
             //intent_feedback.putExtra("whichLanding", whichLanding);
             startActivity(intent_feedback);
+        } else if (id == R.id.nav_coach) {
+            Intent intent_coach = new Intent(this, CoachActivity.class);
+            intent_coach.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent_coach);
         }
 
 

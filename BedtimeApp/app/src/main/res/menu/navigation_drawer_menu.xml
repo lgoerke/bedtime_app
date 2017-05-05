@@ -24,6 +24,10 @@
             android:id="@+id/nav_self_efficacy"
             android:icon="@mipmap/ic_settings_black_24dp"
             android:title="Self-Efficacy" />
+        <item
+            android:id="@+id/nav_coach"
+            android:icon="@mipmap/ic_trending_up_black_24dp"
+            android:title="Coach" />
     </group>
 
 

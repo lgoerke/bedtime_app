@@ -244,6 +244,10 @@ public class MainDrawerActivity extends AppCompatActivity
             Intent intent_self_efficacy = new Intent(this, SelfEfficacyActivity.class);
             intent_self_efficacy.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent_self_efficacy);
+        } else if (id == R.id.nav_coach) {
+            Intent intent_coach = new Intent(this, CoachActivity.class);
+            intent_coach.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent_coach);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

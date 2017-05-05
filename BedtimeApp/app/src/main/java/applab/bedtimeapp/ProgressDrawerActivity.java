@@ -418,6 +418,10 @@ public class ProgressDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("whichLanding", whichLanding);
             intent_alarm.putExtra("whichIcon", whichIcon);
             startActivity(intent_alarm);
+        } else if (id == R.id.nav_coach) {
+            Intent intent_coach = new Intent(this, CoachActivity.class);
+            intent_coach.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent_coach);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
