@@ -1,11 +1,14 @@
 package applab.bedtimeapp;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 
 import java.util.Calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -16,14 +19,19 @@ import android.widget.TimePicker;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import applab.bedtimeapp.db.DatabaseHelper;
+import applab.bedtimeapp.utils.AlarmReceiver;
 import applab.bedtimeapp.utils.NotificationHelper;
 import applab.bedtimeapp.utils.utils;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     private String message;
     private boolean controlGroup;
     private DatabaseHelper database;
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,6 +49,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         c = java.util.Calendar.getInstance();
         hour = c.get(Calendar.HOUR_OF_DAY);
         minute = c.get(Calendar.MINUTE);
+
+        alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
 
         //Create and return a new instance of TimePickerDialog
         return new TimePickerDialog(getActivity(), this, hour, minute,
@@ -88,6 +98,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
 
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, 0);
+            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
             if (hourOfDay == 0) {
                 hourOfDay = 24;
             }
@@ -105,6 +122,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             int p = Math.round(pb.getProgress());
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(p);
+
 
 //            pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }

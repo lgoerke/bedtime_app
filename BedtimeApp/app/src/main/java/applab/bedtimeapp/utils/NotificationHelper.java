@@ -15,10 +15,6 @@ import java.util.Calendar;
 import applab.bedtimeapp.QuestionnaireActivity;
 import applab.bedtimeapp.R;
 
-/**
- * Created by lisa on 16/04/2017.
- */
-
 public class NotificationHelper {
 
     public static void scheduleNotification(Context context, Notification notification, int delay) {

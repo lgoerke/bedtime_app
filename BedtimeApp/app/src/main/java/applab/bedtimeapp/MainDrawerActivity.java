@@ -249,7 +249,11 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_coach.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent_coach);
         }
-
+        else if (id == R.id.nav_a) {
+            Intent intent_a = new Intent(this, AlarmSnoozeActivity.class);
+            intent_a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent_a);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

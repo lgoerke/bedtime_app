@@ -22,6 +22,7 @@
     <color name="moon">#d3d2c0</color>
     <color name="clock">#BDBDAC</color>
 
+    <color name="black_overlay">#66000000</color>
 
 
 </resources>

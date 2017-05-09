@@ -1,5 +1,6 @@
 package applab.bedtimeapp;
 
+import android.app.AlarmManager;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import applab.bedtimeapp.db.DatabaseHelper;
 
 public class AlarmDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private AlarmManager alarmManager;
 
     private static final String TAG = "AlarmDrawerActivity";
 
@@ -50,6 +52,18 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
+
+    private static AlarmDrawerActivity inst;
+
+    public static AlarmDrawerActivity instance() {
+        return inst;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        inst = this;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +139,8 @@ public class AlarmDrawerActivity extends AppCompatActivity
         } else {
             actionButton.setVisibility(View.INVISIBLE);
         }
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     }
 
     public void changeSleepDuration(int prog){
@@ -200,6 +216,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
             intent_coach.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent_coach);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
