@@ -1,19 +1,30 @@
 package applab.bedtimeapp;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.ArrayAdapter;
+
+import java.util.Calendar;
+import java.util.List;
 
 import applab.bedtimeapp.db.DatabaseHelper;
+import applab.bedtimeapp.db.FeedbackOperations;
+import applab.bedtimeapp.model.Feedback;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
+    public final static String EXTRA_REASON = "EXTRA_REASON";
     private boolean metBedtime = false;
     private DatabaseHelper database;
     private boolean rested = false;
@@ -26,6 +37,20 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private int starsBusy = 0;
     private int starsMood = 0;
     private int starsConcentration = 0;
+    private Button completeButton;
+    private Feedback newFeedback;
+    List<Feedback> feedbacks;
+
+    private RatingBar ratingBarRested;
+    private RatingBar ratingBarMood;
+    private RatingBar ratingBarConcentration;
+    private RatingBar ratingBarBusy;
+    private EditText refusalReasonEditText;
+    private FeedbackOperations feedbackData;
+
+
+
+
 
     private static int REQUEST_CODE = 1;
 
@@ -36,6 +61,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
         // get database
         database = new DatabaseHelper(QuestionnaireActivity.this);
+        feedbackData = new FeedbackOperations(this);
+        feedbackData.open();
 
         RatingBar mBar = (RatingBar) findViewById(R.id.ratingBarRested);
         mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -78,6 +105,51 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 starsBusy = Math.round(v);
                 Log.d("bar", Float.toString(Math.round(v)));
                 checkComplete();
+            }
+        });
+
+        ratingBarConcentration = (RatingBar) findViewById(R.id.ratingBarConcentration);
+        ratingBarBusy = (RatingBar) findViewById(R.id.ratingBarBusy);
+        ratingBarMood = (RatingBar) findViewById(R.id.ratingBarMood);
+        ratingBarRested = (RatingBar) findViewById(R.id.ratingBarRested);
+        //refusalReasonEditText = (EditText) findViewById(R.id.editReason);
+
+
+        completeButton = (Button) findViewById(R.id.complete);
+
+        completeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newFeedback = new Feedback();
+
+                // TODO user id creation
+                newFeedback.setUserId(13);
+                newFeedback.setDate(Calendar.getInstance().getTime().toString());
+                newFeedback.setQuestionBusy(Integer.valueOf(((int) ratingBarBusy.getRating())));
+                newFeedback.setQuestionConcentration(Integer.valueOf(((int) ratingBarConcentration.getRating())));
+                newFeedback.setQuestionRested(Integer.valueOf(((int) ratingBarRested.getRating())));
+                newFeedback.setQuestionMood(Integer.valueOf(((int) ratingBarMood.getRating())));
+                newFeedback.setRefusalReason(getIntent().getStringExtra(EXTRA_REASON));
+
+
+                //TODO reason
+
+                feedbackData.addFeedback(newFeedback);
+                Toast t = Toast.makeText(QuestionnaireActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
+                t.show();
+                Intent i = new Intent(QuestionnaireActivity.this, QuestionnaireActivity.class);
+                startActivity(i);
+
+                setContentView(R.layout.activity_view_all_feedbacks);
+
+                feedbacks = feedbackData.getAllFeedbacks();
+                feedbackData.close();
+
+                // write all
+                for(int j=0; j<feedbacks.size();j++ ){
+                    System.err.println(feedbacks.get(j).toString());
+                }
+
             }
         });
 

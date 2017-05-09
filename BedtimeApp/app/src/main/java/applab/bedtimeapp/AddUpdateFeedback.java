@@ -103,9 +103,9 @@ public class AddUpdateFeedback extends AppCompatActivity {
                 if(mode.equals("Add")) {
                     newFeedback.setUserId(Long.parseLong(userIdText.getText().toString()));
                     newFeedback.setDate(dateEditText.getText().toString());
-                    newFeedback.setQuestion1(Integer.parseInt(question1EditText.getText().toString()));
-                    newFeedback.setQuestion2(Integer.parseInt(question2EditText.getText().toString()));
-                    newFeedback.setQuestion3(Integer.parseInt(question3EditText.getText().toString()));
+                    newFeedback.setQuestionBusy(Integer.parseInt(question1EditText.getText().toString()));
+                    newFeedback.setQuestionRested(Integer.parseInt(question2EditText.getText().toString()));
+                    newFeedback.setQuestionConcentration(Integer.parseInt(question3EditText.getText().toString()));
                     newFeedback.setMorningAlarm(morningAlarmEditText.getText().toString());
                     newFeedback.setEveningAlarm(eveningAlarmEditText.getText().toString());
                     newFeedback.setNumberOfSnoozes(Integer.parseInt(numberOfSnoozesEditText.getText().toString()));
@@ -121,9 +121,9 @@ public class AddUpdateFeedback extends AppCompatActivity {
 
                     oldFeedback.setUserId(Long.parseLong(userIdText.getText().toString()));
                     oldFeedback.setDate(dateEditText.getText().toString());
-                    oldFeedback.setQuestion1(Integer.parseInt(question1EditText.getText().toString()));
-                    oldFeedback.setQuestion2(Integer.parseInt(question2EditText.getText().toString()));
-                    oldFeedback.setQuestion3(Integer.parseInt(question3EditText.getText().toString()));
+                    oldFeedback.setQuestionBusy(Integer.parseInt(question1EditText.getText().toString()));
+                    oldFeedback.setQuestionRested(Integer.parseInt(question2EditText.getText().toString()));
+                    oldFeedback.setQuestionConcentration(Integer.parseInt(question3EditText.getText().toString()));
                     oldFeedback.setMorningAlarm(morningAlarmEditText.getText().toString());
                     oldFeedback.setEveningAlarm(eveningAlarmEditText.getText().toString());
                     oldFeedback.setNumberOfSnoozes(Integer.parseInt(numberOfSnoozesEditText.getText().toString()));
@@ -150,9 +150,9 @@ public class AddUpdateFeedback extends AppCompatActivity {
 
         userIdText.setText(String.valueOf(oldFeedback.getUserId()));
         dateEditText.setText(oldFeedback.getDate());
-        question1EditText.setText(String.valueOf(oldFeedback.getQuestion1()));
-        question2EditText.setText(String.valueOf(oldFeedback.getQuestion2()));
-        question3EditText.setText(String.valueOf(oldFeedback.getQuestion3()));
+        question1EditText.setText(String.valueOf(oldFeedback.getQuestionBusy()));
+        question2EditText.setText(String.valueOf(oldFeedback.getQuestionRested()));
+        question3EditText.setText(String.valueOf(oldFeedback.getQuestionConcentration()));
         morningAlarmEditText.setText(oldFeedback.getMorningAlarm());
         eveningAlarmEditText.setText(oldFeedback.getEveningAlarm());
         numberOfSnoozesEditText.setText(String.valueOf(oldFeedback.getNumberOfSnoozes()));

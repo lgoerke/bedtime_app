@@ -20,9 +20,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String FB_ID = "FB_ID";
     public static final String USER_ID = "USER_ID";
     public static final String DATE = "DATE";
-    public static final String QUESTION1 = "QUESTION1";
-    public static final String QUESTION2 = "QUESTION2";
-    public static final String QUESTION3 = "QUESTION3";
+    public static final String QUESTION_BUSY = "QUESTION_BUSY";
+    public static final String QUESTION_RESTED = "QUESTION_RESTED";
+    public static final String QUESTION_MOOD = "QUESTION_MOOD";
+    public static final String QUESTION_CONCENTRATION = "QUESTION_CONCENTRATION";
     public static final String MORNING_ALARM = "MORNING_ALARM";
     public static final String EVENING_ALARM = "EVENING_ALARM";
     public static final String NUMBER_OF_SNOOZES = "NUMBER_OF_SNOOZES";
@@ -35,9 +36,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     FB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     USER_ID + " INTEGER, " +
                     DATE + " NUMERIC, " +
-                    QUESTION1 + " INTEGER, " +
-                    QUESTION2 + " INTEGER, " +
-                    QUESTION3 + " INTEGER, " +
+                    QUESTION_BUSY + " INTEGER, " +
+                    QUESTION_RESTED + " INTEGER, " +
+                    QUESTION_MOOD + " INTEGER, " +
+                    QUESTION_CONCENTRATION + " INTEGER, " +
                     MORNING_ALARM + " NUMERIC, " +
                     EVENING_ALARM + " NUMERIC, " +
                     NUMBER_OF_SNOOZES + " INTEGER, " +

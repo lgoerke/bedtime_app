@@ -9,9 +9,10 @@ public class Feedback {
     private long fbId;
     private long userId;
     private String date;
-    private int question1;
-    private int question2;
-    private int question3;
+    private int questionRested;
+    private int questionBusy;
+    private int questionMood;
+    private int questionConcentration;
     private String morningAlarm;
     private String eveningAlarm;
     private int numberOfSnoozes;
@@ -35,28 +36,37 @@ public class Feedback {
         this.userId = userId;
     }
 
-    public int getQuestion1() {
-        return question1;
+
+    public int getQuestionRested() {
+        return questionRested;
     }
 
-    public void setQuestion1(int question1) {
-        this.question1 = question1;
+    public void setQuestionRested(int questionRested) {
+        this.questionRested = questionRested;
     }
 
-    public int getQuestion2() {
-        return question2;
+    public int getQuestionBusy() {
+        return questionBusy;
     }
 
-    public void setQuestion2(int question2) {
-        this.question2 = question2;
+    public void setQuestionBusy(int questionBusy) {
+        this.questionBusy = questionBusy;
     }
 
-    public int getQuestion3() {
-        return question3;
+    public int getQuestionMood() {
+        return questionMood;
     }
 
-    public void setQuestion3(int question3) {
-        this.question3 = question3;
+    public void setQuestionMood(int questionMood) {
+        this.questionMood = questionMood;
+    }
+
+    public int getQuestionConcentration() {
+        return questionConcentration;
+    }
+
+    public void setQuestionConcentration(int questionConcentration) {
+        this.questionConcentration = questionConcentration;
     }
 
     public String getEveningAlarm() {
@@ -107,13 +117,15 @@ public class Feedback {
         this.date = date;
     }
 
-    public Feedback(long fbId, long userId, String date, int question1, int question2, int question3, String morningAlarm, String eveningAlarm, int numberOfSnoozes, String landingPage, String refusalReason) {
+
+    public Feedback(long fbId, long userId, String date, int questionRested, int questionBusy, int questionMood, int questionConcentration, String morningAlarm, String eveningAlarm, int numberOfSnoozes, String landingPage, String refusalReason) {
         this.fbId = fbId;
         this.userId = userId;
         this.date = date;
-        this.question1 = question1;
-        this.question2 = question2;
-        this.question3 = question3;
+        this.questionRested = questionRested;
+        this.questionBusy = questionBusy;
+        this.questionMood = questionMood;
+        this.questionConcentration = questionConcentration;
         this.morningAlarm = morningAlarm;
         this.eveningAlarm = eveningAlarm;
         this.numberOfSnoozes = numberOfSnoozes;
@@ -129,12 +141,13 @@ public class Feedback {
         return "Feedback{" +
                 "fbId=" + fbId +
                 ", userId=" + userId +
-                ", date=" + date +
-                ", question1=" + question1 +
-                ", question2=" + question2 +
-                ", question3=" + question3 +
-                ", morningAlarm=" + morningAlarm +
-                ", eveningAlarm=" + eveningAlarm +
+                ", date='" + date + '\'' +
+                ", questionRested=" + questionRested +
+                ", questionBusy=" + questionBusy +
+                ", questionMood=" + questionMood +
+                ", questionConcentration=" + questionConcentration +
+                ", morningAlarm='" + morningAlarm + '\'' +
+                ", eveningAlarm='" + eveningAlarm + '\'' +
                 ", numberOfSnoozes=" + numberOfSnoozes +
                 ", landingPage='" + landingPage + '\'' +
                 ", refusalReason='" + refusalReason + '\'' +
