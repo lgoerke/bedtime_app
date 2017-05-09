@@ -27,9 +27,11 @@ public class FeedbackOperations {
             DatabaseHelper.FB_ID,
             DatabaseHelper.USER_ID,
             DatabaseHelper.DATE,
-            DatabaseHelper.QUESTION1,
-            DatabaseHelper.QUESTION2,
-            DatabaseHelper.QUESTION3,
+            DatabaseHelper.QUESTION_BUSY,
+            DatabaseHelper.QUESTION_RESTED,
+            DatabaseHelper.QUESTION_MOOD,
+            DatabaseHelper.QUESTION_CONCENTRATION,
+            DatabaseHelper.QUESTION_CONCENTRATION,
             DatabaseHelper.MORNING_ALARM,
             DatabaseHelper.EVENING_ALARM,
             DatabaseHelper.NUMBER_OF_SNOOZES,
@@ -58,9 +60,10 @@ public class FeedbackOperations {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.USER_ID, feedback.getUserId());
         values.put(DatabaseHelper.DATE, feedback.getDate());
-        values.put(DatabaseHelper.QUESTION1, feedback.getQuestion1());
-        values.put(DatabaseHelper.QUESTION2, feedback.getQuestion2());
-        values.put(DatabaseHelper.QUESTION3, feedback.getQuestion3());
+        values.put(DatabaseHelper.QUESTION_BUSY, feedback.getQuestionBusy());
+        values.put(DatabaseHelper.QUESTION_RESTED, feedback.getQuestionRested());
+        values.put(DatabaseHelper.QUESTION_MOOD, feedback.getQuestionMood());
+        values.put(DatabaseHelper.QUESTION_CONCENTRATION, feedback.getQuestionConcentration());
         values.put(DatabaseHelper.MORNING_ALARM, feedback.getMorningAlarm());
         values.put(DatabaseHelper.EVENING_ALARM, feedback.getEveningAlarm());
         values.put(DatabaseHelper.NUMBER_OF_SNOOZES, feedback.getNumberOfSnoozes());
@@ -88,11 +91,12 @@ public class FeedbackOperations {
                 Integer.parseInt(cursor.getString(3)),
                 Integer.parseInt(cursor.getString(4)),
                 Integer.parseInt(cursor.getString(5)),
-                cursor.getString(6),
+                Integer.parseInt(cursor.getString(6)),
                 cursor.getString(7),
-                Integer.parseInt(cursor.getString(8)),
-                cursor.getString(9),
-                cursor.getString(10)
+                cursor.getString(8),
+                Integer.parseInt(cursor.getString(9)),
+                cursor.getString(10),
+                cursor.getString(11)
         );
         // return Feedback
         return f;
@@ -109,9 +113,10 @@ public class FeedbackOperations {
                 feedback.setFbId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.FB_ID)));
                 feedback.setUserId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.USER_ID)));
                 feedback.setDate(cursor.getString(cursor.getColumnIndex(DatabaseHelper.DATE)));
-                feedback.setQuestion1(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION1)));
-                feedback.setQuestion2(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION2)));
-                feedback.setQuestion3(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION3)));
+                feedback.setQuestionBusy(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_BUSY)));
+                feedback.setQuestionRested(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_RESTED)));
+                feedback.setQuestionMood(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_MOOD)));
+                feedback.setQuestionConcentration(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_CONCENTRATION)));
                 feedback.setMorningAlarm(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)));
                 feedback.setEveningAlarm(cursor.getString(cursor.getColumnIndex(DatabaseHelper.EVENING_ALARM)));
                 feedback.setNumberOfSnoozes(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NUMBER_OF_SNOOZES)));
@@ -133,9 +138,10 @@ public class FeedbackOperations {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.USER_ID, feedback.getUserId());
         values.put(DatabaseHelper.DATE, feedback.getDate());
-        values.put(DatabaseHelper.QUESTION1, feedback.getQuestion1());
-        values.put(DatabaseHelper.QUESTION2, feedback.getQuestion2());
-        values.put(DatabaseHelper.QUESTION3, feedback.getQuestion3());
+        values.put(DatabaseHelper.QUESTION_BUSY, feedback.getQuestionBusy());
+        values.put(DatabaseHelper.QUESTION_RESTED, feedback.getQuestionRested());
+        values.put(DatabaseHelper.QUESTION_MOOD, feedback.getQuestionMood());
+        values.put(DatabaseHelper.QUESTION_CONCENTRATION, feedback.getQuestionConcentration());
         values.put(DatabaseHelper.MORNING_ALARM, feedback.getMorningAlarm());
         values.put(DatabaseHelper.EVENING_ALARM, feedback.getEveningAlarm());
         values.put(DatabaseHelper.NUMBER_OF_SNOOZES, feedback.getNumberOfSnoozes());

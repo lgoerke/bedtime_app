@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class ReasonsActivity extends AppCompatActivity {
 
 
+    public final static String EXTRA_REASON = "EXTRA_REASON" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,9 @@ public class ReasonsActivity extends AppCompatActivity {
     }
 
     public void goToQuestionnaire(View view){
+        EditText et = (EditText) findViewById(R.id.editReason);
         Intent output = new Intent();
+        output.putExtra(EXTRA_REASON, et.getText().toString());
         setResult(RESULT_OK, output);
         finish();
     }
