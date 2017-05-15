@@ -43,7 +43,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/hover"
+        android:background="@drawable/btn_complete_dark"
         android:layout_centerHorizontal="true"
         android:text="Continue"
         android:id="@+id/complete"

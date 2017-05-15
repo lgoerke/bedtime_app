@@ -265,7 +265,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/fab_margin"
                 android:layout_marginRight="@dimen/fab_margin"
-                android:background="@drawable/hover"
+                android:background="@drawable/btn_complete_dark"
                 android:text="Complete"
                 android:id="@+id/complete"
                 android:enabled="false"

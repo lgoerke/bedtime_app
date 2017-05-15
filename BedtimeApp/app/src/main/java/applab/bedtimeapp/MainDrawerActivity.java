@@ -230,38 +230,15 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
-        } else if (id == R.id.nav_notify) {
-            //finish();
-            //NotificationHelper.scheduleNotification(this,NotificationHelper.getNotification(this,"55455"), 5000);
-            //finish();
-            Intent intent_feedback = new Intent(this, FeedbackActivity.class);
-            intent_feedback.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //intent_feedback.putExtra("showAlert", showAlert);
-            //intent_feedback.putExtra("whichLanding", whichLanding);
-            startActivity(intent_feedback);
-        } else if (id == R.id.nav_self_efficacy) {
-            Intent intent_self_efficacy = new Intent(this, SelfEfficacyActivity.class);
-            intent_self_efficacy.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent_self_efficacy);
-        } else if (id == R.id.nav_coach) {
-            Intent intent_coach = new Intent(this, CoachActivity.class);
-            intent_coach.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent_coach);
-        }
-        else if (id == R.id.nav_a) {
-            finish();
-            Intent intent_a = new Intent(this, AlarmSnoozeActivity.class);
-            intent_a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent_a);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.notification_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.notification_menu, menu);
+//        return true;
+//    }
 }

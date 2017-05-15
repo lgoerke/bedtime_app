@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/alarm_btn_padding"
             android:layout_centerInParent="true"
-            android:text="Snooze"
+            android:text="Off"
             android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"/>

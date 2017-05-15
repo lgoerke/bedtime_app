@@ -127,12 +127,12 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 newFeedback.setRefusalReason(extraReason);
 
                 feedbackData.addFeedback(newFeedback);
-                Toast t = Toast.makeText(QuestionnaireActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
-                t.show();
-                Intent i = new Intent(QuestionnaireActivity.this, QuestionnaireActivity.class);
-                startActivity(i);
+//                Toast t = Toast.makeText(QuestionnaireActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
+//                t.show();
+//                Intent i = new Intent(QuestionnaireActivity.this, QuestionnaireActivity.class);
+//                startActivity(i);
 
-                setContentView(R.layout.activity_view_all_feedbacks);
+//                setContentView(R.layout.activity_view_all_feedbacks);
 
                 feedbacks = feedbackData.getAllFeedbacks();
                 feedbackData.close();
@@ -141,6 +141,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 for(int j=0; j<feedbacks.size();j++ ){
                     System.err.println(feedbacks.get(j).toString());
                 }
+                goToMain(v);
 
             }
         });
@@ -160,7 +161,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 metBedtime = true;
                 time = true;
                 reasons = true;
-                SQLiteDatabase db_write = database.getWritableDatabase();
+                //SQLiteDatabase db_write = database.getWritableDatabase();
                 // do stuff to write question3 information in database
 
                 checkComplete();

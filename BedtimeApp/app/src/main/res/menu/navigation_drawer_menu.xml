@@ -16,22 +16,6 @@
             android:id="@+id/nav_settings"
             android:icon="@mipmap/ic_settings_black_24dp"
             android:title="@string/menu_entry_settings" />
-        <item
-            android:id="@+id/nav_notify"
-            android:icon="@mipmap/ic_settings_black_24dp"
-            android:title="DB STUFF" />
-        <item
-            android:id="@+id/nav_self_efficacy"
-            android:icon="@mipmap/ic_settings_black_24dp"
-            android:title="Self-Efficacy" />
-        <item
-            android:id="@+id/nav_coach"
-            android:icon="@mipmap/ic_trending_up_black_24dp"
-            android:title="Coach" />
-        <item
-            android:id="@+id/nav_a"
-            android:icon="@mipmap/ic_alarm_black_24dp"
-            android:title="Alaaaaarm" />
     </group>
 
 
