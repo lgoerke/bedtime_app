@@ -42,7 +42,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
     public static boolean first_time = true;
 
-
     private static int REQUEST_CODE = 1;
 
     private boolean showAlert = true;
@@ -71,8 +70,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
         setContentView(R.layout.drawer_activity_alarm);
 
 
-
-
         //get showAlert bool from other Activity
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
@@ -81,9 +78,9 @@ public class AlarmDrawerActivity extends AppCompatActivity
             for (String key : b.keySet()) {
                 if (key.equals("showAlert")) {
                     showAlert = (boolean) b.get(key);
-                } else if (key.equals("whichLanding")){
+                } else if (key.equals("whichLanding")) {
                     whichLanding = (int) b.get(key);
-                } else if (key.equals("whichIcon")){
+                } else if (key.equals("whichIcon")) {
                     whichIcon = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
@@ -113,7 +110,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
         if (whichIcon == 1) {
             iv.setImageResource(R.drawable.sheep);
-        } else if (whichIcon == 2 ) {
+        } else if (whichIcon == 2) {
             iv.setImageResource(R.drawable.cat);
         }
 
@@ -124,7 +121,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn",actionButton.toString());
+        Log.d("btn", actionButton.toString());
         if (showAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
@@ -141,27 +138,29 @@ public class AlarmDrawerActivity extends AppCompatActivity
         }
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+
     }
 
-    public void changeSleepDuration(int prog){
-        int hour = prog/30;
-        int m = ((prog%30)*2);
+    public void changeSleepDuration(int prog) {
+        int hour = prog / 30;
+        int m = ((prog % 30) * 2);
         TextView tv = (TextView) findViewById(R.id.sleep_duration);
         tv.setText("You will sleep " + Integer.toString(hour) + " hours and " + Integer.toString(m) + " minutes");
     }
 
-    public void showTimePicker(View v){
+    public void showTimePicker(View v) {
         DialogFragment PickerFragment = new TimePickerFragment();
         Bundle bdl = new Bundle(1);
         String message;
-        if (v.getId() == R.id.clockBedtime){
+        if (v.getId() == R.id.clockBedtime) {
             message = "bedtime";
         } else {
             message = "morning";
         }
         bdl.putString(ALARM_TYPE, message);
         PickerFragment.setArguments(bdl);
-        PickerFragment.show(getFragmentManager(),"TimePicker");
+        PickerFragment.show(getFragmentManager(), "TimePicker");
     }
 
     // handle extras from QuestionnaireActivity if wanted
@@ -170,10 +169,10 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
     }
 
-    public void openQuestionnaire(){
+    public void openQuestionnaire() {
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
         intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivityForResult(intent_question,REQUEST_CODE);
+        startActivityForResult(intent_question, REQUEST_CODE);
     }
 
 
@@ -228,4 +227,17 @@ public class AlarmDrawerActivity extends AppCompatActivity
         //database.close();
         super.onStop();
     }
+
+    public boolean isShowAlert() {
+        return showAlert;
+    }
+
+    public int getWhichLanding() {
+        return whichLanding;
+    }
+
+    public int getWhichIcon() {
+        return whichIcon;
+    }
+
 }

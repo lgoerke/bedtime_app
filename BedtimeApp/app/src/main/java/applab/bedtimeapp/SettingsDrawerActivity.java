@@ -114,6 +114,7 @@ public class SettingsDrawerActivity extends AppCompatActivity
                     iv.setImageResource(R.drawable.cat);
                     whichIcon = 2;
                 }
+                setIconPreference(whichIcon);
             }
 
             @Override
@@ -208,6 +209,24 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
         //  Edit preference to make it false because we don't want this to run again
         e.putInt("whichLanding", pref);
+
+        //  Apply changes
+        e.apply();
+    }
+
+    public void setIconPreference(int pref){
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int savedIcon = getPrefs.getInt("whichIcon", 0);
+
+        //  Make a new preferences editor
+        SharedPreferences.Editor e = getPrefs.edit();
+
+        //  Edit preference to make it false because we don't want this to run again
+        e.putInt("whichIcon", pref);
 
         //  Apply changes
         e.apply();

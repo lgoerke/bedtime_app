@@ -18,19 +18,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        //this will sound the alarm tone
-        //this will sound the alarm once, if you wish to
-        //raise alarm in loop continuously then use MediaPlayer and setLooping(true)
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
-
         setResultCode(Activity.RESULT_OK);
         Intent intent_alarm = new Intent(AlarmDrawerActivity.instance(), AlarmSnoozeActivity.class);
         intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent_alarm.putExtra("showAlert", AlarmDrawerActivity.instance().isShowAlert());
+        intent_alarm.putExtra("whichLanding", AlarmDrawerActivity.instance().getWhichLanding());
+        intent_alarm.putExtra("whichIcon", AlarmDrawerActivity.instance().getWhichIcon());
         AlarmDrawerActivity.instance().startActivity(intent_alarm);
 
     }

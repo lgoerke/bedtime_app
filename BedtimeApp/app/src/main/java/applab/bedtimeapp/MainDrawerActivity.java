@@ -106,14 +106,17 @@ public class MainDrawerActivity extends AppCompatActivity
 
         //  Create a new boolean and preference and set it to true
         int savedLanding = getPrefs.getInt("whichLanding", 0);
+        int savedIcon = getPrefs.getInt("whichIcon", 1);
 
         whichLanding = savedLanding;
+        whichIcon = savedIcon;
 
         if (whichLanding == LANDING_ALARM) {
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("whichIcon", whichIcon);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         } else if (whichLanding == LANDING_PROGRESS) {
@@ -121,14 +124,10 @@ public class MainDrawerActivity extends AppCompatActivity
             Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("whichIcon", whichIcon);
             intent_progress.putExtra("whichLanding", whichLanding);
             startActivity(intent_progress);
         }
-
-        //  Create a new boolean and preference and set it to true
-        int savedIcon = getPrefs.getInt("whichIcon", 1);
-
-        whichLanding = savedIcon;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -250,6 +249,7 @@ public class MainDrawerActivity extends AppCompatActivity
             startActivity(intent_coach);
         }
         else if (id == R.id.nav_a) {
+            finish();
             Intent intent_a = new Intent(this, AlarmSnoozeActivity.class);
             intent_a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent_a);
