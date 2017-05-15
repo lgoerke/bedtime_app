@@ -1,20 +1,16 @@
 package applab.bedtimeapp;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.ArrayAdapter;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,6 +42,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private RatingBar ratingBarConcentration;
     private RatingBar ratingBarBusy;
     private EditText refusalReasonEditText;
+    String extraReason = "";
     private FeedbackOperations feedbackData;
 
 
@@ -112,7 +109,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         ratingBarBusy = (RatingBar) findViewById(R.id.ratingBarBusy);
         ratingBarMood = (RatingBar) findViewById(R.id.ratingBarMood);
         ratingBarRested = (RatingBar) findViewById(R.id.ratingBarRested);
-        //refusalReasonEditText = (EditText) findViewById(R.id.editReason);
+        refusalReasonEditText = (EditText) findViewById(R.id.editReason);
 
 
         completeButton = (Button) findViewById(R.id.complete);
@@ -129,10 +126,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 newFeedback.setQuestionConcentration(Integer.valueOf(((int) ratingBarConcentration.getRating())));
                 newFeedback.setQuestionRested(Integer.valueOf(((int) ratingBarRested.getRating())));
                 newFeedback.setQuestionMood(Integer.valueOf(((int) ratingBarMood.getRating())));
-                newFeedback.setRefusalReason(getIntent().getStringExtra(EXTRA_REASON));
-
-
-                //TODO reason
+                newFeedback.setRefusalReason(extraReason);
 
                 feedbackData.addFeedback(newFeedback);
                 Toast t = Toast.makeText(QuestionnaireActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
@@ -198,6 +192,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             reasons = true;
+            extraReason = data.getStringExtra(EXTRA_REASON);
             checkComplete();
         }
     }

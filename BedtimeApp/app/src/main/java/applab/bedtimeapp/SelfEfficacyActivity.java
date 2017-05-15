@@ -7,18 +7,39 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
-import applab.bedtimeapp.db.DatabaseHelper;
+import java.util.Calendar;
+import java.util.List;
+
+import applab.bedtimeapp.db.SelfEfficacyOperations;
+import applab.bedtimeapp.model.SelfEfficacy;
 
 public class SelfEfficacyActivity extends AppCompatActivity {
 
     private boolean metBedtime = false;
-    private DatabaseHelper database;
     private boolean replied[] = new boolean[QUESTIONS];
     private int answers[] = new int[QUESTIONS];
 
     private static int REQUEST_CODE = 1;
     private static int QUESTIONS = 10;
+
+    private Button completeButton;
+    private RatingBar   ratingBarQ1,
+                        ratingBarQ2,
+                        ratingBarQ3,
+                        ratingBarQ4,
+                        ratingBarQ5,
+                        ratingBarQ6,
+                        ratingBarQ7,
+                        ratingBarQ8,
+                        ratingBarQ9,
+                        ratingBarQ10;
+
+    private SelfEfficacyOperations selfEfficacyData;
+
+    List<SelfEfficacy> selfEfficacies;
+
 
 
     @Override
@@ -26,8 +47,8 @@ public class SelfEfficacyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_efficacy);
 
-        // get database
-        database = new DatabaseHelper(SelfEfficacyActivity.this);
+        selfEfficacyData = new SelfEfficacyOperations(this);
+        selfEfficacyData.open();
 
         RatingBar mBar = (RatingBar) findViewById(R.id.ratingBarQ1);
         mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -258,6 +279,58 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 checkComplete();
             }
         });*/
+
+
+        completeButton = (Button) findViewById(R.id.completeSelfEfficacy);
+
+        ratingBarQ1 = (RatingBar) findViewById(R.id.ratingBarQ1);
+        ratingBarQ2 = (RatingBar) findViewById(R.id.ratingBarQ2);
+        ratingBarQ3 = (RatingBar) findViewById(R.id.ratingBarQ3);
+        ratingBarQ4 = (RatingBar) findViewById(R.id.ratingBarQ4);
+        ratingBarQ5 = (RatingBar) findViewById(R.id.ratingBarQ5);
+        ratingBarQ6 = (RatingBar) findViewById(R.id.ratingBarQ6);
+        ratingBarQ7 = (RatingBar) findViewById(R.id.ratingBarQ7);
+        ratingBarQ8 = (RatingBar) findViewById(R.id.ratingBarQ8);
+        ratingBarQ9 = (RatingBar) findViewById(R.id.ratingBarQ9);
+        ratingBarQ10 = (RatingBar) findViewById(R.id.ratingBarQ10);
+
+
+        completeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelfEfficacy newSelfEfficacy = new SelfEfficacy();
+
+                // TODO user id creation
+                newSelfEfficacy.setUserId(13);
+                newSelfEfficacy.setDate(Calendar.getInstance().getTime().toString());
+                newSelfEfficacy.setQ1(Integer.valueOf(((int) ratingBarQ1.getRating())));
+                newSelfEfficacy.setQ2(Integer.valueOf(((int) ratingBarQ2.getRating())));
+                newSelfEfficacy.setQ3(Integer.valueOf(((int) ratingBarQ3.getRating())));
+                newSelfEfficacy.setQ4(Integer.valueOf(((int) ratingBarQ4.getRating())));
+                newSelfEfficacy.setQ5(Integer.valueOf(((int) ratingBarQ5.getRating())));
+                newSelfEfficacy.setQ6(Integer.valueOf(((int) ratingBarQ6.getRating())));
+                newSelfEfficacy.setQ7(Integer.valueOf(((int) ratingBarQ7.getRating())));
+                newSelfEfficacy.setQ8(Integer.valueOf(((int) ratingBarQ8.getRating())));
+                newSelfEfficacy.setQ9(Integer.valueOf(((int) ratingBarQ9.getRating())));
+                newSelfEfficacy.setQ10(Integer.valueOf(((int) ratingBarQ10.getRating())));
+
+                selfEfficacyData.addSelfEfficacy(newSelfEfficacy);
+                Toast t = Toast.makeText(SelfEfficacyActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
+                t.show();
+                Intent i = new Intent(SelfEfficacyActivity.this, SelfEfficacyActivity.class);
+                startActivity(i);
+
+
+                selfEfficacies = selfEfficacyData.getAllSelfEfficacies();
+                selfEfficacyData.close();
+
+                // write all
+                for(int j=0; j<selfEfficacies.size();j++ ){
+                    System.err.println(selfEfficacies.get(j).toString());
+                }
+
+            }
+        });
     }
 
 
@@ -285,7 +358,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
             if (!replied[i])
                 return;
         }
-        Button btn = (Button) findViewById(R.id.complete);
+        Button btn = (Button) findViewById(R.id.completeSelfEfficacy);
         btn.setEnabled(true);
     }
 
@@ -303,7 +376,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        database.close();
+        //database.close();
         super.onStop();
     }
 
