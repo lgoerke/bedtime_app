@@ -39,7 +39,8 @@ public class ReasonsActivity extends AppCompatActivity {
         reasonData = new ReasonOperations(this);
 
         reasonData.open();
-        List<Reason> rL = reasonData.getAllReasons();
+        //TODO user id
+        List<Reason> rL = reasonData.getAllReasons(13);
 
         ArrayList<String> ary = new ArrayList<String>();
 

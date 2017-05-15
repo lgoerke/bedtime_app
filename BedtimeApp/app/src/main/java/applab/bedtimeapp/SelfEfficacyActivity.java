@@ -1,30 +1,23 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
 
-import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.SelfEfficacyOperations;
 import applab.bedtimeapp.model.SelfEfficacy;
-
-import static applab.bedtimeapp.R.id.ratingBarBusy;
-import static applab.bedtimeapp.R.id.ratingBarQ1;
 
 public class SelfEfficacyActivity extends AppCompatActivity {
 
     private boolean metBedtime = false;
-    private DatabaseHelper database;
     private boolean replied[] = new boolean[QUESTIONS];
     private int answers[] = new int[QUESTIONS];
 
@@ -383,7 +376,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        database.close();
+        //database.close();
         super.onStop();
     }
 

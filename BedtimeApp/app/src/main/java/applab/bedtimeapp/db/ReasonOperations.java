@@ -75,9 +75,14 @@ public class ReasonOperations {
         return r;
     }
 
-    public List<Reason> getAllReasons() {
+    public List<Reason> getAllReasons(int userId) {
 
-        Cursor cursor = database.query(DatabaseHelper.TABLE_REASON, allColumns, null, null, null, null, null);
+        Cursor cursor;
+
+        if (userId != -1)
+            cursor = database.query(DatabaseHelper.TABLE_REASON, allColumns, DatabaseHelper.USER_ID + "=?",  new String[]{String.valueOf(userId)}, null, null, null);
+        else
+            cursor = database.query(DatabaseHelper.TABLE_REASON, allColumns, null,  null, null, null, null);
 
         List<Reason> reasons = new ArrayList<>();
         if (cursor.getCount() > 0) {

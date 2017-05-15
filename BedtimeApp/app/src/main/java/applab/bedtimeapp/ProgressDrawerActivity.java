@@ -37,7 +37,11 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
+import applab.bedtimeapp.db.ReasonOperations;
+import applab.bedtimeapp.model.Reason;
 
 public class ProgressDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +57,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
     private static int LANDING_PROGRESS = 2;
 
     private static int REQUEST_CODE = 1;
+    private ReasonOperations reasonData;
 
 
     @Override
@@ -315,10 +320,21 @@ public class ProgressDrawerActivity extends AppCompatActivity
         ll.setAlpha(0.8f);
         /* END Set background */
 
+
         List<String> ary = new ArrayList<String>();
-        ary.add("Facebook");
-        ary.add("Flatmates");
-        ary.add("Laundry");
+        reasonData = new ReasonOperations(this);
+
+        reasonData.open();
+        //TODO add user id
+        List<Reason> rL = reasonData.getAllReasons(13);
+        reasonData.close();
+
+        for (int i = 0; i < rL.size(); i++) {
+            ary.add(rL.get(i).getReason());
+            System.err.println(rL.get(i).getReason());
+        }
+        HashSet<String> uniques = new HashSet<>(ary);
+        ary = new ArrayList<String>(uniques);
 
         ListView lv = (ListView) findViewById(R.id.lv_reasons);
 
