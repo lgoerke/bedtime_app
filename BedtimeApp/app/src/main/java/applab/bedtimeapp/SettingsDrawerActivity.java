@@ -99,6 +99,9 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
 
         Spinner iconSpinner = (Spinner) findViewById(R.id.spinner);
+        if (whichIcon == 2) {
+            iconSpinner.setSelection(1);
+        }
         iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -158,7 +161,7 @@ public class SettingsDrawerActivity extends AppCompatActivity
         }
     }
 
-    private void onCheckboxClicked(View view) {
+    public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
@@ -176,6 +179,9 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
                     //  Create a new boolean and preference and set it to true
                     int savedLanding = getPrefs.getInt("whichLanding", 0);
+                } else {
+                    CheckBox cb = (CheckBox) findViewById(R.id.checkBoxProgress);
+                    cb.setChecked(true);
                 }
                 break;
             case R.id.checkBoxAlarm:
@@ -190,6 +196,9 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
                     //  Create a new boolean and preference and set it to true
                     int savedLanding = getPrefs.getInt("whichLanding", 0);
+                } else {
+                    CheckBox cb = (CheckBox) findViewById(R.id.checkBoxAlarm);
+                    cb.setChecked(true);
                 }
                 break;
 

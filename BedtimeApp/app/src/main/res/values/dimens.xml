@@ -23,6 +23,8 @@
     <dimen name="button_height">50dp</dimen>
 
     <dimen name="alarm_btn_size">50dp</dimen>
+    <dimen name="alarm_btn_padding">100dp</dimen>
+
 
 
 </resources>

@@ -145,19 +145,19 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
                 toggle();
             }
         });
+        final Button btn = (Button) findViewById(R.id.btn_alarm_feedback);
 
         RatingBar rBar = (RatingBar) findViewById(R.id.ratingBarMorning);
         rBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 starsMorning = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                Toast.makeText(AlarmFeedbackActivity.this,"I feel " + Integer.toString(starsMorning),Toast.LENGTH_SHORT);
-
+//                Log.d("bar", Float.toString(Math.round(v)));
+//                Toast.makeText(AlarmFeedbackActivity.this,"I feel " + Integer.toString(starsMorning),Toast.LENGTH_SHORT);
+                btn.setEnabled(true);
             }
         });
 
-        Button btn = (Button) findViewById(R.id.btn_alarm_feedback);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

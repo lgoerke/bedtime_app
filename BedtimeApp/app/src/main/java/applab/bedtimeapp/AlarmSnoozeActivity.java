@@ -176,7 +176,7 @@ public class AlarmSnoozeActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.alarm_snooze).setOnDragListener(new View.OnDragListener() {
+        findViewById(R.id.left_rl).setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {
@@ -205,7 +205,7 @@ public class AlarmSnoozeActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.alarm_stop).setOnDragListener(new View.OnDragListener() {
+        findViewById(R.id.right_rl).setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 switch (event.getAction()) {

@@ -51,7 +51,7 @@ public class TutorialIntro extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         finish();
-        Intent i = new Intent(TutorialIntro.this, MainDrawerActivity.class);
+        Intent i = new Intent(TutorialIntro.this, UserIDActivity.class);
         startActivity(i);
 
     }

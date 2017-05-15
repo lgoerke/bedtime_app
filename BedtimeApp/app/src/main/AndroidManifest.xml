@@ -57,6 +57,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_alarm_snooze"
             android:theme="@style/FullscreenTheme" />
+        <activity android:name=".UserIDActivity"></activity>
     </application>
 
 </manifest>
