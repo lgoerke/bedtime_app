@@ -56,8 +56,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
 
-        // get database
-        database = new DatabaseHelper(QuestionnaireActivity.this);
         feedbackData = new FeedbackOperations(this);
         feedbackData.open();
 
@@ -224,7 +222,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        database.close();
         super.onStop();
     }
 

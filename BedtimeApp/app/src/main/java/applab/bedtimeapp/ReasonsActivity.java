@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ReasonOperations;
 import applab.bedtimeapp.model.Reason;
 
@@ -23,7 +22,6 @@ public class ReasonsActivity extends AppCompatActivity {
 
     public final static String EXTRA_REASON = "EXTRA_REASON";
 
-    private DatabaseHelper database;
     private ReasonOperations reasonData;
 
     @Override
@@ -34,8 +32,6 @@ public class ReasonsActivity extends AppCompatActivity {
         EditText et = (EditText) findViewById(R.id.editReason);
         et.setHint("Type here...");
 
-       // database = new DatabaseHelper(ReasonsActivity.this);
-        //database.onUpgrade(database.getWritableDatabase(),1,2);
         reasonData = new ReasonOperations(this);
 
         reasonData.open();

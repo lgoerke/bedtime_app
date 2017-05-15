@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
+import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.NotificationHelper;
 
@@ -20,6 +21,10 @@ public class TutorialIntro extends AppIntro {
         // Put notification for one week later
         NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this,"From Time Picker", SelfEfficacyActivity.class), Constants.DAYS_IN_A_WEEK * Constants.HOURS_IN_A_DAY * Constants.MINUTES_IN_AN_HOUR * Constants.SECONDS_IN_A_MINUTE * Constants.MILLISECONDS_IN_A_SECOND);
         //NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this,"From Time Picker", SelfEfficacyActivity.class), Constants.SECONDS_IN_A_MINUTE * Constants.MILLISECONDS_IN_A_SECOND);
+
+        // DB Stuff
+        DatabaseHelper database = new DatabaseHelper(this);
+        database.onUpgrade(database.getWritableDatabase(),1,1);
 
         // Add your slide's fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
