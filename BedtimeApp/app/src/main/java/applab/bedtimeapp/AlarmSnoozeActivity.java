@@ -273,6 +273,8 @@ public class AlarmSnoozeActivity extends AppCompatActivity {
     }
 
     public void setSnooze() {
+
+        //TODO count snoozes
         Calendar calendar = Calendar.getInstance();
         int current_h = calendar.get(Calendar.HOUR_OF_DAY);
         int current_m = calendar.get(Calendar.MINUTE);

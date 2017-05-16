@@ -65,7 +65,7 @@ public class MainDrawerActivity extends AppCompatActivity
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
                 //  If the activity has never started before...
-                if (isFirstStart) {
+                //if (isFirstStart) {
 
                     //  Launch app intro
                     Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
@@ -79,7 +79,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
                     //  Apply changes
                     e.apply();
-                }
+                //}
             }
         });
 
@@ -114,6 +114,7 @@ public class MainDrawerActivity extends AppCompatActivity
         //  Create a new boolean and preference and set it to true
         int savedLanding = getPrefs.getInt("whichLanding", 0);
         int savedIcon = getPrefs.getInt("whichIcon", 1);
+
 
         whichLanding = savedLanding;
         whichIcon = savedIcon;

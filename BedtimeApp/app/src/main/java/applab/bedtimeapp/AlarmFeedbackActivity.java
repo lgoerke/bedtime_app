@@ -152,6 +152,8 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 starsMorning = Math.round(v);
+
+                //TODO put starsMorning in sleepRate
 //                Log.d("bar", Float.toString(Math.round(v)));
 //                Toast.makeText(AlarmFeedbackActivity.this,"I feel " + Integer.toString(starsMorning),Toast.LENGTH_SHORT);
                 btn.setEnabled(true);

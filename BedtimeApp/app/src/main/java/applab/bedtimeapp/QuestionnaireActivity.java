@@ -1,8 +1,10 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -118,7 +120,14 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 newFeedback = new Feedback();
 
                 // TODO user id creation
-                newFeedback.setUserId(13);
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                int userID = getPrefs.getInt("userID", 0);
+
+                newFeedback.setUserId(userID);
                 newFeedback.setDate(Calendar.getInstance().getTime().toString());
                 newFeedback.setQuestionBusy(Integer.valueOf(((int) ratingBarBusy.getRating())));
                 newFeedback.setQuestionConcentration(Integer.valueOf(((int) ratingBarConcentration.getRating())));
@@ -134,13 +143,13 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
 //                setContentView(R.layout.activity_view_all_feedbacks);
 
-                feedbacks = feedbackData.getAllFeedbacks();
+//                feedbacks = feedbackData.getAllFeedbacks();
                 feedbackData.close();
 
-                // write all
-                for(int j=0; j<feedbacks.size();j++ ){
-                    System.err.println(feedbacks.get(j).toString());
-                }
+//                // write all
+//                for(int j=0; j<feedbacks.size();j++ ){
+//                    System.err.println(feedbacks.get(j).toString());
+//                }
                 goToMain(v);
 
             }
@@ -161,7 +170,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 metBedtime = true;
                 time = true;
                 reasons = true;
-                //SQLiteDatabase db_write = database.getWritableDatabase();
+//                SQLiteDatabase db_write = database.getWritableDatabase();
                 // do stuff to write question3 information in database
 
                 checkComplete();

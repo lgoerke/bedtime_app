@@ -42,7 +42,6 @@
                     android:id="@+id/clockBedtime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:onClick="showTimePicker"

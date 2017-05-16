@@ -1,7 +1,9 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -301,7 +303,13 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 SelfEfficacy newSelfEfficacy = new SelfEfficacy();
 
                 // TODO user id creation
-                newSelfEfficacy.setUserId(13);
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                int userID = getPrefs.getInt("userID", 0);
+                newSelfEfficacy.setUserId(userID);
                 newSelfEfficacy.setDate(Calendar.getInstance().getTime().toString());
                 newSelfEfficacy.setQ1(Integer.valueOf(((int) ratingBarQ1.getRating())));
                 newSelfEfficacy.setQ2(Integer.valueOf(((int) ratingBarQ2.getRating())));

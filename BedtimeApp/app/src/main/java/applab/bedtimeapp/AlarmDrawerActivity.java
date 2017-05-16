@@ -3,7 +3,9 @@ package applab.bedtimeapp;
 import android.app.AlarmManager;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +23,7 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.scalified.fab.ActionButton;
 
 import applab.bedtimeapp.db.DatabaseHelper;
+import applab.bedtimeapp.utils.utils;
 
 
 public class AlarmDrawerActivity extends AppCompatActivity
@@ -116,8 +119,37 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
         LinearLayout ac = (LinearLayout) findViewById(R.id.alarm_content);
         DonutProgress pb = (DonutProgress) ac.findViewById(R.id.progressBar);
-        pb.setStartingDegree(180);
-        pb.setProgress(270);
+
+        //TODO choose previously set time
+
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        int savedMM = getPrefs.getInt("morningMinute", 0);
+        int savedMH = getPrefs.getInt("morningHour", 6);
+        int savedBM = getPrefs.getInt("bedtimeMinute", 0);
+        int savedBH = getPrefs.getInt("bedtimeHour", 21);
+
+
+        tv = (TextView) findViewById(R.id.clockBedtime);
+        tv.setText(utils.getFullTime(savedBH, savedBM));
+
+        tv = (TextView) findViewById(R.id.clockMorning);
+        tv.setText(utils.getFullTime(savedMH, savedMM));
+
+
+
+        Float starting_angle = utils.getStartingAngle(savedBH, savedBM);
+        pb.setStartingDegree(Math.round(starting_angle));
+        Float stop_progress = utils.getProgress(savedBH, savedBM, savedMH, savedMM);
+        pb.setProgress(stop_progress);
+        int prog = Math.round(pb.getProgress());
+        changeSleepDuration(prog);
+
+
+//        pb.setStartingDegree(180);
+//        pb.setProgress(270);
 
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
@@ -235,5 +267,78 @@ public class AlarmDrawerActivity extends AppCompatActivity
     public int getWhichIcon() {
         return whichIcon;
     }
+
+    public void setMorningMinute(int pref){
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int savedMin = getPrefs.getInt("morningMinute", 0);
+
+        //  Make a new preferences editor
+        SharedPreferences.Editor e = getPrefs.edit();
+
+        //  Edit preference to make it false because we don't want this to run again
+        e.putInt("morningMinute", pref);
+
+        //  Apply changes
+        e.apply();
+    }
+
+    public void setMorningHour(int pref){
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int savedH = getPrefs.getInt("morningHour", 0);
+
+        //  Make a new preferences editor
+        SharedPreferences.Editor e = getPrefs.edit();
+
+        //  Edit preference to make it false because we don't want this to run again
+        e.putInt("morningHour", pref);
+
+        //  Apply changes
+        e.apply();
+    }
+    public void setBedtimeMinute(int pref){
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int savedMin = getPrefs.getInt("bedtimeMinute", 0);
+
+        //  Make a new preferences editor
+        SharedPreferences.Editor e = getPrefs.edit();
+
+        //  Edit preference to make it false because we don't want this to run again
+        e.putInt("bedtimeMinute", pref);
+
+        //  Apply changes
+        e.apply();
+    }
+
+    public void setBedtimeHour(int pref){
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int savedH = getPrefs.getInt("bedtimeHour", 0);
+
+        //  Make a new preferences editor
+        SharedPreferences.Editor e = getPrefs.edit();
+
+        //  Edit preference to make it false because we don't want this to run again
+        e.putInt("bedtimeHour", pref);
+
+        //  Apply changes
+        e.apply();
+    }
+
+
 
 }

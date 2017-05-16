@@ -1,8 +1,10 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +38,15 @@ public class ReasonsActivity extends AppCompatActivity {
 
         reasonData.open();
         //TODO user id
-        List<Reason> rL = reasonData.getAllReasons(13);
+
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        List<Reason> rL = reasonData.getAllReasons(userID);
 
         ArrayList<String> ary = new ArrayList<String>();
 
@@ -91,7 +101,13 @@ public class ReasonsActivity extends AppCompatActivity {
         reasonData.open();
         Reason reason = new Reason();
         // TODO SET USER ID
-        reason.setUserId(13);
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+        reason.setUserId(userID);
         reason.setReason(text);
         reasonData.addReason(reason);
         reasonData.close();

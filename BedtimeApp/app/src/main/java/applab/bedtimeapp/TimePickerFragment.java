@@ -9,7 +9,9 @@ import android.app.TimePickerDialog;
 import java.util.Calendar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -94,6 +96,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             Log.d("Delay: ",String.valueOf(delayForNotification));
             NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
 
+            //TODO save bedtime
+
+            ((AlarmDrawerActivity) getActivity()).setBedtimeHour(hourOfDay);
+            ((AlarmDrawerActivity) getActivity()).setBedtimeMinute(minute);
+
         } else {
 
             Log.d("progress before", Integer.toString(Math.round(pb.getProgress())));
@@ -123,6 +130,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(p);
 
+            //TODO save alarm time
+
+            ((AlarmDrawerActivity) getActivity()).setMorningHour(hourOfDay);
+            ((AlarmDrawerActivity) getActivity()).setMorningMinute(minute);
 
 //            pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }

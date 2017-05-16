@@ -1,10 +1,12 @@
 package applab.bedtimeapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -326,7 +328,15 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         reasonData.open();
         //TODO add user id
-        List<Reason> rL = reasonData.getAllReasons(13);
+
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        List<Reason> rL = reasonData.getAllReasons(userID);
         reasonData.close();
 
         for (int i = 0; i < rL.size(); i++) {
