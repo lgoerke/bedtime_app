@@ -24,8 +24,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.scalified.fab.ActionButton;
 
+import org.json.JSONArray;
+
+import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.utils.NotificationHelper;
 
 public class MainDrawerActivity extends AppCompatActivity
@@ -230,6 +235,12 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
+        }
+        else if (id == R.id.nav) {
+            DatabaseHelper database = new DatabaseHelper(this);
+            JSONArray ary = database.getResults();
+            Toast.makeText(this, ary.toString(), Toast.LENGTH_LONG).show();
+            Log.e("ff",ary.toString());
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
