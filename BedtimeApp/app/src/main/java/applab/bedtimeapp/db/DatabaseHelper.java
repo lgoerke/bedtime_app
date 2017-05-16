@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -118,8 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public JSONArray getResults()
-    {
+    public JSONObject getResults() throws JSONException {
 
 
         // TODO other 2 tables and test
@@ -132,6 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String searchQuery = "SELECT  * FROM " + myTable;
         Cursor cursor = bedtimeDB.rawQuery(searchQuery, null );
 
+        JSONObject meta_object = new JSONObject();
         JSONArray resultSet = new JSONArray();
 
         cursor.moveToFirst();
@@ -167,6 +168,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         Log.d("TAG_NAME", resultSet.toString() );
-        return resultSet;
+
+        meta_object.put("first table",resultSet);
+        return meta_object;
     }
 }

@@ -29,6 +29,8 @@ import android.widget.Toast;
 import com.scalified.fab.ActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.utils.NotificationHelper;
@@ -238,7 +240,12 @@ public class MainDrawerActivity extends AppCompatActivity
         }
         else if (id == R.id.nav) {
             DatabaseHelper database = new DatabaseHelper(this);
-            JSONArray ary = database.getResults();
+            JSONObject ary = null;
+            try {
+                ary = database.getResults();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(this, ary.toString(), Toast.LENGTH_LONG).show();
             Log.e("ff",ary.toString());
         }
