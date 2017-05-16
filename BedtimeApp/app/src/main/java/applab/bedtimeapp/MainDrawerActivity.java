@@ -243,7 +243,7 @@ public class MainDrawerActivity extends AppCompatActivity
             DatabaseHelper database = new DatabaseHelper(this);
             JSONObject ary = null;
             try {
-                ary = database.getResults();
+                ary = database.getResults(this);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

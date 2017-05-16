@@ -1,14 +1,20 @@
 package applab.bedtimeapp.db;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -119,57 +125,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public JSONObject getResults() throws JSONException {
-
-
-        // TODO other 2 tables and test
-        String myTable = TABLE_FEEDBACK;//Set name of your table
-
+    public JSONObject getResults(Context context) throws JSONException {
         //String dbPath = context.getDatabasePath("Bedtime.db");
-
         SQLiteDatabase bedtimeDB = SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READONLY);
-
-        String searchQuery = "SELECT  * FROM " + myTable;
-        Cursor cursor = bedtimeDB.rawQuery(searchQuery, null );
-
         JSONObject meta_object = new JSONObject();
-        JSONArray resultSet = new JSONArray();
 
-        cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
+        // add User_ID
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
 
-            int totalColumn = cursor.getColumnCount();
-            JSONObject rowObject = new JSONObject();
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+        Log.e("User_ID", Integer.toString(userID));
+        meta_object.put("user_ID", userID);
 
-            for( int i=0 ;  i< totalColumn ; i++ )
-            {
-                if( cursor.getColumnName(i) != null )
-                {
-                    try
-                    {
-                        if( cursor.getString(i) != null )
-                        {
-                            Log.d("TAG_NAME", cursor.getString(i) );
-                            rowObject.put(cursor.getColumnName(i) ,  cursor.getString(i) );
+        //List<String> tableList = new ArrayList<String>();
+        List<String> tableList = Arrays.asList(TABLE_FEEDBACK, TABLE_SELF_EFFICACY, TABLE_REASON);
+        for (String table: tableList) {
+            JSONArray resultSet = new JSONArray();
+            Log.e("table name", table);
+            String myTable = table;
+
+            String searchQuery = "SELECT  * FROM " + myTable;
+            Cursor cursor = bedtimeDB.rawQuery(searchQuery, null);
+
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+
+                int totalColumn = cursor.getColumnCount();
+                JSONObject rowObject = new JSONObject();
+
+                for (int i = 0; i < totalColumn; i++) {
+                    if (cursor.getColumnName(i) != null) {
+                        try {
+                            if (cursor.getString(i) != null) {
+                                Log.d("TAG_NAME", cursor.getString(i));
+                                rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                            } else {
+                                rowObject.put(cursor.getColumnName(i), "");
+                            }
+                        } catch (Exception e) {
+                            Log.d("TAG_NAME", e.getMessage());
                         }
-                        else
-                        {
-                            rowObject.put( cursor.getColumnName(i) ,  "" );
-                        }
-                    }
-                    catch( Exception e )
-                    {
-                        Log.d("TAG_NAME", e.getMessage()  );
                     }
                 }
+                resultSet.put(rowObject);
+                cursor.moveToNext();
             }
-            resultSet.put(rowObject);
-            cursor.moveToNext();
+            cursor.close();
+            Log.d("TAG_NAME", resultSet.toString());
+            meta_object.put(table, resultSet);
         }
-        cursor.close();
-        Log.d("TAG_NAME", resultSet.toString() );
-
-        meta_object.put("first table",resultSet);
         return meta_object;
     }
 }
