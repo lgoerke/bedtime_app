@@ -2,6 +2,7 @@ package applab.bedtimeapp.utils;
 
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import static java.lang.Math.abs;
@@ -95,5 +96,11 @@ public class utils {
         return target_degree;
     }
 
+    public static String getCurrentTimeString(String dateFormat){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat(dateFormat);
+        return format1.format(cal.getTime());
+    }
 
 }
