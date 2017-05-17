@@ -32,6 +32,7 @@ import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 import applab.bedtimeapp.db.FeedbackOperations;
 
+
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -181,8 +182,13 @@ public class MainDrawerActivity extends AppCompatActivity
         boolean result = true;
         FeedbackOperations fbOp = new FeedbackOperations(this);
         fbOp.open();
-        //TODO userId
-        if (fbOp.counter(13) > 0)
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        if (fbOp.counter(userID) > 0)
             result = false;
         else
             result = true;

@@ -42,8 +42,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import applab.bedtimeapp.db.FeedbackOperations;
 import applab.bedtimeapp.db.ReasonOperations;
 import applab.bedtimeapp.model.Reason;
+import applab.bedtimeapp.utils.utils;
 
 public class ProgressDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,6 +68,10 @@ public class ProgressDrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_progress);
+
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        int userID = getPrefs.getInt("userID", 0);
 
         //get showAlert bool from other Activity
         Intent intent = getIntent();
@@ -199,9 +205,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
         xAxis.setGranularity(1f);
-        final String[] weekdays = new String[]{
-                "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
-        };
+        final String[] weekdays = utils.getWeekDays();
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -246,7 +250,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* END add data set */
 
         /* Example busy-ness data */
-        entries = new ArrayList<Entry>();
+       /* entries = new ArrayList<Entry>();
 
         entries.add(new Entry(0, 0));
         entries.add(new Entry(1, 2));
@@ -254,7 +258,13 @@ public class ProgressDrawerActivity extends AppCompatActivity
         entries.add(new Entry(3, 0));
         entries.add(new Entry(4, 1));
         entries.add(new Entry(5, 2));
-        entries.add(new Entry(6, 2));
+        entries.add(new Entry(6, 2));*/
+
+        // get busyness data from the db
+        FeedbackOperations feedbackOperations = new FeedbackOperations(this);
+        feedbackOperations.open();
+        entries = feedbackOperations.getBusyness(userID);
+        feedbackOperations.close();
 
         dataSet = new LineDataSet(entries, "Busy-ness of days"); // add entries to dataset
 
@@ -327,14 +337,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         reasonData = new ReasonOperations(this);
 
         reasonData.open();
-        //TODO add user id
-
-        //  Initialize SharedPreferences
-        SharedPreferences getPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-
-        //  Create a new boolean and preference and set it to true
-        int userID = getPrefs.getInt("userID", 0);
 
         List<Reason> rL = reasonData.getAllReasons(userID);
         reasonData.close();

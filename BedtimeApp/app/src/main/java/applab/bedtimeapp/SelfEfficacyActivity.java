@@ -303,7 +303,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SelfEfficacy newSelfEfficacy = new SelfEfficacy();
 
-                // TODO user id creation
+                // user id creation
                 //  Initialize SharedPreferences
                 SharedPreferences getPrefs = PreferenceManager
                         .getDefaultSharedPreferences(getBaseContext());

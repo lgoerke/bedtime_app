@@ -37,7 +37,6 @@ public class ReasonsActivity extends AppCompatActivity {
         reasonData = new ReasonOperations(this);
 
         reasonData.open();
-        //TODO user id
 
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager
@@ -100,7 +99,7 @@ public class ReasonsActivity extends AppCompatActivity {
     private void saveReason(String text) {
         reasonData.open();
         Reason reason = new Reason();
-        // TODO SET USER ID
+        // SET USER ID
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
