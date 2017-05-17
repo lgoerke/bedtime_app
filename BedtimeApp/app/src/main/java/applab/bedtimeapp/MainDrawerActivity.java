@@ -36,6 +36,7 @@ import applab.bedtimeapp.db.FeedbackOperations;
 import applab.bedtimeapp.db.SelfEfficacyOperations;
 import applab.bedtimeapp.utils.NotificationHelper;
 
+
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -66,7 +67,7 @@ public class MainDrawerActivity extends AppCompatActivity
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
                 //  If the activity has never started before...
-                //if (isFirstStart) {
+                if (isFirstStart) {
 
                 //  Launch app intro
                 Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
@@ -80,7 +81,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
                 //  Apply changes
                 e.apply();
-                //}
+                }
             }
         });
 
@@ -185,8 +186,13 @@ public class MainDrawerActivity extends AppCompatActivity
         boolean result = true;
         FeedbackOperations fbOp = new FeedbackOperations(this);
         fbOp.open();
-        //TODO userId
-        if (fbOp.counter(13) > 0)
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        if (fbOp.counter(userID) > 0)
             result = false;
         else
             result = true;

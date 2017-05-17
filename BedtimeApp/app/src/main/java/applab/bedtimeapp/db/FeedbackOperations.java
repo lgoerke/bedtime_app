@@ -92,9 +92,12 @@ public class FeedbackOperations {
         return f;
     }
 
-    public List<Feedback> getAllFeedbacks() {
-
-        Cursor cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, null, null, null, null, null);
+    public List<Feedback> getAllFeedbacks(long userId) {
+        Cursor cursor;
+        if (userId != -1)
+            cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, DatabaseHelper.USER_ID + "=?",  new String[]{String.valueOf(userId)}, null, null, null);
+        else
+            cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, null,  null, null, null, null);
 
         List<Feedback> feedbacks = new ArrayList<>();
         if (cursor.getCount() > 0) {
@@ -143,7 +146,8 @@ public class FeedbackOperations {
 
     public int counter(long userId){
 
-        Cursor cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+        //Cursor cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+        Cursor cursor = database.rawQuery("SELECT FB_ID, USER_ID, DATE, QUESTION_BUSY, QUESTION_RESTED, QUESTION_MOOD, QUESTION_CONCENTRATION, QUESTION_CONCENTRATION, REFUSAL_REASON FROM feedbacks WHERE USER_ID= "+String.valueOf(userId)+" AND DATE LIKE '"+ utils.getCurrentTimeString("yyyy-MM-dd") + "%'", null);
             return cursor.getCount();
 
     }

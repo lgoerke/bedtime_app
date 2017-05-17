@@ -98,7 +98,6 @@ public class utils {
 
     public static String getCurrentTimeString(String dateFormat){
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
         SimpleDateFormat format1 = new SimpleDateFormat(dateFormat);
         return format1.format(cal.getTime());
     }

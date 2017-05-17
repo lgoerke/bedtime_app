@@ -22,7 +22,7 @@ public class ViewAllFeedbacks extends ListActivity{
         setContentView(R.layout.activity_view_all_feedbacks);
         feedbackOps = new FeedbackOperations(this);
         feedbackOps.open();
-        feedbacks = feedbackOps.getAllFeedbacks();
+        feedbacks = feedbackOps.getAllFeedbacks(-1);
         feedbackOps.close();
         ArrayAdapter<Feedback> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, feedbacks);
