@@ -7,12 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import applab.bedtimeapp.model.Feedback;
+import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.utils;
+import com.github.mikephil.charting.data.Entry;
 
 /**
  * Created by berberakif on 17/04/17.
@@ -151,5 +157,37 @@ public class FeedbackOperations {
             return cursor.getCount();
 
     }
+
+    public ArrayList <Entry> getBusyness(long userId){
+
+        //Cursor cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+        String query = "",
+                formattedDate = "";
+
+        int value;
+        Calendar cal;
+
+       ArrayList entries = new ArrayList<Entry>();
+
+        for (int i = 0; i< Constants.DAYS_IN_A_WEEK; i++)
+        {
+            cal = Calendar.getInstance();
+            cal.add(Calendar.DATE,-(Constants.DAYS_IN_A_WEEK-i-1));
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            formattedDate=format1.format(cal.getTime());
+            Cursor cursor = database.rawQuery("SELECT QUESTION_BUSY FROM feedbacks WHERE USER_ID= "+String.valueOf(userId)+" AND DATE LIKE '"+ formattedDate + "%' LIMIT 1", null);
+            value = 0;
+            if (cursor.getCount() > 0) {
+                cursor.moveToNext();
+                value =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_BUSY));
+            }
+
+            entries.add(new Entry(i,value ));
+        }
+
+        return entries;
+
+    }
+
 
 }
