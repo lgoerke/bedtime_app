@@ -337,7 +337,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         reasonData = new ReasonOperations(this);
 
         reasonData.open();
-        //TODO add user id
 
         List<Reason> rL = reasonData.getAllReasons(userID);
         reasonData.close();
