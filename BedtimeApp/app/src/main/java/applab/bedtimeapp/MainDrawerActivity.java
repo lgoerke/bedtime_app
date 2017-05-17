@@ -1,15 +1,8 @@
 package applab.bedtimeapp;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,14 +18,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.*;
+
+import com.loopj.android.http.*;
 import com.scalified.fab.ActionButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import applab.bedtimeapp.db.DatabaseHelper;
-import applab.bedtimeapp.utils.NotificationHelper;
+import applab.bedtimeapp.utils.RestClient;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,18 +65,18 @@ public class MainDrawerActivity extends AppCompatActivity
                 //  If the activity has never started before...
                 //if (isFirstStart) {
 
-                    //  Launch app intro
-                    Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
-                    startActivity(i);
+                //  Launch app intro
+                Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
+                startActivity(i);
 
-                    //  Make a new preferences editor
-                    SharedPreferences.Editor e = getPrefs.edit();
+                //  Make a new preferences editor
+                SharedPreferences.Editor e = getPrefs.edit();
 
-                    //  Edit preference to make it false because we don't want this to run again
-                    e.putBoolean("firstStart", false);
+                //  Edit preference to make it false because we don't want this to run again
+                e.putBoolean("firstStart", false);
 
-                    //  Apply changes
-                    e.apply();
+                //  Apply changes
+                e.apply();
                 //}
             }
         });
@@ -95,9 +93,9 @@ public class MainDrawerActivity extends AppCompatActivity
             for (String key : b.keySet()) {
                 if (key.equals("showAlert")) {
                     showAlert = (boolean) b.get(key);
-                }else if (key.equals("whichLanding")){
+                } else if (key.equals("whichLanding")) {
                     whichLanding = (int) b.get(key);
-                } else if (key.equals("whichIcon")){
+                } else if (key.equals("whichIcon")) {
                     whichIcon = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
@@ -157,12 +155,12 @@ public class MainDrawerActivity extends AppCompatActivity
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
         if (whichIcon == 1) {
             iv.setImageResource(R.drawable.sheep);
-        } else if (whichIcon == 2 ) {
+        } else if (whichIcon == 2) {
             iv.setImageResource(R.drawable.cat);
         }
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn",actionButton.toString());
+        Log.d("btn", actionButton.toString());
         if (showAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +180,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
     /**
      * Get data from questionnaire intent
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -193,10 +192,10 @@ public class MainDrawerActivity extends AppCompatActivity
         }
     }
 
-    public void openQuestionnaire(){
+    public void openQuestionnaire() {
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
         intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivityForResult(intent_question,REQUEST_CODE);
+        startActivityForResult(intent_question, REQUEST_CODE);
     }
 
     @Override
@@ -238,17 +237,43 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
-        }
-        else if (id == R.id.nav) {
-            DatabaseHelper database = new DatabaseHelper(this);
-            JSONObject ary = null;
-            try {
-                ary = database.getResults(this);
-            } catch (JSONException e) {
-                e.printStackTrace();
+        } else {
+            if (id == R.id.nav) {
+                DatabaseHelper database = new DatabaseHelper(this);
+                JSONObject ary = null;
+                try {
+                    ary = database.getResults(this);
+                    String str = ary.toString();
+
+                    StringEntity entity = null;
+                    try {
+                        entity = new StringEntity(str);
+                        entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                    } catch (Exception e) {
+                        //Exception
+                    }
+
+                    RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            // If the response is JSONObject instead of expected JSONArray
+                            Log.d("Response", response.toString());
+                        }
+
+                        // When the response returned by REST has Http response code other than '200'
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("Response", errorResponse.toString());
+                        }
+                    });
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(this, ary.toString(), Toast.LENGTH_LONG).show();
+                Log.e("ff", ary.toString());
             }
-            Toast.makeText(this, ary.toString(), Toast.LENGTH_LONG).show();
-            Log.e("ff",ary.toString());
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
