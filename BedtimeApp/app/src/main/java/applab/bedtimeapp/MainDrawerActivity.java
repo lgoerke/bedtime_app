@@ -32,6 +32,9 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
+import applab.bedtimeapp.db.FeedbackOperations;
+import applab.bedtimeapp.db.SelfEfficacyOperations;
+import applab.bedtimeapp.utils.NotificationHelper;
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,7 +53,7 @@ public class MainDrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_main);
-
+        showAlert = checkForTodaysQuestionnaire();
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
             @Override
@@ -176,6 +179,20 @@ public class MainDrawerActivity extends AppCompatActivity
             actionButton.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    private boolean checkForTodaysQuestionnaire() {
+        boolean result = true;
+        FeedbackOperations fbOp = new FeedbackOperations(this);
+        fbOp.open();
+        //TODO userId
+        if (fbOp.counter(13) > 0)
+            result = false;
+        else
+            result = true;
+        fbOp.close();
+
+        return result;
     }
 
     /**

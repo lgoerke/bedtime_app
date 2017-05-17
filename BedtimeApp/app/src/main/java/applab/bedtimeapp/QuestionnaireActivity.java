@@ -13,12 +13,17 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import applab.bedtimeapp.db.AlarmOperations;
 import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.FeedbackOperations;
+import applab.bedtimeapp.model.Alarm;
 import applab.bedtimeapp.model.Feedback;
+import applab.bedtimeapp.utils.utils;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
@@ -55,6 +60,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        tryAlarmData();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
 
@@ -119,16 +127,14 @@ public class QuestionnaireActivity extends AppCompatActivity {
             public void onClick(View v) {
                 newFeedback = new Feedback();
 
-                // TODO user id creation
                 //  Initialize SharedPreferences
-                SharedPreferences getPrefs = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
                 //  Create a new boolean and preference and set it to true
                 int userID = getPrefs.getInt("userID", 0);
 
                 newFeedback.setUserId(userID);
-                newFeedback.setDate(Calendar.getInstance().getTime().toString());
+                newFeedback.setDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
                 newFeedback.setQuestionBusy(Integer.valueOf(((int) ratingBarBusy.getRating())));
                 newFeedback.setQuestionConcentration(Integer.valueOf(((int) ratingBarConcentration.getRating())));
                 newFeedback.setQuestionRested(Integer.valueOf(((int) ratingBarRested.getRating())));
@@ -136,25 +142,40 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 newFeedback.setRefusalReason(extraReason);
 
                 feedbackData.addFeedback(newFeedback);
-//                Toast t = Toast.makeText(QuestionnaireActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
-//                t.show();
-//                Intent i = new Intent(QuestionnaireActivity.this, QuestionnaireActivity.class);
-//                startActivity(i);
 
-//                setContentView(R.layout.activity_view_all_feedbacks);
-
-//                feedbacks = feedbackData.getAllFeedbacks();
                 feedbackData.close();
 
-//                // write all
-//                for(int j=0; j<feedbacks.size();j++ ){
-//                    System.err.println(feedbacks.get(j).toString());
-//                }
                 goToMain(v);
 
             }
         });
 
+    }
+
+    private void tryAlarmData() {
+
+        AlarmOperations alarmData = new AlarmOperations(this);
+        alarmData.open();
+        Alarm alarm = new Alarm();
+        alarm.setDate("2017-05-17 17:41");
+        alarm.setNumberOfSnoozes(3);
+        alarm.setEveningAlarm("23:30");
+        alarm.setMorningAlarm("07:30");
+        alarm.setSleepRate(5);
+        alarm.setUserId(13);
+        alarmData.addAlarm(alarm);
+        System.err.println(alarmData.getAllAlarms(13));
+
+        alarm = new Alarm();
+        alarm.setDate("2017-05-17 17:45");
+        alarm.setNumberOfSnoozes(5);
+        alarm.setEveningAlarm("20:30");
+        alarm.setMorningAlarm("08:30");
+        alarm.setSleepRate(6);
+        alarm.setUserId(13);
+        alarmData.addAlarm(alarm);
+        System.err.println(alarmData.getAllAlarms(13));
+        alarmData.close();
     }
 
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applab.bedtimeapp.model.SelfEfficacy;
+import applab.bedtimeapp.utils.utils;
 
 /**
  * Created by berberakif on 17/04/17.
@@ -166,4 +167,8 @@ public class SelfEfficacyOperations {
     }
 
 
+    public int counter(long userId){
+        Cursor cursor = database.query(DatabaseHelper.TABLE_SELF_EFFICACY, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+            return cursor.getCount();
+    }
 }

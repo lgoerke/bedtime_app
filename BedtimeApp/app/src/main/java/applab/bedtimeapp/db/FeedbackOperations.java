@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import applab.bedtimeapp.model.Feedback;
+import applab.bedtimeapp.utils.utils;
 
 /**
  * Created by berberakif on 17/04/17.
@@ -32,10 +34,6 @@ public class FeedbackOperations {
             DatabaseHelper.QUESTION_MOOD,
             DatabaseHelper.QUESTION_CONCENTRATION,
             DatabaseHelper.QUESTION_CONCENTRATION,
-            DatabaseHelper.MORNING_ALARM,
-            DatabaseHelper.EVENING_ALARM,
-            DatabaseHelper.NUMBER_OF_SNOOZES,
-            DatabaseHelper.LANDING_PAGE,
             DatabaseHelper.REFUSAL_REASON
     };
 
@@ -64,10 +62,6 @@ public class FeedbackOperations {
         values.put(DatabaseHelper.QUESTION_RESTED, feedback.getQuestionRested());
         values.put(DatabaseHelper.QUESTION_MOOD, feedback.getQuestionMood());
         values.put(DatabaseHelper.QUESTION_CONCENTRATION, feedback.getQuestionConcentration());
-        values.put(DatabaseHelper.MORNING_ALARM, feedback.getMorningAlarm());
-        values.put(DatabaseHelper.EVENING_ALARM, feedback.getEveningAlarm());
-        values.put(DatabaseHelper.NUMBER_OF_SNOOZES, feedback.getNumberOfSnoozes());
-        values.put(DatabaseHelper.LANDING_PAGE, feedback.getLandingPage());
         values.put(DatabaseHelper.REFUSAL_REASON, feedback.getRefusalReason());
 
 
@@ -92,10 +86,6 @@ public class FeedbackOperations {
                 Integer.parseInt(cursor.getString(4)),
                 Integer.parseInt(cursor.getString(5)),
                 Integer.parseInt(cursor.getString(6)),
-                cursor.getString(7),
-                cursor.getString(8),
-                Integer.parseInt(cursor.getString(9)),
-                cursor.getString(10),
                 cursor.getString(11)
         );
         // return Feedback
@@ -117,10 +107,6 @@ public class FeedbackOperations {
                 feedback.setQuestionRested(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_RESTED)));
                 feedback.setQuestionMood(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_MOOD)));
                 feedback.setQuestionConcentration(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_CONCENTRATION)));
-                feedback.setMorningAlarm(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)));
-                feedback.setEveningAlarm(cursor.getString(cursor.getColumnIndex(DatabaseHelper.EVENING_ALARM)));
-                feedback.setNumberOfSnoozes(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.NUMBER_OF_SNOOZES)));
-                feedback.setLandingPage(cursor.getString(cursor.getColumnIndex(DatabaseHelper.LANDING_PAGE)));
                 feedback.setRefusalReason(cursor.getString(cursor.getColumnIndex(DatabaseHelper.REFUSAL_REASON)));
 
                 feedbacks.add(feedback);
@@ -142,10 +128,6 @@ public class FeedbackOperations {
         values.put(DatabaseHelper.QUESTION_RESTED, feedback.getQuestionRested());
         values.put(DatabaseHelper.QUESTION_MOOD, feedback.getQuestionMood());
         values.put(DatabaseHelper.QUESTION_CONCENTRATION, feedback.getQuestionConcentration());
-        values.put(DatabaseHelper.MORNING_ALARM, feedback.getMorningAlarm());
-        values.put(DatabaseHelper.EVENING_ALARM, feedback.getEveningAlarm());
-        values.put(DatabaseHelper.NUMBER_OF_SNOOZES, feedback.getNumberOfSnoozes());
-        values.put(DatabaseHelper.LANDING_PAGE, feedback.getLandingPage());
         values.put(DatabaseHelper.REFUSAL_REASON, feedback.getRefusalReason());
 
         // updating row
@@ -159,5 +141,11 @@ public class FeedbackOperations {
         database.delete(DatabaseHelper.TABLE_FEEDBACK, DatabaseHelper.FB_ID + "=" + feedback.getFbId(), null);
     }
 
+    public int counter(long userId){
+
+        Cursor cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+            return cursor.getCount();
+
+    }
 
 }

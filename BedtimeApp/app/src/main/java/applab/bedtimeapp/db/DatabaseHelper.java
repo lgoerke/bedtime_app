@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_FEEDBACK = "feedbacks";
     public static final String TABLE_SELF_EFFICACY = "efficacy";
     public static final String TABLE_REASON = "reason";
+    public static final String TABLE_ALARM = "alarm";
 
     // Column names
     public static final String FB_ID = "FB_ID";
@@ -41,10 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String QUESTION_RESTED = "QUESTION_RESTED";
     public static final String QUESTION_MOOD = "QUESTION_MOOD";
     public static final String QUESTION_CONCENTRATION = "QUESTION_CONCENTRATION";
-    public static final String MORNING_ALARM = "MORNING_ALARM";
-    public static final String EVENING_ALARM = "EVENING_ALARM";
-    public static final String NUMBER_OF_SNOOZES = "NUMBER_OF_SNOOZES";
-    public static final String LANDING_PAGE = "LANDING_PAGE";
+    //public static final String LANDING_PAGE = "LANDING_PAGE";
     public static final String REFUSAL_REASON = "REFUSAL_REASON";
 
     // self efficacy columns
@@ -64,6 +62,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String R_ID = "R_ID";
     public static final String REASON = "REASON";
 
+    // alarm columns
+    public static final String ALARM_ID = "ALARM_ID";
+    public static final String SLEEP_RATE = "SLEEP_RATE";
+    public static final String MORNING_ALARM = "MORNING_ALARM";
+    public static final String EVENING_ALARM = "EVENING_ALARM";
+    public static final String NUMBER_OF_SNOOZES = "NUMBER_OF_SNOOZES";
+
 
 
     private static final String TABLE_CREATE_FEEDBACK =
@@ -75,10 +80,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     QUESTION_RESTED + " INTEGER, " +
                     QUESTION_MOOD + " INTEGER, " +
                     QUESTION_CONCENTRATION + " INTEGER, " +
-                    MORNING_ALARM + " NUMERIC, " +
-                    EVENING_ALARM + " NUMERIC, " +
-                    NUMBER_OF_SNOOZES + " INTEGER, " +
-                    LANDING_PAGE + " TEXT, " +
                     REFUSAL_REASON + " TEXT);";
 
 
@@ -104,6 +105,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     USER_ID + " INTEGER, " +
                     REASON + " TEXT); ";
 
+    private static final String TABLE_CREATE_ALARM =
+            "CREATE TABLE " + TABLE_ALARM + " ( " +
+                    ALARM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    USER_ID + " INTEGER, " +
+                    DATE + " NUMERIC, " +
+                    SLEEP_RATE + " INTEGER, " +
+                    MORNING_ALARM + " TEXT, " +
+                    EVENING_ALARM + " TEXT, " +
+                    NUMBER_OF_SNOOZES + " INTEGER)";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         databasePath = context.getDatabasePath("Bedtime.db").getPath();
@@ -114,6 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE_FEEDBACK);
         db.execSQL(TABLE_CREATE_SELF_EFFICACY);
         db.execSQL(TABLE_CREATE_REASON);
+        db.execSQL(TABLE_CREATE_ALARM);
     }
 
     @Override
@@ -121,6 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SELF_EFFICACY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARM);
 
         onCreate(db);
     }

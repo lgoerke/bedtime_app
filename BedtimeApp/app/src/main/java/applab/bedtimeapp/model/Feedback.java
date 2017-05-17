@@ -13,10 +13,6 @@ public class Feedback {
     private int questionBusy;
     private int questionMood;
     private int questionConcentration;
-    private String morningAlarm;
-    private String eveningAlarm;
-    private int numberOfSnoozes;
-    private String landingPage;
     private String refusalReason;
 
 
@@ -69,37 +65,6 @@ public class Feedback {
         this.questionConcentration = questionConcentration;
     }
 
-    public String getEveningAlarm() {
-        return eveningAlarm;
-    }
-
-    public void setEveningAlarm(String eveningAlarm) {
-        this.eveningAlarm = eveningAlarm;
-    }
-
-    public String getMorningAlarm() {
-        return morningAlarm;
-    }
-
-    public void setMorningAlarm(String morningAlarm) {
-        this.morningAlarm = morningAlarm;
-    }
-
-    public int getNumberOfSnoozes() {
-        return numberOfSnoozes;
-    }
-
-    public void setNumberOfSnoozes(int numberOfSnoozes) {
-        this.numberOfSnoozes = numberOfSnoozes;
-    }
-
-    public String getLandingPage() {
-        return landingPage;
-    }
-
-    public void setLandingPage(String landingPage) {
-        this.landingPage = landingPage;
-    }
 
     public String getRefusalReason() {
         return refusalReason;
@@ -118,7 +83,7 @@ public class Feedback {
     }
 
 
-    public Feedback(long fbId, long userId, String date, int questionRested, int questionBusy, int questionMood, int questionConcentration, String morningAlarm, String eveningAlarm, int numberOfSnoozes, String landingPage, String refusalReason) {
+    public Feedback(long fbId, long userId, String date, int questionRested, int questionBusy, int questionMood, int questionConcentration, String refusalReason) {
         this.fbId = fbId;
         this.userId = userId;
         this.date = date;
@@ -126,10 +91,6 @@ public class Feedback {
         this.questionBusy = questionBusy;
         this.questionMood = questionMood;
         this.questionConcentration = questionConcentration;
-        this.morningAlarm = morningAlarm;
-        this.eveningAlarm = eveningAlarm;
-        this.numberOfSnoozes = numberOfSnoozes;
-        this.landingPage = landingPage;
         this.refusalReason = refusalReason;
     }
 
@@ -146,10 +107,6 @@ public class Feedback {
                 ", questionBusy=" + questionBusy +
                 ", questionMood=" + questionMood +
                 ", questionConcentration=" + questionConcentration +
-                ", morningAlarm='" + morningAlarm + '\'' +
-                ", eveningAlarm='" + eveningAlarm + '\'' +
-                ", numberOfSnoozes=" + numberOfSnoozes +
-                ", landingPage='" + landingPage + '\'' +
                 ", refusalReason='" + refusalReason + '\'' +
                 '}';
     }

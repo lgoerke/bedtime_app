@@ -16,6 +16,7 @@ import java.util.List;
 
 import applab.bedtimeapp.db.SelfEfficacyOperations;
 import applab.bedtimeapp.model.SelfEfficacy;
+import applab.bedtimeapp.utils.utils;
 
 public class SelfEfficacyActivity extends AppCompatActivity {
 
@@ -310,7 +311,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 //  Create a new boolean and preference and set it to true
                 int userID = getPrefs.getInt("userID", 0);
                 newSelfEfficacy.setUserId(userID);
-                newSelfEfficacy.setDate(Calendar.getInstance().getTime().toString());
+                newSelfEfficacy.setDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
                 newSelfEfficacy.setQ1(Integer.valueOf(((int) ratingBarQ1.getRating())));
                 newSelfEfficacy.setQ2(Integer.valueOf(((int) ratingBarQ2.getRating())));
                 newSelfEfficacy.setQ3(Integer.valueOf(((int) ratingBarQ3.getRating())));

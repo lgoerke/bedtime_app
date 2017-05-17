@@ -106,10 +106,6 @@ public class AddUpdateFeedback extends AppCompatActivity {
                     newFeedback.setQuestionBusy(Integer.parseInt(question1EditText.getText().toString()));
                     newFeedback.setQuestionRested(Integer.parseInt(question2EditText.getText().toString()));
                     newFeedback.setQuestionConcentration(Integer.parseInt(question3EditText.getText().toString()));
-                    newFeedback.setMorningAlarm(morningAlarmEditText.getText().toString());
-                    newFeedback.setEveningAlarm(eveningAlarmEditText.getText().toString());
-                    newFeedback.setNumberOfSnoozes(Integer.parseInt(numberOfSnoozesEditText.getText().toString()));
-                    newFeedback.setLandingPage(landingPageEditText.getText().toString());
                     newFeedback.setRefusalReason(refusalReasonEditText.getText().toString());
 
                     feedbackData.addFeedback(newFeedback);
@@ -124,10 +120,6 @@ public class AddUpdateFeedback extends AppCompatActivity {
                     oldFeedback.setQuestionBusy(Integer.parseInt(question1EditText.getText().toString()));
                     oldFeedback.setQuestionRested(Integer.parseInt(question2EditText.getText().toString()));
                     oldFeedback.setQuestionConcentration(Integer.parseInt(question3EditText.getText().toString()));
-                    oldFeedback.setMorningAlarm(morningAlarmEditText.getText().toString());
-                    oldFeedback.setEveningAlarm(eveningAlarmEditText.getText().toString());
-                    oldFeedback.setNumberOfSnoozes(Integer.parseInt(numberOfSnoozesEditText.getText().toString()));
-                    oldFeedback.setLandingPage(landingPageEditText.getText().toString());
                     oldFeedback.setRefusalReason(refusalReasonEditText.getText().toString());
 
                     feedbackData.updateFeedback(oldFeedback);
@@ -153,10 +145,6 @@ public class AddUpdateFeedback extends AppCompatActivity {
         question1EditText.setText(String.valueOf(oldFeedback.getQuestionBusy()));
         question2EditText.setText(String.valueOf(oldFeedback.getQuestionRested()));
         question3EditText.setText(String.valueOf(oldFeedback.getQuestionConcentration()));
-        morningAlarmEditText.setText(oldFeedback.getMorningAlarm());
-        eveningAlarmEditText.setText(oldFeedback.getEveningAlarm());
-        numberOfSnoozesEditText.setText(String.valueOf(oldFeedback.getNumberOfSnoozes()));
-        landingPageEditText.setText(oldFeedback.getLandingPage());
         refusalReasonEditText.setText(oldFeedback.getRefusalReason());
 
 
