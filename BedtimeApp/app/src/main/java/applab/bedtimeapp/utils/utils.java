@@ -102,4 +102,26 @@ public class utils {
         return format1.format(cal.getTime());
     }
 
+    public static String[] getWeekDays(){
+        Calendar cal = Calendar.getInstance();
+        int dayOfTheWeek = cal.get(Calendar.DAY_OF_WEEK);
+        if (dayOfTheWeek ==1)
+            return new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        else if (dayOfTheWeek ==2)
+            return new String[]{"Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"};
+        else if (dayOfTheWeek ==3)
+            return new String[]{"Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue"};
+        else if (dayOfTheWeek ==4)
+            return new String[]{"Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"};
+        else if (dayOfTheWeek ==5)
+            return new String[]{"Fri","Sat", "Sun", "Mon", "Tue", "Wed", "Thu"};
+        else if (dayOfTheWeek ==6)
+            return new String[]{"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
+        else if (dayOfTheWeek ==7)
+            return new String[]{"Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        else
+            return new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+
+    }
+
 }

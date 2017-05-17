@@ -45,6 +45,7 @@ import java.util.List;
 import applab.bedtimeapp.db.FeedbackOperations;
 import applab.bedtimeapp.db.ReasonOperations;
 import applab.bedtimeapp.model.Reason;
+import applab.bedtimeapp.utils.utils;
 
 public class ProgressDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -204,9 +205,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
         xAxis.setGranularity(1f);
-        final String[] weekdays = new String[]{
-                "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
-        };
+        final String[] weekdays = utils.getWeekDays();
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
