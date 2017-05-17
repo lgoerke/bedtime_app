@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.*;
-
 import com.loopj.android.http.*;
 import com.scalified.fab.ActionButton;
 
@@ -33,8 +31,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 import applab.bedtimeapp.db.FeedbackOperations;
-import applab.bedtimeapp.db.SelfEfficacyOperations;
-import applab.bedtimeapp.utils.NotificationHelper;
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,21 +62,21 @@ public class MainDrawerActivity extends AppCompatActivity
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
                 //  If the activity has never started before...
-                //if (isFirstStart) {
+                if (isFirstStart) {
 
-                //  Launch app intro
-                Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
-                startActivity(i);
+                    //  Launch app intro
+                    Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
+                    startActivity(i);
 
-                //  Make a new preferences editor
-                SharedPreferences.Editor e = getPrefs.edit();
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
 
-                //  Edit preference to make it false because we don't want this to run again
-                e.putBoolean("firstStart", false);
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
 
-                //  Apply changes
-                e.apply();
-                //}
+                    //  Apply changes
+                    e.apply();
+                }
             }
         });
 
@@ -254,6 +250,13 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("showAlert", showAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
+        } else if (id == R.id.nav_coach) {
+            finish();
+            Intent intent_alarm = new Intent(this, CoachActivity.class);
+            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
+            startActivity(intent_alarm);
         } else {
             if (id == R.id.nav) {
                 DatabaseHelper database = new DatabaseHelper(this);
@@ -261,10 +264,11 @@ public class MainDrawerActivity extends AppCompatActivity
                 try {
                     ary = database.getResults(this);
                     String str = ary.toString();
+                    String str_komma = str + ",";
 
                     StringEntity entity = null;
                     try {
-                        entity = new StringEntity(str);
+                        entity = new StringEntity(str_komma);
                         entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
                     } catch (Exception e) {
                         //Exception
