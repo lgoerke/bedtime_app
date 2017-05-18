@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import applab.bedtimeapp.model.SelfEfficacy;
+import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.utils;
 
 /**
@@ -168,7 +171,10 @@ public class SelfEfficacyOperations {
 
 
     public int counter(long userId){
-        Cursor cursor = database.query(DatabaseHelper.TABLE_SELF_EFFICACY, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
-            return cursor.getCount();
+        //Cursor cursor = database.query(DatabaseHelper.TABLE_SELF_EFFICACY, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+        // TODO not like this, maybe using SharedPreferences
+        Cursor cursor = database.rawQuery("SELECT DATE FROM efficacy WHERE USER_ID= "+String.valueOf(userId), null);
+
+        return cursor.getCount();
     }
 }

@@ -56,7 +56,7 @@ public class CoachActivity extends AppCompatActivity {
         List<Integer> concentrations = new ArrayList<Integer>();
         List<Date> datesF = new ArrayList<Date>();
 
-        List<Feedback> feedbacks = feedbackData.getAllFeedbacks();
+        List<Feedback> feedbacks = feedbackData.getAllFeedbacks(-1);
         feedbackData.close();
 
         for (int i = 0; i < feedbacks.size(); i++) {
