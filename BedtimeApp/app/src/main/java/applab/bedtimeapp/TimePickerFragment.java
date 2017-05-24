@@ -92,10 +92,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(prog);
 
-            int delayForNotification = utils.getDelay(hourOfDay,minute);
-            Log.d("Delay: ",String.valueOf(delayForNotification));
-            NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
+            //int delayForNotification = utils.getDelay(hourOfDay,minute);
+            //Log.d("Delay: ",String.valueOf(delayForNotification));
+            //NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
             //TODO is this the correct place? I think it has to go to alarm
+            // Yes I put these from here to below, to else @akif
 
             //TODO save bedtime
 
@@ -135,6 +136,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).setMorningHour(hourOfDay);
             ((AlarmDrawerActivity) getActivity()).setMorningMinute(minute);
+
+            int delayForNotification = utils.getDelay(hourOfDay,minute);
+            Log.d("Delay: ",String.valueOf(delayForNotification));
+            NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
 
 //            pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }
