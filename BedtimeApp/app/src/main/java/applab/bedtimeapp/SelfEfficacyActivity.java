@@ -303,7 +303,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SelfEfficacy newSelfEfficacy = new SelfEfficacy();
 
-                // TODO user id creation
+                // user id creation
                 //  Initialize SharedPreferences
                 SharedPreferences getPrefs = PreferenceManager
                         .getDefaultSharedPreferences(getBaseContext());
@@ -324,10 +324,10 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 newSelfEfficacy.setQ10(Integer.valueOf(((int) ratingBarQ10.getRating())));
 
                 selfEfficacyData.addSelfEfficacy(newSelfEfficacy);
-                Toast t = Toast.makeText(SelfEfficacyActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
-                t.show();
-                Intent i = new Intent(SelfEfficacyActivity.this, SelfEfficacyActivity.class);
-                startActivity(i);
+                //Toast t = Toast.makeText(SelfEfficacyActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
+                //t.show();
+                //Intent i = new Intent(SelfEfficacyActivity.this, SelfEfficacyActivity.class);
+                //startActivity(i);
 
 
                 selfEfficacies = selfEfficacyData.getAllSelfEfficacies();
@@ -337,6 +337,8 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 for(int j=0; j<selfEfficacies.size();j++ ){
                     System.err.println(selfEfficacies.get(j).toString());
                 }
+
+                goToMain(v);
 
             }
         });

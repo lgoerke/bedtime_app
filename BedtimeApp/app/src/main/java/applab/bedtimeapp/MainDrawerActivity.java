@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.*;
-
 import com.loopj.android.http.*;
 import com.scalified.fab.ActionButton;
 
@@ -27,21 +25,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import applab.bedtimeapp.db.DatabaseHelper;
+import applab.bedtimeapp.db.SelfEfficacyOperations;
 import applab.bedtimeapp.utils.RestClient;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 import applab.bedtimeapp.db.FeedbackOperations;
-import applab.bedtimeapp.db.SelfEfficacyOperations;
-import applab.bedtimeapp.utils.NotificationHelper;
 
 
 public class MainDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainDrawerActivity";
-    private boolean showAlert = true;
+    private boolean showDailyAlert = true;
+    private boolean showWeeklyAlert = true;
     private int whichLanding = 0;
     // Sheep = 1, Cat = 2
     private int whichIcon = 1;
@@ -54,7 +52,8 @@ public class MainDrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_activity_main);
-        showAlert = checkForTodaysQuestionnaire();
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
             @Override
@@ -69,18 +68,18 @@ public class MainDrawerActivity extends AppCompatActivity
                 //  If the activity has never started before...
                 if (isFirstStart) {
 
-                //  Launch app intro
-                Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
-                startActivity(i);
+                    //  Launch app intro
+                    Intent i = new Intent(MainDrawerActivity.this, TutorialIntro.class);
+                    startActivity(i);
 
-                //  Make a new preferences editor
-                SharedPreferences.Editor e = getPrefs.edit();
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
 
-                //  Edit preference to make it false because we don't want this to run again
-                e.putBoolean("firstStart", false);
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
 
-                //  Apply changes
-                e.apply();
+                    //  Apply changes
+                    e.apply();
                 }
             }
         });
@@ -89,15 +88,17 @@ public class MainDrawerActivity extends AppCompatActivity
         t.start();
 
 
-        //get showAlert bool from other Activity
+        //get showDailyAlert bool from other Activity
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
 
         if (b != null) {
             for (String key : b.keySet()) {
-                if (key.equals("showAlert")) {
-                    showAlert = (boolean) b.get(key);
-                } else if (key.equals("whichLanding")) {
+                if (key.equals("showDailyAlert")) {
+                    showDailyAlert = (boolean) b.get(key);
+                } else if (key.equals("showWeeklyAlert")) {
+                    showWeeklyAlert = (boolean) b.get(key);
+                }else if (key.equals("whichLanding")) {
                     whichLanding = (int) b.get(key);
                 } else if (key.equals("whichIcon")) {
                     whichIcon = (int) b.get(key);
@@ -125,7 +126,8 @@ public class MainDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
+            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_alarm.putExtra("whichIcon", whichIcon);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
@@ -133,7 +135,8 @@ public class MainDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("showDailyAlert", showDailyAlert);
+            intent_progress.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_progress.putExtra("whichIcon", whichIcon);
             intent_progress.putExtra("whichLanding", whichLanding);
             startActivity(intent_progress);
@@ -165,13 +168,13 @@ public class MainDrawerActivity extends AppCompatActivity
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         Log.d("btn", actionButton.toString());
-        if (showAlert) {
+        if (showDailyAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     actionButton.setVisibility(View.INVISIBLE);
-                    showAlert = false;
+                    showDailyAlert = false;
                     openQuestionnaire();
 
                 }
@@ -179,6 +182,24 @@ public class MainDrawerActivity extends AppCompatActivity
         } else {
             actionButton.setVisibility(View.INVISIBLE);
         }
+
+        final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
+        Log.d("weeklybtn", weeklyAlertButton.toString());
+        if (showWeeklyAlert) {
+            weeklyAlertButton.setVisibility(View.VISIBLE);
+            weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    weeklyAlertButton.setVisibility(View.INVISIBLE);
+                    showWeeklyAlert = false;
+                    openSelfEfficacy();
+
+                }
+            });
+        } else {
+            weeklyAlertButton.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 
@@ -197,6 +218,25 @@ public class MainDrawerActivity extends AppCompatActivity
         else
             result = true;
         fbOp.close();
+
+        return result;
+    }
+
+    private boolean checkForThisWeeksSelfEfficacy() {
+        boolean result = true;
+        SelfEfficacyOperations selfEfficacyOperations = new SelfEfficacyOperations(this);
+        selfEfficacyOperations.open();
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        if (selfEfficacyOperations.counter(userID) > 0)
+            result = false;
+        else
+            result = true;
+        selfEfficacyOperations.close();
 
         return result;
     }
@@ -221,6 +261,12 @@ public class MainDrawerActivity extends AppCompatActivity
         startActivityForResult(intent_question, REQUEST_CODE);
     }
 
+    public void openSelfEfficacy() {
+        Intent intent_self_efficacy = new Intent(this, SelfEfficacyActivity.class);
+        intent_self_efficacy.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent_self_efficacy, REQUEST_CODE);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -242,16 +288,16 @@ public class MainDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_progress = new Intent(this, ProgressDrawerActivity.class);
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_progress.putExtra("showAlert", showAlert);
+            intent_progress.putExtra("showDailyAlert", showDailyAlert);
+            intent_progress.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_progress.putExtra("whichLanding", whichLanding);
-            intent_progress.putExtra("whichIcon", whichIcon);
-            Log.e("whichIconMain", Integer.toString(whichIcon));
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
             finish();
             Intent intent_settings = new Intent(this, SettingsDrawerActivity.class);
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_settings.putExtra("showAlert", showAlert);
+            intent_settings.putExtra("showDailyAlert", showDailyAlert);
+            intent_settings.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_settings.putExtra("whichLanding", whichLanding);
             startActivity(intent_settings);
 
@@ -259,7 +305,16 @@ public class MainDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
+            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
+            startActivity(intent_alarm);
+        } else if (id == R.id.nav_coach) {
+            finish();
+            Intent intent_alarm = new Intent(this, CoachActivity.class);
+            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
+            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         } else {
@@ -269,10 +324,11 @@ public class MainDrawerActivity extends AppCompatActivity
                 try {
                     ary = database.getResults(this);
                     String str = ary.toString();
+                    String str_komma = str + ",";
 
                     StringEntity entity = null;
                     try {
-                        entity = new StringEntity(str);
+                        entity = new StringEntity(str_komma);
                         entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
                     } catch (Exception e) {
                         //Exception

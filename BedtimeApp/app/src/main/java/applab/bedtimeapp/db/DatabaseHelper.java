@@ -33,6 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SELF_EFFICACY = "efficacy";
     public static final String TABLE_REASON = "reason";
     public static final String TABLE_ALARM = "alarm";
+    public static final String TABLE_ACTION_LOG = "action_log";
 
     // Column names
     public static final String FB_ID = "FB_ID";
@@ -68,6 +69,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String MORNING_ALARM = "MORNING_ALARM";
     public static final String EVENING_ALARM = "EVENING_ALARM";
     public static final String NUMBER_OF_SNOOZES = "NUMBER_OF_SNOOZES";
+
+    // action log columns
+    public static final String ACTION_LOG_ID = "ACTION_LOG_ID";
+    public static final String CREATION_DATE_TIME = "CREATION_DATE_TIME";
+    public static final String LAST_UPDATE_DATE_TIME = "LAST_UPDATE_DATE_TIME";
+    public static final String ACTION_DATE_TIME = "ACTION_DATE_TIME";
+    public static final String ACTION_TYPE = "ACTION_TYPE";
+    public static final String ACTION_STATUS = "ACTION_STATUS";
 
 
 
@@ -115,6 +124,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     EVENING_ALARM + " TEXT, " +
                     NUMBER_OF_SNOOZES + " INTEGER)";
 
+    private static final String TABLE_CREATE_ACTION_LOG =
+            "CREATE TABLE " + TABLE_ACTION_LOG + " ( " +
+                    ACTION_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    USER_ID + " INTEGER, " +
+                    ACTION_DATE_TIME + " NUMERIC, " +
+                    CREATION_DATE_TIME + " NUMERIC, " +
+                    LAST_UPDATE_DATE_TIME + " NUMERIC, " +
+                    ACTION_TYPE + " TEXT, " +
+                    ACTION_STATUS + " TEXT)";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         databasePath = context.getDatabasePath("Bedtime.db").getPath();
@@ -126,6 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE_SELF_EFFICACY);
         db.execSQL(TABLE_CREATE_REASON);
         db.execSQL(TABLE_CREATE_ALARM);
+        db.execSQL(TABLE_CREATE_ACTION_LOG);
     }
 
     @Override
@@ -134,6 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SELF_EFFICACY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARM);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTION_LOG);
 
         onCreate(db);
     }

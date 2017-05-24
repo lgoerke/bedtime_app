@@ -18,8 +18,12 @@
             android:title="@string/menu_entry_settings" />
         <item
             android:id="@+id/nav"
+            android:icon="@mipmap/ic_trending_up_black_24dp"
+            android:title="Send to server" />
+        <item
+            android:id="@+id/nav_coach"
             android:icon="@mipmap/ic_settings_black_24dp"
-            android:title="ljkklkl" />
+            android:title="Coach" />
     </group>
 
 
