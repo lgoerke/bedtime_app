@@ -244,6 +244,8 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_progress.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_progress.putExtra("showAlert", showAlert);
             intent_progress.putExtra("whichLanding", whichLanding);
+            intent_progress.putExtra("whichIcon", whichIcon);
+            Log.e("whichIconMain", Integer.toString(whichIcon));
             startActivity(intent_progress);
         } else if (id == R.id.nav_settings) {
             finish();

@@ -105,10 +105,12 @@ public class ProgressDrawerActivity extends AppCompatActivity
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
         tv.setText("Yoo Lisa");
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
+        Log.e("whichIcon", Integer.toString(whichIcon));
         if (whichIcon == 1) {
             iv.setImageResource(R.drawable.sheep);
         } else if (whichIcon == 2 ) {
             iv.setImageResource(R.drawable.cat);
+            tv.setText("Yoo yoo");
         }
 
 
