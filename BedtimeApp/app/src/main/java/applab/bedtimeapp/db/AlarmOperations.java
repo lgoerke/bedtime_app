@@ -82,7 +82,7 @@ public class AlarmOperations {
                 cursor.getString(4),
                 cursor.getString(5),
                 Integer.parseInt(cursor.getString(6))
-                );
+        );
         // return
         return a;
     }
