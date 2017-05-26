@@ -163,6 +163,7 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO send data to database here
                 //Send data to database here
                 finish();
             }

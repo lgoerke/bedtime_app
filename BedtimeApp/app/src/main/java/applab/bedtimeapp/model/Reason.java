@@ -9,6 +9,7 @@ public class Reason {
     private long reasonId;
     private long userId;
     private String reason;
+    private int duration;
 
     public Reason(){
 
@@ -44,12 +45,22 @@ public class Reason {
         this.reason = reason;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+
     @Override
     public String toString() {
         return "Reason{" +
                 "reasonId=" + reasonId +
                 ", userId=" + userId +
                 ", reason='" + reason + '\'' +
+                ", duration='" + duration + '\'' +
                 '}';
     }
 }

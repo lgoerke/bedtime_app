@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applab.bedtimeapp.model.Alarm;
+import applab.bedtimeapp.utils.utils;
 
 /**
  * Created by berberakif on 17/04/17.
@@ -113,6 +114,14 @@ public class AlarmOperations {
         return alarms;
     }
 
+
+    public int counter(long userId){
+        // TODO write Alarm
+        //Cursor cursor = database.query(DatabaseHelper.TABLE_FEEDBACK, allColumns, DatabaseHelper.USER_ID + "=? AND substr(" +DatabaseHelper.DATE +", 10)=?", new String[]{String.valueOf(userId), utils.getCurrentTimeString("yyyy-MM-dd")}, null, null, null, null);
+        Cursor cursor = database.rawQuery("SELECT FB_ID, USER_ID, DATE, QUESTION_BUSY, QUESTION_RESTED, QUESTION_MOOD, QUESTION_CONCENTRATION, QUESTION_CONCENTRATION, REFUSAL_REASON FROM feedbacks WHERE USER_ID= "+String.valueOf(userId)+" AND DATE LIKE '"+ utils.getCurrentTimeString("yyyy-MM-dd") + "%'", null);
+        return cursor.getCount();
+
+    }
 
     // Updating alarm
     public int updateAlarm(Alarm alarm) {

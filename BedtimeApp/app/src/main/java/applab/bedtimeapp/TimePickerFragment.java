@@ -34,6 +34,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     private DatabaseHelper database;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
+    private final int DELAY_MORNING_QUESTIONNAIRE = 1;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+            //TODO check if alarmmanager also works after reboot
 
             if (hourOfDay == 0) {
                 hourOfDay = 24;
@@ -137,7 +139,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             ((AlarmDrawerActivity) getActivity()).setMorningHour(hourOfDay);
             ((AlarmDrawerActivity) getActivity()).setMorningMinute(minute);
 
-            int delayForNotification = utils.getDelay(hourOfDay,minute);
+            int delayForNotification = utils.getDelay(hourOfDay+DELAY_MORNING_QUESTIONNAIRE,minute);
             Log.d("Delay: ",String.valueOf(delayForNotification));
             NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
 

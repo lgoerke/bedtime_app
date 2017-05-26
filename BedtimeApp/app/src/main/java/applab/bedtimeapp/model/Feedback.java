@@ -14,6 +14,7 @@ public class Feedback {
     private int questionMood;
     private int questionConcentration;
     private String refusalReason;
+    //TODO change string to Reason class
 
 
     public long getFbId() {

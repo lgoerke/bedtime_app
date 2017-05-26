@@ -13,7 +13,43 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:background="@color/colorAccent"
+            android:padding="@dimen/fab_margin"
+            android:text="How much longer did you stay up?"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/darkblue" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupDuration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:background="@color/colorAccent"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="@color/darkblue"
+                android:button="@drawable/customized_radio_btn"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
 
         <TextView
             android:layout_width="match_parent"
@@ -26,11 +62,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:padding="@dimen/fab_margin"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:background="@color/colorAccent"
+            android:padding="@dimen/fab_margin"
             android:text="Why did you miss your bedtime?"
             android:textAppearance="@android:style/TextAppearance.Medium"
             android:textColor="@color/darkblue" />
@@ -40,17 +76,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
             android:background="@color/colorAccent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingRight="@dimen/fab_margin">
 
             <RadioGroup
-                android:id="@+id/radioGroup"
+                android:id="@+id/radioGroupReasons"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_marginLeft="@dimen/fab_margin"
-                android:layout_marginRight="@dimen/fab_margin">
+                android:layout_marginRight="@dimen/fab_margin"
+                android:orientation="vertical">
 
 
             </RadioGroup>
@@ -63,17 +99,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            android:background="@color/colorAccent"
-            >
-        <EditText
-            android:id="@+id/editReason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:ems="10"
-            android:background="@color/white"
-            android:inputType="textPersonName"
-            />
+            android:background="@color/colorAccent">
+
+            <EditText
+                android:id="@+id/editReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <TextView
@@ -92,16 +127,16 @@
             android:layout_marginRight="@dimen/fab_margin" />
 
         <Button
+            android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
             android:background="@drawable/btn_complete_dark"
-            android:text="Confirm"
-            android:id="@+id/confirm"
             android:enabled="true"
-            android:onClick="goToQuestionnaire"/>
+            android:onClick="goToQuestionnaire"
+            android:text="Confirm" />
 
         <TextView
             android:layout_width="match_parent"

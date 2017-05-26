@@ -58,7 +58,7 @@ public class ReasonsActivity extends AppCompatActivity {
 
         reasonData.close();
 
-        RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
+        RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroupReasons);
         rg.setOrientation(RadioGroup.VERTICAL);//or RadioGroup.VERTICAL
         for (int i = 0; i < ary.size(); i++) {
             Log.d("why", ary.get(i));
