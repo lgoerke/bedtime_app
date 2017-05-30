@@ -2,7 +2,6 @@ package applab.bedtimeapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,23 +10,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
-import applab.bedtimeapp.db.AlarmOperations;
 import applab.bedtimeapp.db.DatabaseHelper;
-import applab.bedtimeapp.db.FeedbackOperations;
-import applab.bedtimeapp.model.Alarm;
+import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Feedback;
+import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.utils;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
     public final static String EXTRA_REASON = "EXTRA_REASON";
+    public final static String EXTRA_DURATION = "EXTRA_DURATION";
     private boolean metBedtime = false;
     private DatabaseHelper database;
     private boolean rested = false;
@@ -41,7 +39,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private int starsMood = 0;
     private int starsConcentration = 0;
     private Button completeButton;
-    private Feedback newFeedback;
+    private Result newFeedback;
     List<Feedback> feedbacks;
 
     private RatingBar ratingBarRested;
@@ -50,7 +48,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private RatingBar ratingBarBusy;
     private EditText refusalReasonEditText;
     String extraReason = "";
-    private FeedbackOperations feedbackData;
+    int extraDuration = 0;
+
+    private ResultOperations feedbackData;
 
 
 
@@ -61,12 +61,10 @@ public class QuestionnaireActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        tryAlarmData();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
 
-        feedbackData = new FeedbackOperations(this);
+        feedbackData = new ResultOperations(this);
         feedbackData.open();
 
         RatingBar mBar = (RatingBar) findViewById(R.id.ratingBarRested);
@@ -125,24 +123,30 @@ public class QuestionnaireActivity extends AppCompatActivity {
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newFeedback = new Feedback();
-
-                //  Initialize SharedPreferences
-                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-                //  Create a new boolean and preference and set it to true
-                int userID = getPrefs.getInt("userID", 0);
-
-                newFeedback.setUserId(userID);
-                newFeedback.setDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
+                newFeedback = new Result();
+                newFeedback.setUpdateType('F');
+                newFeedback.setFeedbackDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
                 newFeedback.setQuestionBusy(Integer.valueOf(((int) ratingBarBusy.getRating())));
                 newFeedback.setQuestionConcentration(Integer.valueOf(((int) ratingBarConcentration.getRating())));
                 newFeedback.setQuestionRested(Integer.valueOf(((int) ratingBarRested.getRating())));
                 newFeedback.setQuestionMood(Integer.valueOf(((int) ratingBarMood.getRating())));
                 newFeedback.setRefusalReason(extraReason);
+                newFeedback.setProcrastinationDuration(extraDuration);
 
-                feedbackData.addFeedback(newFeedback);
+                // todo always day id - 1 ? questionnaires are always for the day before
+                feedbackData.updateResult(newFeedback, utils.getDayId(QuestionnaireActivity.this));
 
+                feedbackData.close();
+
+
+
+                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                int userID = getPrefs.getInt("userID", 0);
+                feedbackData.open();
+                List<Result> rL = feedbackData.getAllResults(userID);
+                for(int i = 0; i< rL.size(); i++){
+                    System.err.println(rL.get(i).toString());
+                }
                 feedbackData.close();
 
                 goToMain(v);
@@ -152,31 +156,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     }
 
-    private void tryAlarmData() {
-
-        AlarmOperations alarmData = new AlarmOperations(this);
-        alarmData.open();
-        Alarm alarm = new Alarm();
-        alarm.setDate("2017-05-17 17:41");
-        alarm.setNumberOfSnoozes(3);
-        alarm.setEveningAlarm("23:30");
-        alarm.setMorningAlarm("07:30");
-        alarm.setSleepRate(5);
-        alarm.setUserId(13);
-        alarmData.addAlarm(alarm);
-        System.err.println(alarmData.getAllAlarms(13));
-
-        alarm = new Alarm();
-        alarm.setDate("2017-05-17 17:45");
-        alarm.setNumberOfSnoozes(5);
-        alarm.setEveningAlarm("20:30");
-        alarm.setMorningAlarm("08:30");
-        alarm.setSleepRate(6);
-        alarm.setUserId(13);
-        alarmData.addAlarm(alarm);
-        System.err.println(alarmData.getAllAlarms(13));
-        alarmData.close();
-    }
 
 
     public void onBtnClicked(View view) {
@@ -222,6 +201,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             reasons = true;
             extraReason = data.getStringExtra(EXTRA_REASON);
+            extraDuration = data.getIntExtra(EXTRA_DURATION,0);
             checkComplete();
         }
     }

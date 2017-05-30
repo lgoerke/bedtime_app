@@ -25,13 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import applab.bedtimeapp.db.DatabaseHelper;
-import applab.bedtimeapp.db.SelfEfficacyOperations;
+import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.utils.RestClient;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
-import applab.bedtimeapp.db.FeedbackOperations;
 
 
 public class MainDrawerActivity extends AppCompatActivity
@@ -205,7 +204,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
     private boolean checkForTodaysQuestionnaire() {
         boolean result = true;
-        FeedbackOperations fbOp = new FeedbackOperations(this);
+        ResultOperations fbOp = new ResultOperations(this);
         fbOp.open();
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -224,7 +223,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
     private boolean checkForThisWeeksSelfEfficacy() {
         boolean result = true;
-        SelfEfficacyOperations selfEfficacyOperations = new SelfEfficacyOperations(this);
+        ResultOperations selfEfficacyOperations = new ResultOperations(this);
         selfEfficacyOperations.open();
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());

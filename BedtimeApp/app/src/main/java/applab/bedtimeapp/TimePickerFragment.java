@@ -6,7 +6,9 @@ import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +23,8 @@ import android.widget.TimePicker;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import applab.bedtimeapp.db.DatabaseHelper;
+import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.AlarmReceiver;
 import applab.bedtimeapp.utils.NotificationHelper;
 import applab.bedtimeapp.utils.utils;
@@ -62,6 +66,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     //onTimeSet() callback method
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        ResultOperations alarmData = new ResultOperations(getActivity());
         //Do something with the user chosen time
         //Get reference of host activity (XML Layout File) TextView widget
         TextView tv;
@@ -93,13 +99,17 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(prog);
 
-            //int delayForNotification = utils.getDelay(hourOfDay,minute);
-            //Log.d("Delay: ",String.valueOf(delayForNotification));
-            //NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
-            //TODO is this the correct place? I think it has to go to alarm
-            // Yes I put these from here to below, to else @akif
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar currentDateCal = Calendar.getInstance();
+            String currentDate = format1.format(currentDateCal.getTime());
 
-            //TODO save bedtime
+            Result newAlarm = new Result();
+            newAlarm.setAlarmDate(currentDate);
+            newAlarm.setUpdateType('E'); //evening alarm
+            newAlarm.setEveningAlarm(hourOfDay + ":" + minute);
+            alarmData.open();
+            alarmData.updateResult(newAlarm,utils.getDayId(getActivity()));
+            alarmData.close();
 
             ((AlarmDrawerActivity) getActivity()).setBedtimeHour(hourOfDay);
             ((AlarmDrawerActivity) getActivity()).setBedtimeMinute(minute);
@@ -134,7 +144,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(p);
 
-            //TODO save alarm time
+            // set morning alarm
+            Result newAlarm = new Result();
+            newAlarm.setUpdateType('M'); //evening alarm
+            newAlarm.setMorningAlarm(hourOfDay + ":" + minute);
+            alarmData.open();
+            alarmData.updateResult(newAlarm,utils.getDayId(getActivity()));
+            alarmData.close();
 
             ((AlarmDrawerActivity) getActivity()).setMorningHour(hourOfDay);
             ((AlarmDrawerActivity) getActivity()).setMorningMinute(minute);
@@ -143,7 +159,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             Log.d("Delay: ",String.valueOf(delayForNotification));
             NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
 
-//            pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
+//          pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }
 
     }

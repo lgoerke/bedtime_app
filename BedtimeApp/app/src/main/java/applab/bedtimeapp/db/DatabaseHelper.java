@@ -29,25 +29,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Bedtime.db";
 
     // Table name
-    public static final String TABLE_FEEDBACK = "feedbacks";
-    public static final String TABLE_SELF_EFFICACY = "efficacy";
-    public static final String TABLE_REASON = "reason";
-    public static final String TABLE_ALARM = "alarm";
-    public static final String TABLE_ACTION_LOG = "action_log";
+    public static final String TABLE_RESULT = "result";
 
     // Column names
-    public static final String FB_ID = "FB_ID";
+
+    // result columns
+    public static final String RESULT_ID = "RESULT_ID";
     public static final String USER_ID = "USER_ID";
-    public static final String DATE = "DATE";
+    public static final String DAY_ID = "DAY_ID";
+    public static final String CREATION_DATE = "CREATION_DATE";
+
+    // alarm columns
+    public static final String ALARM_DATE = "ALARM_DATE";
+    public static final String SLEEP_RATE = "SLEEP_RATE";
+    public static final String MORNING_ALARM = "MORNING_ALARM";
+    public static final String EVENING_ALARM = "EVENING_ALARM";
+    public static final String NUMBER_OF_SNOOZES = "NUMBER_OF_SNOOZES";
+
+    // feedback columns
+    public static final String FEEDBACK_DATE = "FEEDBACK_DATE";
     public static final String QUESTION_BUSY = "QUESTION_BUSY";
     public static final String QUESTION_RESTED = "QUESTION_RESTED";
     public static final String QUESTION_MOOD = "QUESTION_MOOD";
     public static final String QUESTION_CONCENTRATION = "QUESTION_CONCENTRATION";
-    //public static final String LANDING_PAGE = "LANDING_PAGE";
+
+    // reason columns
     public static final String REFUSAL_REASON = "REFUSAL_REASON";
+    public static final String PROCRASTINATION_DURATION = "PROCRASTINATION_DURATION";
 
     // self efficacy columns
-    public static final String SE_ID = "SE_ID";
+    public static final String SELF_EFFICACY_DATE = "SELF_EFFICACY_DATE";
     public static final String Q1 = "Q1";
     public static final String Q2 = "Q2";
     public static final String Q3 = "Q3";
@@ -59,44 +70,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Q9 = "Q9";
     public static final String Q10 = "Q10";
 
-    // reason columns
-    public static final String R_ID = "R_ID";
-    public static final String REASON = "REASON";
+    private static final String TABLE_CREATE_RESULT =
+            "CREATE TABLE " + TABLE_RESULT + " ( " +
 
-    // alarm columns
-    public static final String ALARM_ID = "ALARM_ID";
-    public static final String SLEEP_RATE = "SLEEP_RATE";
-    public static final String MORNING_ALARM = "MORNING_ALARM";
-    public static final String EVENING_ALARM = "EVENING_ALARM";
-    public static final String NUMBER_OF_SNOOZES = "NUMBER_OF_SNOOZES";
-
-    // action log columns
-    public static final String ACTION_LOG_ID = "ACTION_LOG_ID";
-    public static final String CREATION_DATE_TIME = "CREATION_DATE_TIME";
-    public static final String LAST_UPDATE_DATE_TIME = "LAST_UPDATE_DATE_TIME";
-    public static final String ACTION_DATE_TIME = "ACTION_DATE_TIME";
-    public static final String ACTION_TYPE = "ACTION_TYPE";
-    public static final String ACTION_STATUS = "ACTION_STATUS";
-
-
-
-    private static final String TABLE_CREATE_FEEDBACK =
-            "CREATE TABLE " + TABLE_FEEDBACK + " ( " +
-                    FB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    RESULT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     USER_ID + " INTEGER, " +
-                    DATE + " NUMERIC, " +
-                    QUESTION_BUSY + " INTEGER, " +
+                    DAY_ID + " INTEGER, " +
+                    CREATION_DATE + " NUMERIC, " +
+
+                    // ALARM COLUMNS
+                    ALARM_DATE + " NUMERIC, " +
+                    SLEEP_RATE + " INTEGER, " +
+                    MORNING_ALARM + " TEXT, " +
+                    EVENING_ALARM + " TEXT, " +
+                    NUMBER_OF_SNOOZES + " INTEGER, " +
+
+                    // FEEDBACK COLUMNS
+                    FEEDBACK_DATE + " NUMERIC, " +
                     QUESTION_RESTED + " INTEGER, " +
                     QUESTION_MOOD + " INTEGER, " +
                     QUESTION_CONCENTRATION + " INTEGER, " +
-                    REFUSAL_REASON + " TEXT);";
+                    QUESTION_BUSY + " INTEGER, " +
+                    REFUSAL_REASON + " TEXT, " +
+                    PROCRASTINATION_DURATION + " INTEGER, " +
 
-
-    private static final String TABLE_CREATE_SELF_EFFICACY =
-            "CREATE TABLE " + TABLE_SELF_EFFICACY + " ( " +
-                    SE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    USER_ID + " INTEGER, " +
-                    DATE + " NUMERIC, " +
+                    //SELF EFFICACY COLUMNS
+                    SELF_EFFICACY_DATE + " NUMERIC, " +
                     Q1 + " INTEGER, " +
                     Q2 + " INTEGER, " +
                     Q3 + " INTEGER, " +
@@ -108,31 +107,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Q9 + " INTEGER, " +
                     Q10 + " INTEGER);";
 
-    private static final String TABLE_CREATE_REASON =
-            "CREATE TABLE " + TABLE_REASON + " ( " +
-                    R_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    USER_ID + " INTEGER, " +
-                    REASON + " TEXT); ";
 
-    private static final String TABLE_CREATE_ALARM =
-            "CREATE TABLE " + TABLE_ALARM + " ( " +
-                    ALARM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    USER_ID + " INTEGER, " +
-                    DATE + " NUMERIC, " +
-                    SLEEP_RATE + " INTEGER, " +
-                    MORNING_ALARM + " TEXT, " +
-                    EVENING_ALARM + " TEXT, " +
-                    NUMBER_OF_SNOOZES + " INTEGER)";
 
-    private static final String TABLE_CREATE_ACTION_LOG =
-            "CREATE TABLE " + TABLE_ACTION_LOG + " ( " +
-                    ACTION_LOG_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    USER_ID + " INTEGER, " +
-                    ACTION_DATE_TIME + " NUMERIC, " +
-                    CREATION_DATE_TIME + " NUMERIC, " +
-                    LAST_UPDATE_DATE_TIME + " NUMERIC, " +
-                    ACTION_TYPE + " TEXT, " +
-                    ACTION_STATUS + " TEXT)";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -141,20 +117,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TABLE_CREATE_FEEDBACK);
-        db.execSQL(TABLE_CREATE_SELF_EFFICACY);
-        db.execSQL(TABLE_CREATE_REASON);
-        db.execSQL(TABLE_CREATE_ALARM);
-        db.execSQL(TABLE_CREATE_ACTION_LOG);
+        db.execSQL(TABLE_CREATE_RESULT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FEEDBACK);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SELF_EFFICACY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_REASON);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARM);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ACTION_LOG);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESULT);
 
         onCreate(db);
     }
@@ -175,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         meta_object.put("user_ID", userID);
 
         //List<String> tableList = new ArrayList<String>();
-        List<String> tableList = Arrays.asList(TABLE_FEEDBACK, TABLE_SELF_EFFICACY, TABLE_REASON);
+        List<String> tableList = Arrays.asList(TABLE_RESULT);
         for (String table: tableList) {
             JSONArray resultSet = new JSONArray();
             Log.e("table name", table);
