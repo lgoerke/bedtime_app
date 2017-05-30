@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -18,18 +19,29 @@ import java.util.List;
 
 import applab.bedtimeapp.db.ReasonOperations;
 import applab.bedtimeapp.model.Reason;
+import applab.bedtimeapp.utils.TextThumbSeekBar;
 
 public class ReasonsActivity extends AppCompatActivity {
 
 
     public final static String EXTRA_REASON = "EXTRA_REASON";
 
+    private int minutes;
     private ReasonOperations reasonData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reasons);
+
+        TextThumbSeekBar ttsb = (TextThumbSeekBar) findViewById(R.id.thumbseekbar);
+        ttsb.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                minutes  = ((TextThumbSeekBar) view).getProgress();
+                return true;
+            }
+        });
 
         EditText et = (EditText) findViewById(R.id.editReason);
         et.setHint("Type here...");
@@ -91,6 +103,7 @@ public class ReasonsActivity extends AppCompatActivity {
         EditText et = (EditText) findViewById(R.id.editReason);
         Intent output = new Intent(this, QuestionnaireActivity.class);
         output.putExtra(EXTRA_REASON, et.getText().toString());
+        //TODO save minutes
         saveReason(et.getText().toString());
         setResult(RESULT_OK, output);
         finish();
