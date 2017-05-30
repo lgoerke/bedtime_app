@@ -31,7 +31,6 @@
         android:background="@drawable/speechbubble"
         android:gravity="center"
         android:padding="@dimen/double_fab_margin"
-        android:text="Last week you did very well, keep up the good work!"
         android:textColor="@color/darkblue"
         android:textSize="20dp" />
 
