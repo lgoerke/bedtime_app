@@ -2,9 +2,6 @@ package applab.bedtimeapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -14,18 +11,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -42,8 +35,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import applab.bedtimeapp.db.FeedbackOperations;
-import applab.bedtimeapp.db.ReasonOperations;
+import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Reason;
 import applab.bedtimeapp.utils.utils;
 
@@ -61,7 +53,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
     private static int LANDING_PROGRESS = 2;
 
     private static int REQUEST_CODE = 1;
-    private ReasonOperations reasonData;
+    private ResultOperations reasonData;
 
 
     @Override
@@ -261,9 +253,9 @@ public class ProgressDrawerActivity extends AppCompatActivity
         entries.add(new Entry(6, 2));*/
 
         // get busyness data from the db
-        FeedbackOperations feedbackOperations = new FeedbackOperations(this);
+        ResultOperations feedbackOperations = new ResultOperations(this);
         feedbackOperations.open();
-        entries = feedbackOperations.getBusyness(userID);
+        entries = feedbackOperations.getBusyness(userID, utils.getDayId(this));
         feedbackOperations.close();
 
         dataSet = new LineDataSet(entries, "Busy-ness of days"); // add entries to dataset
@@ -334,16 +326,16 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
 
         List<String> ary = new ArrayList<String>();
-        reasonData = new ReasonOperations(this);
+        reasonData = new ResultOperations(this);
 
         reasonData.open();
 
-        List<Reason> rL = reasonData.getAllReasons(userID);
+        List<String> rL = reasonData.getAllReasons(userID);
         reasonData.close();
 
         for (int i = 0; i < rL.size(); i++) {
-            ary.add(rL.get(i).getReason());
-            System.err.println(rL.get(i).getReason());
+            ary.add(rL.get(i));
+            System.err.println(rL.get(i));
         }
         HashSet<String> uniques = new HashSet<>(ary);
         ary = new ArrayList<String>(uniques);

@@ -1,6 +1,5 @@
 package applab.bedtimeapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,11 +16,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
-import applab.bedtimeapp.db.AlarmOperations;
-import applab.bedtimeapp.db.FeedbackOperations;
+import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Alarm;
 import applab.bedtimeapp.model.Feedback;
 
@@ -29,8 +25,8 @@ import applab.bedtimeapp.model.Feedback;
 public class CoachActivity extends AppCompatActivity {
 
     private int height;
-    private FeedbackOperations feedbackData;
-    private AlarmOperations alarmData;
+    private ResultOperations feedbackData;
+    private ResultOperations alarmData;
     private final int DATES = 1;
     private final int RATING = 2;
 
@@ -50,7 +46,7 @@ public class CoachActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach);
 
-        feedbackData = new FeedbackOperations(this);
+        feedbackData = new ResultOperations(this);
         feedbackData.open();
 
         ArrayList<Integer> restednesses = new ArrayList<Integer>();
@@ -70,7 +66,7 @@ public class CoachActivity extends AppCompatActivity {
             concentrations.add(feedbacks.get(i).getQuestionConcentration());
         }
 
-        alarmData = new AlarmOperations(this);
+        alarmData = new ResultOperations(this);
         alarmData.open();
 
 

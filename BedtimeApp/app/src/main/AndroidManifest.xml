@@ -38,9 +38,6 @@
         <activity android:name=".TutorialIntro" />
         <activity android:name=".QuestionnaireActivity" />
         <activity android:name=".ReasonsActivity" />
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".AddUpdateFeedback" />
-        <activity android:name=".ViewAllFeedbacks" />
         <activity android:name=".SelfEfficacyActivity" />
 
         <receiver android:name=".utils.NotificationPublisher">

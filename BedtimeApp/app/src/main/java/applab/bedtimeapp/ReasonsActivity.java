@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import applab.bedtimeapp.db.ReasonOperations;
+import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Reason;
 import applab.bedtimeapp.utils.TextThumbSeekBar;
 
@@ -25,9 +26,11 @@ public class ReasonsActivity extends AppCompatActivity {
 
 
     public final static String EXTRA_REASON = "EXTRA_REASON";
+    public final static String EXTRA_DURATION = "EXTRA_DURATION";
 
     private int minutes;
     private ReasonOperations reasonData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class ReasonsActivity extends AppCompatActivity {
 
         for (int i = 0; i < rL.size(); i++) {
             ary.add(rL.get(i).getReason());
-            System.err.println(rL.get(i).getReason());
+            System.err.println(rL.get(i));
         }
         HashSet<String> uniques = new HashSet<>(ary);
         ary = new ArrayList<String>(uniques);
@@ -104,6 +107,9 @@ public class ReasonsActivity extends AppCompatActivity {
         Intent output = new Intent(this, QuestionnaireActivity.class);
         output.putExtra(EXTRA_REASON, et.getText().toString());
         //TODO save minutes
+
+        //todo put duration extra from radioGroupDuration
+        output.putExtra(EXTRA_DURATION, 0);
         saveReason(et.getText().toString());
         setResult(RESULT_OK, output);
         finish();
@@ -111,6 +117,9 @@ public class ReasonsActivity extends AppCompatActivity {
 
     private void saveReason(String text) {
         reasonData.open();
+        // convert to update result
+        // TODO: 27/05/17
+
         Reason reason = new Reason();
         // SET USER ID
         //  Initialize SharedPreferences
@@ -121,7 +130,6 @@ public class ReasonsActivity extends AppCompatActivity {
         int userID = getPrefs.getInt("userID", 0);
         reason.setUserId(userID);
         reason.setReason(text);
-        reasonData.addReason(reason);
         reasonData.close();
     }
 }

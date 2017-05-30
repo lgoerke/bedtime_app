@@ -12,9 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.model.Result;
+
 public class UserIDActivity extends AppCompatActivity {
 
     private int ID;
+    private static final int STUDY_TIME = 14;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +68,37 @@ public class UserIDActivity extends AppCompatActivity {
                 //  Edit preference to make it false because we don't want this to run again
                 e.putInt("userID", ID);
 
+                // Put start date to preferences
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar currentDateCal = Calendar.getInstance();
+                String startDate = format1.format(currentDateCal.getTime());
+                e.putString("startDate", startDate);
+
                 //  Apply changes
                 e.apply();
+
+                createFourteen(ID,startDate);
 
                 finish();
             }
         });
 
 
+
+    }
+
+    private void createFourteen(int userId,String startDate) {
+
+        ResultOperations ro = new ResultOperations(this);
+        ro.open();
+        for(int i = 1; i<= STUDY_TIME; i++){
+            Result r = new Result();
+            r.setUserId(userId);
+            r.setDayId(((long) i));
+            r.setCreationDate(startDate);
+            ro.addResult(r);
+        }
+        ro.close();
 
     }
 }

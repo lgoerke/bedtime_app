@@ -9,12 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
-import java.util.Calendar;
 import java.util.List;
 
-import applab.bedtimeapp.db.SelfEfficacyOperations;
+import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.model.SelfEfficacy;
 import applab.bedtimeapp.utils.utils;
 
@@ -39,7 +38,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                         ratingBarQ9,
                         ratingBarQ10;
 
-    private SelfEfficacyOperations selfEfficacyData;
+    private ResultOperations selfEfficacyData;
 
     List<SelfEfficacy> selfEfficacies;
 
@@ -50,7 +49,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_efficacy);
 
-        selfEfficacyData = new SelfEfficacyOperations(this);
+        selfEfficacyData = new ResultOperations(this);
         selfEfficacyData.open();
 
         RatingBar mBar = (RatingBar) findViewById(R.id.ratingBarQ1);
@@ -301,17 +300,9 @@ public class SelfEfficacyActivity extends AppCompatActivity {
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelfEfficacy newSelfEfficacy = new SelfEfficacy();
-
-                // user id creation
-                //  Initialize SharedPreferences
-                SharedPreferences getPrefs = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
-
-                //  Create a new boolean and preference and set it to true
-                int userID = getPrefs.getInt("userID", 0);
-                newSelfEfficacy.setUserId(userID);
-                newSelfEfficacy.setDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
+                Result newSelfEfficacy = new Result();
+                newSelfEfficacy.setUpdateType('S');
+                newSelfEfficacy.setSelfEfficacyDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
                 newSelfEfficacy.setQ1(Integer.valueOf(((int) ratingBarQ1.getRating())));
                 newSelfEfficacy.setQ2(Integer.valueOf(((int) ratingBarQ2.getRating())));
                 newSelfEfficacy.setQ3(Integer.valueOf(((int) ratingBarQ3.getRating())));
@@ -323,20 +314,20 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 newSelfEfficacy.setQ9(Integer.valueOf(((int) ratingBarQ9.getRating())));
                 newSelfEfficacy.setQ10(Integer.valueOf(((int) ratingBarQ10.getRating())));
 
-                selfEfficacyData.addSelfEfficacy(newSelfEfficacy);
-                //Toast t = Toast.makeText(SelfEfficacyActivity.this, "Your feedback has been added successfully !", Toast.LENGTH_LONG);
-                //t.show();
-                //Intent i = new Intent(SelfEfficacyActivity.this, SelfEfficacyActivity.class);
-                //startActivity(i);
+                selfEfficacyData.updateResult(newSelfEfficacy,utils.getDayId(SelfEfficacyActivity.this));
 
 
-                selfEfficacies = selfEfficacyData.getAllSelfEfficacies();
                 selfEfficacyData.close();
 
-                // write all
-                for(int j=0; j<selfEfficacies.size();j++ ){
-                    System.err.println(selfEfficacies.get(j).toString());
+                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                int userID = getPrefs.getInt("userID", 0);
+
+                selfEfficacyData.open();
+                List<Result> rL = selfEfficacyData.getAllResults(userID);
+                for(int i = 0; i< rL.size(); i++){
+                    System.err.println(rL.get(i).toString());
                 }
+                selfEfficacyData.close();
 
                 goToMain(v);
 

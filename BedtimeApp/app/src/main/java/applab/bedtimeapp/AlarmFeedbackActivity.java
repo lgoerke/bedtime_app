@@ -23,7 +23,10 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.AlarmReceiver;
+import applab.bedtimeapp.utils.utils;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -112,7 +115,6 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_alarm_feedback);
 
-
         //get showAlert bool from other Activity
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
@@ -163,8 +165,17 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO send data to database here
-                //Send data to database here
+
+                ResultOperations alarmData = new ResultOperations(getApplicationContext());
+
+                // TODO SLEEP RATE, #OF SNOOZES
+                Result newAlarm = new Result();
+                newAlarm.setUpdateType('A');
+                newAlarm.setSleepRate(5);
+                newAlarm.setNumberOfSnoozes(5);
+                alarmData.open();
+                alarmData.updateResult(newAlarm, utils.getDayId(getApplicationContext()));
+                alarmData.close();                //Send data to database here
                 finish();
             }
         });
