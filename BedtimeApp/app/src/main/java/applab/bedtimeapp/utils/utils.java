@@ -1,9 +1,15 @@
 package applab.bedtimeapp.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.abs;
 
@@ -124,4 +130,29 @@ public class utils {
 
     }
 
+    public static long getDayId(Context context) {
+
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar currentDateCal = Calendar.getInstance();
+
+        String currentDate = format1.format(currentDateCal.getTime());
+
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String startDate = getPrefs.getString("startDate", currentDate);
+
+
+        Date date1 = null;
+        Date date2 = null;
+        try {
+            date1 = format1.parse(startDate);
+            date2 = format1.parse(currentDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long diff = date2.getTime() - date1.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
+
+    }
 }

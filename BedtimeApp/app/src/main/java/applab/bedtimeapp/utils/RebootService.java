@@ -27,6 +27,7 @@ public class RebootService extends IntentService {
 
     public void createNotifications() {
 
+        // TODO:  control all notifications - alarms
         int hourOfDay = 01;
         int minute = 10;
 
