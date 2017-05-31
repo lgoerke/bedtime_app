@@ -300,14 +300,13 @@ public class ResultOperations {
     public List<String> getAllReasons(int userID) {
 
         List reasons = new ArrayList();
-        Cursor cursor = database.rawQuery("SELECT REFUSAL_REASON FROM result WHERE USER_ID= "+String.valueOf(userID), null);
+        Cursor cursor = database.rawQuery("SELECT REFUSAL_REASON FROM result WHERE REFUSAL_REASON <> '' and USER_ID= "+String.valueOf(userID), null);
         String reason = "";
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
             reason =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.REFUSAL_REASON));
+            reasons.add(reason);
         }
-
-        reasons.add(reason);
 
         return reasons;
     }
