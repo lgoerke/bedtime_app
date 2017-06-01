@@ -157,7 +157,6 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 starsMorning = Math.round(v);
 
-                //TODO put starsMorning in sleepRate
 //                Log.d("bar", Float.toString(Math.round(v)));
 //                Toast.makeText(AlarmFeedbackActivity.this,"I feel " + Integer.toString(starsMorning),Toast.LENGTH_SHORT);
                 btn.setEnabled(true);
@@ -175,11 +174,11 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
 
                 //  Create a new boolean and preference and set it to true
                 int userID = getPrefs.getInt("userID", 0);
-                // TODO SLEEP RATE, #OF SNOOZES
+
                 Result newAlarm = new Result();
                 newAlarm.setUpdateType('A');
-                newAlarm.setSleepRate(5);
-                newAlarm.setNumberOfSnoozes(5);
+                newAlarm.setSleepRate(starsMorning);
+                newAlarm.setNumberOfSnoozes(starsMorning);
                 alarmData.open();
                 alarmData.updateResult(newAlarm, alarmData.getSleepRateDayId(userID));
                 alarmData.close();                //Send data to database here

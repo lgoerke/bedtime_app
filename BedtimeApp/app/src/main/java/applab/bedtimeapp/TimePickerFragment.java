@@ -26,6 +26,7 @@ import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.AlarmReceiver;
+import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.NotificationHelper;
 import applab.bedtimeapp.utils.utils;
 
@@ -38,7 +39,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     private DatabaseHelper database;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
-    private final int DELAY_MORNING_QUESTIONNAIRE = 1;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -106,7 +106,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             Result newAlarm = new Result();
             newAlarm.setAlarmDate(currentDate);
             newAlarm.setUpdateType('E'); //evening alarm
-            newAlarm.setEveningAlarm(hourOfDay + ":" + minute);
+            newAlarm.setEveningAlarm(String.format("%02d", Integer.valueOf(hourOfDay).intValue()) +
+                    ":" + String.format("%02d", Integer.valueOf(minute).intValue()));
             alarmData.open();
             alarmData.updateResult(newAlarm,utils.getDayId(getActivity()));
             alarmData.close();
@@ -148,7 +149,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             // set morning alarm
             Result newAlarm = new Result();
             newAlarm.setUpdateType('M'); //evening alarm
-            newAlarm.setMorningAlarm(hourOfDay + ":" + minute);
+
+
+            // todo check whether similar 9 to 09 conversion is needed
+            newAlarm.setMorningAlarm(String.format("%02d", Integer.valueOf(hourOfDay).intValue()) +
+                    ":" + String.format("%02d", Integer.valueOf(minute).intValue()));
             alarmData.open();
             alarmData.updateResult(newAlarm,utils.getDayId(getActivity()));
             alarmData.close();
@@ -156,7 +161,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             ((AlarmDrawerActivity) getActivity()).setMorningHour(hourOfDay);
             ((AlarmDrawerActivity) getActivity()).setMorningMinute(minute);
 
-            int delayForNotification = utils.getDelay(hourOfDay+DELAY_MORNING_QUESTIONNAIRE,minute);
+            int delayForNotification = utils.getDelay(hourOfDay+ Constants.DELAY_MORNING_QUESTIONNAIRE,minute);
             Log.d("Delay: ",String.valueOf(delayForNotification));
             NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"Please fill in the Questionnaire", QuestionnaireActivity.class), delayForNotification);
 

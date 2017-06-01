@@ -27,8 +27,7 @@ public class Result {
     private int questionConcentration;
     // reason
     private String refusalReason;
-    private int procrastinationDuration; // todo name
-    //TODO are we saving this for th previous day?
+    private int procrastinationDuration;
 
     // self_efficacy
     private String selfEfficacyDate; // can be used as a status flag

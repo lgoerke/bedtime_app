@@ -11,5 +11,7 @@ public final class Constants {
     public static final int MINUTES_IN_AN_HOUR = 60;
     public static final int SECONDS_IN_A_MINUTE = 60;
     public static final int MILLISECONDS_IN_A_SECOND = 1000;
+    public static final int DELAY_MORNING_QUESTIONNAIRE = 1;
+
 
 }

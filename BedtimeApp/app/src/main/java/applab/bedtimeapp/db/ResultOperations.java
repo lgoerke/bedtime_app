@@ -363,7 +363,15 @@ public class ResultOperations {
         result[0] = -1;
         result[1] = -1;
 
-        // TimePickerFragment.DELAY_MORNING_QUESTIONNAIRE
+        Cursor cursor = database.rawQuery("SELECT MORNING_ALARM FROM result WHERE FEEDBACK_DATE LIKE '"+utils.getCurrentTimeString("yyyy-MM-dd") + "%' and USER_ID= " +String.valueOf(userID), null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            result[0] =  /*Constants.DELAY_MORNING_QUESTIONNAIRE +*/ Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(0,2));
+            result[1] =  Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(3,5));
+        }
+
+        // Constants.DELAY_MORNING_QUESTIONNAIRE
         return result;
     }
 
