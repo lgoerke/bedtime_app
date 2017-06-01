@@ -121,6 +121,12 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
+
+            Calendar now = Calendar.getInstance();
+            if (calendar.before(now)){
+                calendar.add(Calendar.DATE, 1);
+            }
+
             Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
 
             pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);

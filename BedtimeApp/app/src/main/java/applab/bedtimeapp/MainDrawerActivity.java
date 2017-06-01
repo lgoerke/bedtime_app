@@ -29,6 +29,7 @@ import java.util.List;
 import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Result;
+import applab.bedtimeapp.model.SelfEfficacy;
 import applab.bedtimeapp.utils.RestClient;
 import applab.bedtimeapp.utils.utils;
 import cz.msebera.android.httpclient.Header;
@@ -328,50 +329,12 @@ public class MainDrawerActivity extends AppCompatActivity
             startActivity(intent_alarm);
         } else if (id == R.id.nav_coach) {
             finish();
-            Intent intent_alarm = new Intent(this, CoachActivity.class);
+            Intent intent_alarm = new Intent(this, SelfEfficacyActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_alarm.putExtra("showDailyAlert", showDailyAlert);
             intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
-        } else {
-            if (id == R.id.nav) {
-                DatabaseHelper database = new DatabaseHelper(this);
-                JSONObject ary = null;
-                try {
-                    ary = database.getResults(this);
-                    String str = ary.toString();
-                    String str_komma = str + ",";
-
-                    StringEntity entity = null;
-                    try {
-                        entity = new StringEntity(str_komma);
-                        entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-                    } catch (Exception e) {
-                        //Exception
-                    }
-
-                    RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            // If the response is JSONObject instead of expected JSONArray
-                            Log.d("Response", response.toString());
-                        }
-
-                        // When the response returned by REST has Http response code other than '200'
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            Log.d("Response", errorResponse.toString());
-                        }
-                    });
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(this, ary.toString(), Toast.LENGTH_LONG).show();
-                Log.e("ff", ary.toString());
-            }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

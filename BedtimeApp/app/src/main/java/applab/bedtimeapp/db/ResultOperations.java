@@ -272,7 +272,7 @@ public class ResultOperations {
 
     }
 
-    public ArrayList <Entry> getBusyness(long userId, long currentDay){
+    public ArrayList <Entry> getField(long userId, long currentDay, String field){
 
         int value;
 
@@ -281,14 +281,36 @@ public class ResultOperations {
         for (int i = 0; i< Constants.DAYS_IN_A_WEEK; i++)
         {
             long day = currentDay - i;
-            Cursor cursor = database.rawQuery("SELECT QUESTION_BUSY FROM result WHERE USER_ID= "+String.valueOf(userId)+" AND DAY_ID = " + String.valueOf(day), null);
+            Cursor cursor = database.rawQuery("SELECT "+ field + " FROM result WHERE USER_ID= "+String.valueOf(userId)+" AND DAY_ID = " + String.valueOf(day), null);
             value = 0;
             if (cursor.getCount() > 0) {
                 cursor.moveToNext();
-                value =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.QUESTION_BUSY));
+                value =  cursor.getInt(cursor.getColumnIndex(field));
             }
 
             entries.add(new Entry(i,value ));
+        }
+
+        return entries;
+
+    }
+
+    public ArrayList <String> getFieldString(long userId, long currentDay, String field){
+
+        String value;
+
+        ArrayList<String> entries = new ArrayList<>();
+
+        for (int i = 0; i< Constants.DAYS_IN_A_WEEK; i++)
+        {
+            long day = currentDay - i;
+            Cursor cursor = database.rawQuery("SELECT "+ field + " FROM result WHERE USER_ID= "+String.valueOf(userId)+" AND DAY_ID = " + String.valueOf(day), null);
+            value = "";
+            if (cursor.getCount() > 0) {
+                cursor.moveToNext();
+                value =  cursor.getString(cursor.getColumnIndex(field));
+            }
+            entries.add(value);
         }
 
         return entries;

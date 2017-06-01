@@ -129,160 +129,6 @@ public class SelfEfficacyActivity extends AppCompatActivity {
             }
         });
 
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ8);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[7] = true;
-                answers[7] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ9);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[8] = true;
-                answers[8] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ10);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[9] = true;
-                answers[9] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-        /*
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ11);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[10] = true;
-                answers[10] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ12);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[11] = true;
-                answers[11] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ13);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[12] = true;
-                answers[12] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ14);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[13] = true;
-                answers[13] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ15);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[14] = true;
-                answers[14] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ16);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[15] = true;
-                answers[15] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ17);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[16] = true;
-                answers[16] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ18);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[17] = true;
-                answers[17] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ19);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[18] = true;
-                answers[18] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ20);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[19] = true;
-                answers[19] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });
-
-        mBar = (RatingBar) findViewById(R.id.ratingBarQ21);
-        mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                replied[20] = true;
-                answers[20] = Math.round(v);
-                Log.d("bar", Float.toString(Math.round(v)));
-                checkComplete();
-            }
-        });*/
-
-
         completeButton = (Button) findViewById(R.id.completeSelfEfficacy);
 
         ratingBarQ1 = (RatingBar) findViewById(R.id.ratingBarQ1);
@@ -292,9 +138,6 @@ public class SelfEfficacyActivity extends AppCompatActivity {
         ratingBarQ5 = (RatingBar) findViewById(R.id.ratingBarQ5);
         ratingBarQ6 = (RatingBar) findViewById(R.id.ratingBarQ6);
         ratingBarQ7 = (RatingBar) findViewById(R.id.ratingBarQ7);
-        ratingBarQ8 = (RatingBar) findViewById(R.id.ratingBarQ8);
-        ratingBarQ9 = (RatingBar) findViewById(R.id.ratingBarQ9);
-        ratingBarQ10 = (RatingBar) findViewById(R.id.ratingBarQ10);
 
 
         completeButton.setOnClickListener(new View.OnClickListener() {
@@ -310,9 +153,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
                 newSelfEfficacy.setQ5(Integer.valueOf(((int) ratingBarQ5.getRating())));
                 newSelfEfficacy.setQ6(Integer.valueOf(((int) ratingBarQ6.getRating())));
                 newSelfEfficacy.setQ7(Integer.valueOf(((int) ratingBarQ7.getRating())));
-                newSelfEfficacy.setQ8(Integer.valueOf(((int) ratingBarQ8.getRating())));
-                newSelfEfficacy.setQ9(Integer.valueOf(((int) ratingBarQ9.getRating())));
-                newSelfEfficacy.setQ10(Integer.valueOf(((int) ratingBarQ10.getRating())));
+
 
                 selfEfficacyData.updateResult(newSelfEfficacy,utils.getDayId(SelfEfficacyActivity.this));
 
