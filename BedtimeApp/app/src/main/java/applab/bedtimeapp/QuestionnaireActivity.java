@@ -12,6 +12,11 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.ToggleButton;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +25,12 @@ import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Feedback;
 import applab.bedtimeapp.model.Result;
+import applab.bedtimeapp.utils.RestClient;
 import applab.bedtimeapp.utils.utils;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
@@ -146,6 +156,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 }
                 feedbackData.close();
 
+                sendData();
+
                 goToMain(v);
 
             }
@@ -153,6 +165,42 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     }
 
+    public void sendData(){
+        DatabaseHelper database = new DatabaseHelper(this);
+        JSONObject ary = null;
+        try {
+            ary = database.getResults(this);
+            String str = ary.toString();
+            String str_komma = str + ",";
+
+            StringEntity entity = null;
+            try {
+                entity = new StringEntity(str_komma);
+                entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            } catch (Exception e) {
+                //Exception
+            }
+
+            RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // If the response is JSONObject instead of expected JSONArray
+                    Log.d("Response", response.toString());
+                }
+
+                // When the response returned by REST has Http response code other than '200'
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.d("Response", errorResponse.toString());
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     public void onBtnClicked(View view) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,9 +33,17 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Stack;
+import java.util.concurrent.TimeUnit;
 
+import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Reason;
 import applab.bedtimeapp.utils.utils;
@@ -77,8 +86,9 @@ public class ProgressDrawerActivity extends AppCompatActivity
                 } else if (key.equals("showWeeklyAlert")) {
                     showWeeklyAlert = (boolean) b.get(key);
                 }  else if (key.equals("whichLanding")){
+
                     whichLanding = (int) b.get(key);
-                } else if (key.equals("whichIcon")){
+                } else if (key.equals("whichIcon")) {
                     whichIcon = (int) b.get(key);
                 } else {
                     Object value = b.get(key);
@@ -108,7 +118,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
         if (whichIcon == 1) {
             iv.setImageResource(R.drawable.sheep);
-        } else if (whichIcon == 2 ) {
+        } else if (whichIcon == 2) {
             iv.setImageResource(R.drawable.cat);
         }
 
@@ -125,42 +135,52 @@ public class ProgressDrawerActivity extends AppCompatActivity
         LineChart chart = (LineChart) findViewById(R.id.sleep_quality_duration);
         /* END Create chart */
 
-        /* Example sleep quality data */
-        List<Entry> entries = new ArrayList<Entry>();
-
-        entries.add(new Entry(0, 1));
-        entries.add(new Entry(1, 0));
-        entries.add(new Entry(2, 2));
-        entries.add(new Entry(3, 1));
-        entries.add(new Entry(4, 3));
-        entries.add(new Entry(5, 4));
-        entries.add(new Entry(6, 2));
-
-        LineDataSet dataSet = new LineDataSet(entries, "Goodness of sleep"); // add entries to dataset
-
-        dataSet = putStyleDataSet(dataSet,getResources().getColor(R.color.gold));
-        /* END Example sleep quality */
-
         /* Add to data set */
-        List<ILineDataSet> lineData = new ArrayList<ILineDataSet>();
-        lineData.add(dataSet);
+        ArrayList lineData = new ArrayList<ILineDataSet>();
         /* END add data set */
 
+        // get mood data from the db
+        ResultOperations feedbackOperations = new ResultOperations(this);
+        feedbackOperations.open();
+        List entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_MOOD);
+        entries = reverse(entries);
+
+        LineDataSet dataSet = new LineDataSet(entries, "Mood"); // add entries to dataset
+
+        putStyleDataSet(dataSet, getResources().getColor(R.color.foregroundMountain));
+        /* END Example mood */
+        lineData.add(dataSet);
+
+        /* START example concentraition */
+        entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_CONCENTRATION);
+        entries = reverse(entries);
+        dataSet = new LineDataSet(entries, "Concentration"); // add entries to dataset
+
+        putStyleDataSet(dataSet, getResources().getColor(R.color.backgroundMountain));
+        /* END example concentration */
+        lineData.add(dataSet);
+
+
         /* Example duration data */
-        entries = new ArrayList<Entry>();
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 3.5f));
+//        entries.add(new Entry(1, 3.0f));
+//        entries.add(new Entry(2, 2.5f));
+//        entries.add(new Entry(3, 3.0f));
+//        entries.add(new Entry(4, 2.5f));
+//        entries.add(new Entry(5, 3.5f));
+//        entries.add(new Entry(6, 3.0f));
 
-        entries.add(new Entry(0, 3.5f));
-        entries.add(new Entry(1, 3.0f));
-        entries.add(new Entry(2, 2.5f));
-        entries.add(new Entry(3, 3.0f));
-        entries.add(new Entry(4, 2.5f));
-        entries.add(new Entry(5, 3.5f));
-        entries.add(new Entry(6, 3.0f));
+        entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.PROCRASTINATION_DURATION);
+        entries = reverse(entries);
+        Log.e("proc b", entries.toString());
+        entries = changeRange(entries, 120, 4);
+        Log.e("proc a", entries.toString());
+        dataSet = new LineDataSet(entries, "Procrastination duration"); // add entries to dataset
 
-        dataSet = new LineDataSet(entries, "Sleep duration"); // add entries to dataset
-
-        dataSet = putStyleDataSet(dataSet,getResources().getColor(R.color.alert));
-        /* END Example duration */
+        dataSet = putStyleDataSet(dataSet, getResources().getColor(R.color.alert));
+        /* END Example procrastionation duration */
 
         /* Add to data set and put in graph */
         lineData.add(dataSet);
@@ -193,7 +213,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* 4 = 10h sleep, 3 = 8h sleep, ...*/
         YAxis yAxisRight = chart.getAxisRight();
         yAxisRight.setAxisMinimum(0f);
-        yAxisRight.setAxisMaximum(9f);
+        yAxisRight.setAxisMaximum(120f);
         /* END Put busy-ness */
 
         /* Put weekdays on X Axis of Graph */
@@ -224,47 +244,74 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* END Create chart */
 
         /* Example sleep quality data */
-        entries = new ArrayList<Entry>();
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 1));
+//        entries.add(new Entry(1, 0));
+//        entries.add(new Entry(2, 2));
+//        entries.add(new Entry(3, 1));
+//        entries.add(new Entry(4, 3));
+//        entries.add(new Entry(5, 4));
+//        entries.add(new Entry(6, 2));
 
-        entries.add(new Entry(0, 1));
-        entries.add(new Entry(1, 0));
-        entries.add(new Entry(2, 2));
-        entries.add(new Entry(3, 1));
-        entries.add(new Entry(4, 3));
-        entries.add(new Entry(5, 4));
-        entries.add(new Entry(6, 2));
-
-        dataSet = new LineDataSet(entries, "Goodness of sleep"); // add entries to dataset
-
-        putStyleDataSet(dataSet,getResources().getColor(R.color.gold));
-        /* END Example sleep quality */
-
-        /* Add to data set */
+          /* Add to data set */
         lineData = new ArrayList<ILineDataSet>();
-        lineData.add(dataSet);
         /* END add data set */
 
+        // get mood data from the db
+        entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_RESTED);
+        entries = reverse(entries);
+        // Collections.reverse(entries);
+
+        dataSet = new LineDataSet(entries, "Restedness"); // add entries to dataset
+
+        putStyleDataSet(dataSet, getResources().getColor(R.color.foregroundMountain));
+        /* END Example mood */
+        lineData.add(dataSet);
+
+        /* START example quality */
+        entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.SLEEP_RATE);
+        entries = reverse(entries);
+        dataSet = new LineDataSet(entries, "Sleep quality"); // add entries to dataset
+
+        putStyleDataSet(dataSet, getResources().getColor(R.color.colorPrimaryDark));
+        /* END example quality */
+        lineData.add(dataSet);
+
+
         /* Example busy-ness data */
-       /* entries = new ArrayList<Entry>();
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, (7.5f/10f)*4f));
+//        entries.add(new Entry(1, (7f/10f)*4f));
+//        entries.add(new Entry(2, (8f/10f)*4f));
+//        entries.add(new Entry(3, (6f/10f)*4f));
+//        entries.add(new Entry(4, (6f/10f)*4f));
+//        entries.add(new Entry(5, (8.5f/10f)*4f));
+//        entries.add(new Entry(6, (7f/10f)*4f));
+//
+//        Log.d("duration", entries.toString());
+        //here
 
-        entries.add(new Entry(0, 0));
-        entries.add(new Entry(1, 2));
-        entries.add(new Entry(2, 1));
-        entries.add(new Entry(3, 0));
-        entries.add(new Entry(4, 1));
-        entries.add(new Entry(5, 2));
-        entries.add(new Entry(6, 2));*/
+        List alarmentries = feedbackOperations.getFieldString(userID, utils.getDayId(this), DatabaseHelper.MORNING_ALARM);
+        List bedtimeentries = feedbackOperations.getFieldString(userID, utils.getDayId(this), DatabaseHelper.EVENING_ALARM);
+        List<Entry> procentries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.PROCRASTINATION_DURATION);
 
-        // get busyness data from the db
-        ResultOperations feedbackOperations = new ResultOperations(this);
-        feedbackOperations.open();
-        entries = feedbackOperations.getBusyness(userID, utils.getDayId(this));
+        Log.d("alarm", alarmentries.toString());
+        Log.d("bed", bedtimeentries.toString());
+        Log.d("proc", procentries.toString());
+
+        // entries = reverse(entries);
+        // bedtimeentries = reverse(bedtimeentries);
+        //  procentries = reverse(procentries);
+        entries = getSleepDuration(alarmentries, bedtimeentries, procentries);
+        entries = reverse(entries);
+        dataSet = new LineDataSet(entries, "Sleep duration"); // add entries to dataset
+
+        putStyleDataSet(dataSet, getResources().getColor(R.color.alert));
+        /* END Example sleep duration*/
+
         feedbackOperations.close();
-
-        dataSet = new LineDataSet(entries, "Busy-ness of days"); // add entries to dataset
-
-        putStyleDataSet(dataSet,getResources().getColor(R.color.alert));
-        /* END Example busy-ness */
 
         /* Add to data set and put in graph */
         lineData.add(dataSet);
@@ -290,21 +337,11 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* END Put sleep quality */
 
 
-        /* Put busy-ness on right Y Axis */
-        final String[] busyNess = new String[]{
-                "Very busy", "Busy", "Normal", "Relaxed", "Very relaxed"
-        };
-
+       /* Put busy-ness on right Y Axis */
+        /* 4 = 10h sleep, 3 = 8h sleep, ...*/
         yAxisRight = chart.getAxisRight();
         yAxisRight.setAxisMinimum(0f);
-        yAxisRight.setAxisMaximum(4f);
-        yAxisRight.setGranularity(1f);
-        yAxisRight.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return busyNess[(int) value % busyNess.length];
-            }
-        });
+        yAxisRight.setAxisMaximum(10f);
         /* END Put busy-ness */
 
         /* Put weekdays on X Axis of Graph */
@@ -351,7 +388,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 R.layout.reason_item,
-                ary );
+                ary);
 
         lv.setAdapter(arrayAdapter);
 
@@ -393,7 +430,71 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
     }
 
-    private void putStyleChart(LineChart chart){
+    private List<Entry> getSleepDuration(List alarmentries, List bedtimeentries, List procentries) {
+        List<Entry> result = new ArrayList<>();
+        for (int i = 0; i < alarmentries.size(); i++) {
+            Log.e("a",alarmentries.get(i).toString());
+            Log.e("b",bedtimeentries.get(i).toString());
+            if (alarmentries.get(i) != null && !(((String) alarmentries.get(i)).isEmpty())) {
+                int hm = Integer.parseInt(((String) alarmentries.get(i)).substring(0, 2));
+                int mm = Integer.parseInt(((String) alarmentries.get(i)).substring(3, 5));
+
+                if (bedtimeentries.get(i) != null && !(((String) bedtimeentries.get(i)).isEmpty())) {
+                    int hb = Integer.parseInt(((String) bedtimeentries.get(i)).substring(0, 2));
+                    int mb = Integer.parseInt(((String) bedtimeentries.get(i)).substring(3, 5));
+                    float proc = ((Entry) procentries.get(i)).getY();
+
+                    Calendar bed = Calendar.getInstance();
+                    bed.set(Calendar.HOUR_OF_DAY, hb);
+                    bed.set(Calendar.MINUTE, mb);
+
+                    if (hb < 5) {
+                        bed.add(Calendar.DATE, 1);
+                    }
+
+                    Calendar alarm = Calendar.getInstance();
+                    alarm.set(Calendar.HOUR_OF_DAY, hm);
+                    alarm.set(Calendar.MINUTE, mm);
+                    alarm.add(Calendar.DATE, 1);
+
+                    long diff = TimeUnit.MILLISECONDS.toMinutes(
+                            Math.abs(alarm.getTimeInMillis() - bed.getTimeInMillis()));
+
+                    float d = TimeUnit.MINUTES.toHours(diff - (long) proc);
+                    result.add(new Entry(i, d));
+                } else{
+                    result.add(new Entry(i,0));
+                }
+            } else {
+                result.add(new Entry(i,0));
+            }
+        }
+        return result;
+    }
+
+
+    private List changeRange(List entries, float rangeBefore, float rangeAfter) {
+        List result = new ArrayList();
+        for (int i = 0; i < entries.size(); i++) {
+            float newY = ((((Entry) entries.get(i)).getY()) / rangeBefore) * rangeAfter;
+            result.add(new Entry(i, newY));
+        }
+        return result;
+    }
+
+    private List<Entry> reverse(List<Entry> entries) {
+        Stack tmp = new Stack();
+        for (int i = 0; i < entries.size(); i++) {
+            tmp.add(entries.get(i));
+        }
+        List<Entry> result = new ArrayList<>();
+        for (int i = 0; i < entries.size(); i++) {
+            result.add(new Entry(i, ((Entry) tmp.pop()).getY()));
+        }
+        return result;
+    }
+
+    private void putStyleChart(LineChart chart) {
         chart.setDrawBorders(true);
         chart.setDrawGridBackground(true);
         chart.getXAxis().setTextColor(getResources().getColor(R.color.darkblue));
@@ -403,7 +504,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         chart.invalidate(); // refresh
     }
 
-    private LineDataSet putStyleDataSet(LineDataSet dataSet, int color){
+    private LineDataSet putStyleDataSet(LineDataSet dataSet, int color) {
         dataSet.setColor(color);
         dataSet.setLineWidth(2.5f);
         dataSet.setCircleColor(color);
@@ -426,11 +527,10 @@ public class ProgressDrawerActivity extends AppCompatActivity
     }
 
 
-
-    public void openQuestionnaire(){
+    public void openQuestionnaire() {
         Intent intent_question = new Intent(this, QuestionnaireActivity.class);
         intent_question.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivityForResult(intent_question,REQUEST_CODE);
+        startActivityForResult(intent_question, REQUEST_CODE);
     }
 
 
