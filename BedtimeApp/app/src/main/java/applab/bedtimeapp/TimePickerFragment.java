@@ -124,7 +124,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-            //TODO check if alarmmanager also works after reboot
 
             if (hourOfDay == 0) {
                 hourOfDay = 24;
@@ -157,7 +156,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             int delayForNotification = utils.getDelay(hourOfDay+DELAY_MORNING_QUESTIONNAIRE,minute);
             Log.d("Delay: ",String.valueOf(delayForNotification));
-            NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"From Time Picker", QuestionnaireActivity.class), delayForNotification);
+            NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"Please fill in the Questionnaire", QuestionnaireActivity.class), delayForNotification);
 
 //          pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }

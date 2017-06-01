@@ -24,9 +24,13 @@ import com.scalified.fab.ActionButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.RestClient;
+import applab.bedtimeapp.utils.utils;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
@@ -50,6 +54,7 @@ public class MainDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.drawer_activity_main);
         showDailyAlert = checkForTodaysQuestionnaire();
         showWeeklyAlert = checkForThisWeeksSelfEfficacy();
@@ -120,6 +125,19 @@ public class MainDrawerActivity extends AppCompatActivity
 
         whichLanding = savedLanding;
         whichIcon = savedIcon;
+
+
+        ResultOperations feedbackData = new ResultOperations(this);
+        feedbackData.open();
+        int userID = getPrefs.getInt("userID", 0);
+
+
+        feedbackData.open();
+        List<Result> rL = feedbackData.getAllResults(userID);
+        for(int i = 0; i< rL.size(); i++){
+            System.err.println(rL.get(i).toString());
+        }
+        feedbackData.close();
 
         if (whichLanding == LANDING_ALARM) {
             finish();
@@ -203,7 +221,7 @@ public class MainDrawerActivity extends AppCompatActivity
     }
 
     private boolean checkForTodaysQuestionnaire() {
-        boolean result = true;
+        boolean result;
         ResultOperations fbOp = new ResultOperations(this);
         fbOp.open();
         //  Initialize SharedPreferences
@@ -212,29 +230,29 @@ public class MainDrawerActivity extends AppCompatActivity
         //  Create a new boolean and preference and set it to true
         int userID = getPrefs.getInt("userID", 0);
 
-        if (fbOp.counter(userID) > 0)
-            result = false;
-        else
-            result = true;
+        result = !fbOp.isFeedbackGivenToday(userID) ;
+
         fbOp.close();
 
         return result;
     }
 
     private boolean checkForThisWeeksSelfEfficacy() {
-        boolean result = true;
+
+        if(utils.getDayId(this) < 8)
+            return false;
+
+        boolean result;
         ResultOperations selfEfficacyOperations = new ResultOperations(this);
         selfEfficacyOperations.open();
         //  Initialize SharedPreferences
+
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         //  Create a new boolean and preference and set it to true
         int userID = getPrefs.getInt("userID", 0);
 
-        if (selfEfficacyOperations.counter(userID) > 0)
-            result = false;
-        else
-            result = true;
+        result = !selfEfficacyOperations.isQuestionairreFilled(userID) ;
         selfEfficacyOperations.close();
 
         return result;

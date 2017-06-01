@@ -5,11 +5,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -168,13 +170,18 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
 
                 ResultOperations alarmData = new ResultOperations(getApplicationContext());
 
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                int userID = getPrefs.getInt("userID", 0);
                 // TODO SLEEP RATE, #OF SNOOZES
                 Result newAlarm = new Result();
                 newAlarm.setUpdateType('A');
                 newAlarm.setSleepRate(5);
                 newAlarm.setNumberOfSnoozes(5);
                 alarmData.open();
-                alarmData.updateResult(newAlarm, utils.getDayId(getApplicationContext()));
+                alarmData.updateResult(newAlarm, alarmData.getSleepRateDayId(userID));
                 alarmData.close();                //Send data to database here
                 finish();
             }

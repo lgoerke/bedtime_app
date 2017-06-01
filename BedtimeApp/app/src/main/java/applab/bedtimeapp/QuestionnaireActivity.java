@@ -52,10 +52,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     private ResultOperations feedbackData;
 
-
-
-
-
     private static int REQUEST_CODE = 1;
 
     @Override
@@ -133,15 +129,16 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 newFeedback.setRefusalReason(extraReason);
                 newFeedback.setProcrastinationDuration(extraDuration);
 
-                // todo always day id - 1 ? questionnaires are always for the day before
-                feedbackData.updateResult(newFeedback, utils.getDayId(QuestionnaireActivity.this));
+                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+                int userID = getPrefs.getInt("userID", 0);
+                int lastFeedbackDay = feedbackData.getFeedbackDayId(userID);
+
+                feedbackData.updateResult(newFeedback, lastFeedbackDay);
 
                 feedbackData.close();
 
 
-
-                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                int userID = getPrefs.getInt("userID", 0);
                 feedbackData.open();
                 List<Result> rL = feedbackData.getAllResults(userID);
                 for(int i = 0; i< rL.size(); i++){
