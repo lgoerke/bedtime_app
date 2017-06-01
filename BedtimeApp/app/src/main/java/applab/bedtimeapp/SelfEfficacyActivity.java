@@ -24,7 +24,7 @@ public class SelfEfficacyActivity extends AppCompatActivity {
     private int answers[] = new int[QUESTIONS];
 
     private static int REQUEST_CODE = 1;
-    private static int QUESTIONS = 10;
+    private static int QUESTIONS = 7;
 
     private Button completeButton;
     private RatingBar   ratingBarQ1,
