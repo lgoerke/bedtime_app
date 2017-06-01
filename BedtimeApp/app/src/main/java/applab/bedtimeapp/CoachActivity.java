@@ -137,7 +137,7 @@ public class CoachActivity extends AppCompatActivity {
                     if (slopes.get(i) > 0) {
                         s = "Last week your " + pairs1.get(i) + " had a positive influence on your " + pairs2.get(i);
                     } else if (slopes.get(i) < 0) {
-                        s = "Last week your " + " your " + pairs1.get(i) + " had a negative influence on your " + pairs2.get(i);
+                        s = "Last week your " + pairs1.get(i) + " had a negative influence on your " + pairs2.get(i);
                     }
                     advices.add(s);
                     needed_advises -= 1;
@@ -183,10 +183,21 @@ public class CoachActivity extends AppCompatActivity {
             index += 1;
         }
 
+        Log.e("complete list",advices.toString());
+
+        ArrayList<String> shuffled_advicese = new ArrayList<>();
+        shuffled_advicese.add(advices.remove(0));
+        Collections.shuffle(advices);
+        for (int i = 0; i < advices.size(); i++){
+            shuffled_advicese.add(advices.get(i));
+        }
+
+        Log.e("complete list",shuffled_advicese.toString());
+
         int currentDayIdDummy = 10;
         //TODO change to real day id
         TextView tv = (TextView) findViewById(R.id.advice);
-        tv.setText(advices.get(currentDayIdDummy-DURATION_FIRST_PERIOD));
+        tv.setText(shuffled_advicese.get(currentDayIdDummy-DURATION_FIRST_PERIOD));
 
 
 //
@@ -276,6 +287,9 @@ public class CoachActivity extends AppCompatActivity {
      */
     public void goToMain(View view) {
         // TODO are we going to the right activity
+        //TODO set notification to first go to the coach and then to alarm
+        //TODO set coach as start screen for second week
+
         finish();
     }
 

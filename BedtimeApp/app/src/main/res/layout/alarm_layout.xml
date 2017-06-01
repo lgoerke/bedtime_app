@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:background="@drawable/cat">
+            android:background="@drawable/alarm_circle">
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/progressBar"

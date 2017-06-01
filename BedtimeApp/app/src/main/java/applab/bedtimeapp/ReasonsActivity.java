@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import applab.bedtimeapp.db.ReasonOperations;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Reason;
 import applab.bedtimeapp.utils.TextThumbSeekBar;
@@ -27,29 +26,27 @@ public class ReasonsActivity extends AppCompatActivity {
 
     public final static String EXTRA_REASON = "EXTRA_REASON";
     public final static String EXTRA_DURATION = "EXTRA_DURATION";
-
-    private int minutes;
-    private ReasonOperations reasonData;
-
+    public int minutes;
+    private ResultOperations reasonData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reasons);
 
-        TextThumbSeekBar ttsb = (TextThumbSeekBar) findViewById(R.id.thumbseekbar);
-        ttsb.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                minutes  = ((TextThumbSeekBar) view).getProgress();
-                return true;
-            }
-        });
+//        TextThumbSeekBar ttsb = (TextThumbSeekBar) findViewById(R.id.thumbseekbar);
+//        ttsb.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                minutes  = ((TextThumbSeekBar) view).getProgress();
+//                return true;
+//            }
+//        });
 
         EditText et = (EditText) findViewById(R.id.editReason);
         et.setHint("Type here...");
 
-        reasonData = new ReasonOperations(this);
+        reasonData = new ResultOperations(this);
 
         reasonData.open();
 
@@ -60,14 +57,15 @@ public class ReasonsActivity extends AppCompatActivity {
         //  Create a new boolean and preference and set it to true
         int userID = getPrefs.getInt("userID", 0);
 
-        List<Reason> rL = reasonData.getAllReasons(userID);
+        List<String> rL = reasonData.getAllReasons(userID);
+        Log.e("rL",rL.toString());
 
         ArrayList<String> ary = new ArrayList<String>();
 
-        for (int i = 0; i < rL.size(); i++) {
-            ary.add(rL.get(i).getReason());
-            System.err.println(rL.get(i));
-        }
+//        for (int i = 0; i < rL.size(); i++) {
+//            ary.add(rL.get(i));
+//            Log.e("log",rL.get(i).toString());
+//        }
         HashSet<String> uniques = new HashSet<>(ary);
         ary = new ArrayList<String>(uniques);
 
@@ -106,10 +104,11 @@ public class ReasonsActivity extends AppCompatActivity {
         EditText et = (EditText) findViewById(R.id.editReason);
         Intent output = new Intent(this, QuestionnaireActivity.class);
         output.putExtra(EXTRA_REASON, et.getText().toString());
-        //TODO save minutes
-
+        TextThumbSeekBar ttsb = (TextThumbSeekBar) findViewById(R.id.thumbseekbar);
+        minutes = ttsb.getProgress();
         //todo put duration extra from radioGroupDuration
-        output.putExtra(EXTRA_DURATION, 0);
+        output.putExtra(EXTRA_DURATION, minutes);
+
         saveReason(et.getText().toString());
         setResult(RESULT_OK, output);
         finish();
@@ -128,6 +127,7 @@ public class ReasonsActivity extends AppCompatActivity {
 
         //  Create a new boolean and preference and set it to true
         int userID = getPrefs.getInt("userID", 0);
+        // TODO set minutes as duration in Database
         reason.setUserId(userID);
         reason.setReason(text);
         reasonData.close();

@@ -25,8 +25,8 @@
     <dimen name="alarm_btn_size">50dp</dimen>
     <dimen name="alarm_btn_padding">100dp</dimen>
 
-    <dimen name="thumb_size">20dp</dimen>
-    <dimen name="thumb_text_size">10dp</dimen>
+    <dimen name="thumb_size">30dp</dimen>
+    <dimen name="thumb_text_size">15dp</dimen>
 
 
 </resources>

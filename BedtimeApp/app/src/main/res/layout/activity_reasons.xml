@@ -37,14 +37,14 @@
             android:id="@+id/thumbseekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="120"
-            android:background="@color/colorAccent"
-            android:theme="@style/AppThemeSeekBar"
-            android:progress="0"
-            android:thumb="@drawable/shape_seek_bar_text_thumb"
-            android:thumbOffset="4dp"
             android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_marginRight="@dimen/fab_margin"/>
+            android:layout_marginRight="@dimen/fab_margin"
+            android:background="@color/colorAccent"
+            android:max="120"
+            android:progress="10"
+            android:theme="@style/AppThemeSeekBar"
+            android:thumb="@drawable/shape_seek_bar_text_thumb"
+            android:thumbOffset="4dp" />
 
 
         <TextView

@@ -120,8 +120,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
         LinearLayout ac = (LinearLayout) findViewById(R.id.alarm_content);
         DonutProgress pb = (DonutProgress) ac.findViewById(R.id.progressBar);
 
-        //TODO choose previously set time
-
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());

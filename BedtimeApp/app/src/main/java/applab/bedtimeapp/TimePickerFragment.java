@@ -122,8 +122,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
             Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, 0);
-            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+            pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             //TODO check if alarmmanager also works after reboot
 
             if (hourOfDay == 0) {

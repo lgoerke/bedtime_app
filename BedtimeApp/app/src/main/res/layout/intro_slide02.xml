@@ -1,49 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
     <LinearLayout
-        android:layout_marginBottom="70dp"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:weightSum="3">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="350dp">
-            <ImageView
-                android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:weightSum="8">
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/menu_small"
-                />
+                android:layout_weight="2">
 
-            <ImageView
-                android:layout_width="@dimen/nav_header_height"
-                android:layout_height="@dimen/nav_header_height"
-                android:src="@drawable/touch_finger_green"
-                android:layout_marginLeft="135dp"
-                android:layout_marginTop="210dp"
-                android:rotation="335"/>
+            </TextView>
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/menu_small" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/fab_margin"
+                    android:rotation="335"
+                    android:src="@drawable/touch_finger_green" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+            </TextView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/fab_margin"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
+            android:shadowColor="@color/black"
+            android:shadowDy="2"
+            android:shadowRadius="1"
             android:text="In the menu you can navigate through all sections."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white" />
 
     </LinearLayout>
 
-
-
-</RelativeLayout>
+</LinearLayout>

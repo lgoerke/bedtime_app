@@ -7,43 +7,67 @@
     android:background="@drawable/background">
 
     <LinearLayout
-        android:layout_marginBottom="70dp"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginTop="16dp"
+        android:weightSum="3"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="350dp">
-            <ImageView
-                android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:weightSum="8">
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alarm"
-                />
+                android:layout_weight="2">
 
-            <ImageView
-                android:layout_width="@dimen/nav_header_height"
-                android:layout_height="@dimen/nav_header_height"
-                android:src="@drawable/touch_finger"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="25dp"
-                android:rotation="25"/>
+            </TextView>
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/alarm"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp"
+                    android:rotation="25"
+                    android:src="@drawable/touch_finger" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+            </TextView>
+        </LinearLayout>
 
         <TextView
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/fab_margin"
             android:gravity="center_horizontal"
             android:text="In the alarms section you can select your bedtime and alarm time. Your resulting sleeping time will be shown in the clock and the text below it."
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:shadowColor="@color/black"
+            android:shadowRadius="1"
+            android:shadowDy="2"/>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>
