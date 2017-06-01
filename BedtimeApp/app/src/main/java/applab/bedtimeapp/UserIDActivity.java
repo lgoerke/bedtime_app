@@ -36,8 +36,12 @@ public class UserIDActivity extends AppCompatActivity {
         et.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                btn.setEnabled(true);
-                ID = Integer.parseInt(et.getText().toString());
+                if (s.length() == 0) {
+                    btn.setEnabled(false);
+                } else{
+                    btn.setEnabled(true);
+                    ID = Integer.parseInt(et.getText().toString());
+                }
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count,
@@ -47,8 +51,12 @@ public class UserIDActivity extends AppCompatActivity {
 
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                btn.setEnabled(true);
-                ID = Integer.parseInt(et.getText().toString());
+                if (s.length() == 0) {
+                    btn.setEnabled(false);
+                } else{
+                    btn.setEnabled(true);
+                    ID = Integer.parseInt(et.getText().toString());
+                }
             }
         });
 

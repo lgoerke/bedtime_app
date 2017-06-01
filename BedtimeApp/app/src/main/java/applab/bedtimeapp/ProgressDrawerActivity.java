@@ -433,8 +433,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
     private List<Entry> getSleepDuration(List alarmentries, List bedtimeentries, List procentries) {
         List<Entry> result = new ArrayList<>();
         for (int i = 0; i < alarmentries.size(); i++) {
-            Log.e("a",alarmentries.get(i).toString());
-            Log.e("b",bedtimeentries.get(i).toString());
             if (alarmentries.get(i) != null && !(((String) alarmentries.get(i)).isEmpty())) {
                 int hm = Integer.parseInt(((String) alarmentries.get(i)).substring(0, 2));
                 int mm = Integer.parseInt(((String) alarmentries.get(i)).substring(3, 5));
