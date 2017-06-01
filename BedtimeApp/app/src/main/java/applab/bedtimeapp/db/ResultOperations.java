@@ -296,35 +296,84 @@ public class ResultOperations {
     }
 
 
-    // TODO
     public List<String> getAllReasons(int userID) {
 
         List reasons = new ArrayList();
-        Cursor cursor = database.rawQuery("SELECT REFUSAL_REASON FROM result WHERE USER_ID= "+String.valueOf(userID), null);
+        Cursor cursor = database.rawQuery("SELECT REFUSAL_REASON FROM result WHERE REFUSAL_REASON <> '' and USER_ID= "+String.valueOf(userID), null);
         String reason = "";
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
             reason =  cursor.getString(cursor.getColumnIndex(DatabaseHelper.REFUSAL_REASON));
+            reasons.add(reason);
         }
-
-        reasons.add(reason);
 
         return reasons;
     }
 
-    public void addFeedback(Feedback f) {
+    // get day id to write feedback
+    public int getFeedbackDayId(int userID) {
+
+        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE FEEDBACK_DATE IS NULL and USER_ID= "+String.valueOf(userID) + " ORDER BY DAY_ID LIMIT 1", null);
+        int dayId = 0;
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            dayId =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DAY_ID));
+        }
+
+        return dayId;
     }
 
-
-    public int getAllFeedbacks(int i) {
-        return 0;
+    public boolean isFeedbackGivenToday(int userID){
+        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE FEEDBACK_DATE LIKE '"+utils.getCurrentTimeString("yyyy-MM-dd") + "%' and USER_ID= " +String.valueOf(userID), null);
+        if (cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
     }
+
+    public boolean isQuestionairreFilled(int userID){
+        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE SELF_EFFICACY_DATE IS NOT NULL and USER_ID= " +String.valueOf(userID) , null);
+        if (cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    // get day id to write sleeprate
+    public int getSleepRateDayId(int userID) {
+
+        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE SLEEP_RATE = 0 and USER_ID= "+String.valueOf(userID) + " ORDER BY DAY_ID LIMIT 1", null);
+        int dayId = 0;
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            dayId =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DAY_ID));
+        }
+
+        return dayId;
+    }
+
 
     public int counter(int userID) {
         return 0;
     }
 
-    public int getAllAlarms(int userID) {
-        return 0;
+    // TODO : get the unnotified notification for today if exists
+    public int[] getNotificationTime(int userID) {
+        int result[] = new int[2];
+        result[0] = -1;
+        result[1] = -1;
+
+        // TimePickerFragment.DELAY_MORNING_QUESTIONNAIRE
+        return result;
+    }
+
+    // get the times for alarm
+    public int[] getAlarmTime(int userID) {
+        int result[] = new int[2];
+        result[0] = -1;
+        result[1] = -1;
+
+
+        return result;
     }
 }

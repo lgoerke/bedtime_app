@@ -26,7 +26,8 @@ public class ReasonsActivity extends AppCompatActivity {
 
     public final static String EXTRA_REASON = "EXTRA_REASON";
     public final static String EXTRA_DURATION = "EXTRA_DURATION";
-    public int minutes;
+
+    private int minutes;
     private ResultOperations reasonData;
 
     @Override
@@ -66,6 +67,7 @@ public class ReasonsActivity extends AppCompatActivity {
 //            ary.add(rL.get(i));
 //            Log.e("log",rL.get(i).toString());
 //        }
+
         HashSet<String> uniques = new HashSet<>(ary);
         ary = new ArrayList<String>(uniques);
 
