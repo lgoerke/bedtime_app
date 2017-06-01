@@ -53,7 +53,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
     private static final String TAG = "ProgressDrawerActivity";
 
-    private boolean showAlert = true;
+    private boolean showDailyAlert = true;
+    private boolean showWeeklyAlert = true;
     private int whichLanding = 0;
     // Sheep = 1, Cat = 2
     private int whichIcon = 1;
@@ -80,9 +81,12 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         if (b != null) {
             for (String key : b.keySet()) {
-                if (key.equals("showAlert")) {
-                    showAlert = (boolean) b.get(key);
-                } else if (key.equals("whichLanding")) {
+                if (key.equals("showDailyAlert")) {
+                    showDailyAlert = (boolean) b.get(key);
+                } else if (key.equals("showWeeklyAlert")) {
+                    showWeeklyAlert = (boolean) b.get(key);
+                }  else if (key.equals("whichLanding")){
+
                     whichLanding = (int) b.get(key);
                 } else if (key.equals("whichIcon")) {
                     whichIcon = (int) b.get(key);
@@ -110,7 +114,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
-        tv.setText("Yoo Lisa");
+        tv.setText((userID>0)?String.valueOf(userID):"");
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
         if (whichIcon == 1) {
             iv.setImageResource(R.drawable.sheep);
@@ -390,20 +394,37 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         /* Connect FAB to opening the pending questionnaire */
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn", actionButton.toString());
-        if (showAlert) {
+        Log.d("btn",actionButton.toString());
+        if (showDailyAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     actionButton.setVisibility(View.INVISIBLE);
-                    showAlert = false;
+                    showDailyAlert = false;
                     openQuestionnaire();
 
                 }
             });
         } else {
             actionButton.setVisibility(View.INVISIBLE);
+        }
+
+        final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
+        Log.d("weeklybtn", weeklyAlertButton.toString());
+        if (showWeeklyAlert) {
+            weeklyAlertButton.setVisibility(View.VISIBLE);
+            weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    weeklyAlertButton.setVisibility(View.INVISIBLE);
+                    showWeeklyAlert = false;
+                    openSelfEfficacy();
+
+                }
+            });
+        } else {
+            weeklyAlertButton.setVisibility(View.INVISIBLE);
         }
         /* END Connect FAB */
 
@@ -525,7 +546,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_settings = new Intent(this, SettingsDrawerActivity.class);
             intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_settings.putExtra("showAlert", showAlert);
+            intent_settings.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_settings.putExtra("showDailyAlert", showDailyAlert);
             intent_settings.putExtra("whichLanding", whichLanding);
             intent_settings.putExtra("whichIcon", whichIcon);
             startActivity(intent_settings);
@@ -533,7 +555,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_alarm.putExtra("showAlert", showAlert);
+            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             intent_alarm.putExtra("whichIcon", whichIcon);
             startActivity(intent_alarm);
@@ -542,5 +565,10 @@ public class ProgressDrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void openSelfEfficacy() {
+        Intent intent_self_efficacy = new Intent(this, SelfEfficacyActivity.class);
+        intent_self_efficacy.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivityForResult(intent_self_efficacy, REQUEST_CODE);
     }
 }

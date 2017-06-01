@@ -43,10 +43,10 @@
         android:id="@+id/alertWeekly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:button_color="@color/alert"
+        fab:button_color="@color/orange"
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_gravity="top|right"
+        android:layout_gravity="bottom|right"
         fab:type="DEFAULT"
         fab:image="@drawable/ic_error_outline_black_24dp"
         />

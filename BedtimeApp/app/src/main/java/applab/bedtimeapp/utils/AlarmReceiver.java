@@ -21,7 +21,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         setResultCode(Activity.RESULT_OK);
         Intent intent_alarm = new Intent(AlarmDrawerActivity.instance(), AlarmSnoozeActivity.class);
         intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent_alarm.putExtra("showAlert", AlarmDrawerActivity.instance().isShowAlert());
+        intent_alarm.putExtra("showWeeklyAlert", AlarmDrawerActivity.instance().isShowWeeklyAlert());
+        intent_alarm.putExtra("showDailyAlert", AlarmDrawerActivity.instance().isShowDailyAlert());
         intent_alarm.putExtra("whichLanding", AlarmDrawerActivity.instance().getWhichLanding());
         intent_alarm.putExtra("whichIcon", AlarmDrawerActivity.instance().getWhichIcon());
         AlarmDrawerActivity.instance().startActivity(intent_alarm);

@@ -176,7 +176,7 @@ public class MainDrawerActivity extends AppCompatActivity
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
-        tv.setText("Yoo Lisa");
+
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
         if (whichIcon == 1) {
             iv.setImageResource(R.drawable.sheep);
@@ -186,6 +186,10 @@ public class MainDrawerActivity extends AppCompatActivity
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         Log.d("btn", actionButton.toString());
+
+        // to test buttons
+        //showDailyAlert = true;
+        //showWeeklyAlert = true;
         if (showDailyAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
