@@ -108,30 +108,10 @@ public class ReasonsActivity extends AppCompatActivity {
         output.putExtra(EXTRA_REASON, et.getText().toString());
         TextThumbSeekBar ttsb = (TextThumbSeekBar) findViewById(R.id.thumbseekbar);
         minutes = ttsb.getProgress();
-        //todo put duration extra from radioGroupDuration
         output.putExtra(EXTRA_DURATION, minutes);
-
-        saveReason(et.getText().toString());
         setResult(RESULT_OK, output);
         finish();
     }
 
-    private void saveReason(String text) {
-        reasonData.open();
-        // convert to update result
-        // TODO: 27/05/17
 
-        Reason reason = new Reason();
-        // SET USER ID
-        //  Initialize SharedPreferences
-        SharedPreferences getPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-
-        //  Create a new boolean and preference and set it to true
-        int userID = getPrefs.getInt("userID", 0);
-        // TODO set minutes as duration in Database
-        reason.setUserId(userID);
-        reason.setReason(text);
-        reasonData.close();
-    }
 }

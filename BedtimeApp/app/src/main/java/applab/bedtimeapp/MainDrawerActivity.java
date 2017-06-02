@@ -30,6 +30,8 @@ import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.model.SelfEfficacy;
+import applab.bedtimeapp.utils.Constants;
+import applab.bedtimeapp.utils.NotificationHelper;
 import applab.bedtimeapp.utils.RestClient;
 import applab.bedtimeapp.utils.utils;
 import cz.msebera.android.httpclient.Header;
@@ -55,6 +57,11 @@ public class MainDrawerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // notify at every 18:00
+        dailyEveningNotifications();
+        utils.showDB(getBaseContext());
+
 
         setContentView(R.layout.drawer_activity_main);
         showDailyAlert = checkForTodaysQuestionnaire();
@@ -103,7 +110,7 @@ public class MainDrawerActivity extends AppCompatActivity
                     showDailyAlert = (boolean) b.get(key);
                 } else if (key.equals("showWeeklyAlert")) {
                     showWeeklyAlert = (boolean) b.get(key);
-                }else if (key.equals("whichLanding")) {
+                } else if (key.equals("whichLanding")) {
                     whichLanding = (int) b.get(key);
                 } else if (key.equals("whichIcon")) {
                     whichIcon = (int) b.get(key);
@@ -128,17 +135,9 @@ public class MainDrawerActivity extends AppCompatActivity
         whichIcon = savedIcon;
 
 
-        ResultOperations feedbackData = new ResultOperations(this);
-        feedbackData.open();
+
         int userID = getPrefs.getInt("userID", 0);
 
-
-        feedbackData.open();
-        List<Result> rL = feedbackData.getAllResults(userID);
-        for(int i = 0; i< rL.size(); i++){
-            System.err.println(rL.get(i).toString());
-        }
-        feedbackData.close();
 
         if (whichLanding == LANDING_ALARM) {
             finish();
@@ -222,7 +221,6 @@ public class MainDrawerActivity extends AppCompatActivity
             weeklyAlertButton.setVisibility(View.INVISIBLE);
         }
 
-
     }
 
     private boolean checkForTodaysQuestionnaire() {
@@ -235,16 +233,17 @@ public class MainDrawerActivity extends AppCompatActivity
         //  Create a new boolean and preference and set it to true
         int userID = getPrefs.getInt("userID", 0);
 
-        result = !fbOp.isFeedbackGivenToday(userID) ;
+        result = !fbOp.isFeedbackGivenToday(userID, getBaseContext());
 
         fbOp.close();
 
+        //return true;
         return result;
     }
 
     private boolean checkForThisWeeksSelfEfficacy() {
 
-        if(utils.getDayId(this) < 8)
+        if (utils.getDayId(this) < 8)
             return false;
 
         boolean result;
@@ -257,7 +256,7 @@ public class MainDrawerActivity extends AppCompatActivity
         //  Create a new boolean and preference and set it to true
         int userID = getPrefs.getInt("userID", 0);
 
-        result = !selfEfficacyOperations.isQuestionairreFilled(userID) ;
+        result = !selfEfficacyOperations.isQuestionairreFilled(userID);
         selfEfficacyOperations.close();
 
         return result;
@@ -350,4 +349,11 @@ public class MainDrawerActivity extends AppCompatActivity
 //        getMenuInflater().inflate(R.menu.notification_menu, menu);
 //        return true;
 //    }
+
+    // TODO WHY ALWAYS EXECUTES WHEN IT OPENS
+    public void dailyEveningNotifications() {
+        int delayForNotification = utils.getDelay(Constants.EVENING_NOTIFICATION_HOUR, Constants.EVENING_NOTIFICATION_MINUTE);
+        Log.d("Delay: ", String.valueOf(delayForNotification));
+        NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this, "Please set your bed time and alarm time", TimePickerFragment.class), delayForNotification, 24);
+    }
 }

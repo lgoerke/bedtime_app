@@ -142,19 +142,13 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
                 int userID = getPrefs.getInt("userID", 0);
-                int lastFeedbackDay = feedbackData.getFeedbackDayId(userID);
+                int updateFeedbackDay = feedbackData.getFeedbackDayId(getBaseContext());
 
-                feedbackData.updateResult(newFeedback, lastFeedbackDay);
+                feedbackData.updateResult(newFeedback, updateFeedbackDay);
 
                 feedbackData.close();
 
-
-                feedbackData.open();
-                List<Result> rL = feedbackData.getAllResults(userID);
-                for(int i = 0; i< rL.size(); i++){
-                    System.err.println(rL.get(i).toString());
-                }
-                feedbackData.close();
+                utils.showDB(getBaseContext());
 
                 sendData();
 

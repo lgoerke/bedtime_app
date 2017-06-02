@@ -9,7 +9,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.model.Result;
 
 import static java.lang.Math.abs;
 
@@ -132,7 +136,7 @@ public class utils {
 
     public static long getDayId(Context context) {
 
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         Calendar currentDateCal = Calendar.getInstance();
 
@@ -156,4 +160,18 @@ public class utils {
 
     }
 
+    public static void showDB(Context context){
+
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int userID = getPrefs.getInt("userID", 0);
+        ResultOperations feedbackData = new ResultOperations(context);
+        feedbackData.open();
+        List<Result> rL = feedbackData.getAllResults(userID);
+        for(int i = 0; i< rL.size(); i++){
+            System.err.println(rL.get(i).toString());
+        }
+        feedbackData.close();
+
+
+    }
 }

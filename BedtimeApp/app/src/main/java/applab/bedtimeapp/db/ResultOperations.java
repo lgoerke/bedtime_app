@@ -8,15 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.github.mikephil.charting.data.Entry;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import applab.bedtimeapp.model.Feedback;
-import applab.bedtimeapp.model.Reason;
 import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.utils;
@@ -67,7 +61,7 @@ public class ResultOperations {
             DatabaseHelper.Q7,
             DatabaseHelper.Q8,
             DatabaseHelper.Q9,
-            DatabaseHelper.Q10
+            DatabaseHelper.Q10 // Q10 is gonna used as evening notification flag
     };
 
     public ResultOperations(Context context) {
@@ -114,8 +108,8 @@ public class ResultOperations {
         values.put(DatabaseHelper.Q6, result.getQ6());
         values.put(DatabaseHelper.Q7, result.getQ7());
         values.put(DatabaseHelper.Q8, result.getQ8());
-        values.put(DatabaseHelper.Q9, result.getQ8());
-        values.put(DatabaseHelper.Q10, result.getQ9());
+        values.put(DatabaseHelper.Q9, result.getQ9());
+        values.put(DatabaseHelper.Q10, result.getQ10());
 
         long insertId = database.insert(DatabaseHelper.TABLE_RESULT, null, values);
         result.setResultId(insertId);
@@ -222,14 +216,15 @@ public class ResultOperations {
         //values.put(DatabaseHelper.CREATION_DATE, result.getCreationDate());
 
         if (result.getUpdateType() == 'A') {
-            values.put(DatabaseHelper.ALARM_DATE, result.getAlarmDate());
             values.put(DatabaseHelper.SLEEP_RATE, result.getSleepRate());
             values.put(DatabaseHelper.NUMBER_OF_SNOOZES, result.getNumberOfSnoozes());
         }
         else if (result.getUpdateType() == 'M'){
+            values.put(DatabaseHelper.ALARM_DATE, result.getAlarmDate());
             values.put(DatabaseHelper.MORNING_ALARM, result.getMorningAlarm());
         }
         else if (result.getUpdateType() == 'E'){
+            values.put(DatabaseHelper.ALARM_DATE, result.getAlarmDate());
             values.put(DatabaseHelper.EVENING_ALARM, result.getEveningAlarm());
         }
         else if (result.getUpdateType()== 'F') {
@@ -251,7 +246,7 @@ public class ResultOperations {
             values.put(DatabaseHelper.Q6, result.getQ6());
             values.put(DatabaseHelper.Q7, result.getQ7());
             values.put(DatabaseHelper.Q8, result.getQ8());
-            values.put(DatabaseHelper.Q9, result.getQ8());
+            values.put(DatabaseHelper.Q9, result.getQ9());
             values.put(DatabaseHelper.Q10, result.getQ9());
         }
         // updating row
@@ -333,20 +328,34 @@ public class ResultOperations {
     }
 
     // get day id to write feedback
-    public int getFeedbackDayId(int userID) {
+    public int getFeedbackDayId(Context context) {
 
-        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE FEEDBACK_DATE IS NULL and USER_ID= "+String.valueOf(userID) + " ORDER BY DAY_ID LIMIT 1", null);
+        /*Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE FEEDBACK_DATE IS NULL and USER_ID= "+String.valueOf(userID) + " ORDER BY DAY_ID LIMIT 1", null);
         int dayId = 0;
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
             dayId =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DAY_ID));
-        }
+        }*/
+        int dayId = (int)(utils.getDayId(context)) -1;
+
+        if(dayId < 1)
+            dayId = 1;
+
+        if(dayId > 13)
+            dayId = 14;
 
         return dayId;
+
     }
 
-    public boolean isFeedbackGivenToday(int userID){
-        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE FEEDBACK_DATE LIKE '"+utils.getCurrentTimeString("yyyy-MM-dd") + "%' and USER_ID= " +String.valueOf(userID), null);
+    public boolean isFeedbackGivenToday(int userID,Context context){
+
+        // CHECK FOR THE DAY 1
+        int currentFeedbackDay = (int)utils.getDayId(context) -1;
+        if (currentFeedbackDay < 1)
+            return true;
+
+        Cursor cursor = database.rawQuery("SELECT FEEDBACK_DATE FROM result WHERE DAY_ID = " + currentFeedbackDay + " AND FEEDBACK_DATE IS NOT NULL and USER_ID= " +String.valueOf(userID), null);
         if (cursor.getCount() > 0) {
             return true;
         }
@@ -362,34 +371,47 @@ public class ResultOperations {
     }
 
     // get day id to write sleeprate
-    public int getSleepRateDayId(int userID) {
+    public int getSleepRateDayId(Context context) {
 
-        Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE SLEEP_RATE = 0 and USER_ID= "+String.valueOf(userID) + " ORDER BY DAY_ID LIMIT 1", null);
+       /* Cursor cursor = database.rawQuery("SELECT DAY_ID FROM result WHERE SLEEP_RATE = 0 and USER_ID= "+String.valueOf(userID) + " ORDER BY DAY_ID LIMIT 1", null);
         int dayId = 0;
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
             dayId =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DAY_ID));
-        }
+        }*/
+        int dayId = (int)(utils.getDayId(context)) -1;
+
+        if(dayId < 1)
+            dayId = 1;
+
+        if(dayId > 13)
+            dayId = 14;
 
         return dayId;
     }
 
-
-    public int counter(int userID) {
-        return 0;
-    }
-
     // TODO : get the unnotified notification for today if exists
-    public int[] getNotificationTime(int userID) {
+    public int[] getNotificationTime(int userID, Context context) {
         int result[] = new int[2];
         result[0] = -1;
         result[1] = -1;
 
-        Cursor cursor = database.rawQuery("SELECT MORNING_ALARM FROM result WHERE FEEDBACK_DATE LIKE '"+utils.getCurrentTimeString("yyyy-MM-dd") + "%' and USER_ID= " +String.valueOf(userID), null);
+        if(userID == 0)
+            return result;
+
+        int dayId = (int)(utils.getDayId(context)) -1;
+
+        if(dayId < 1)
+            dayId = 1;
+
+        if(dayId > 13)
+            dayId = 14;
+
+        Cursor cursor = database.rawQuery("SELECT MORNING_ALARM FROM result WHERE MORNING_ALARM IS NOT NULL AND DAY_ID = "+ dayId + " AND USER_ID= " +String.valueOf(userID), null);
 
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
-            result[0] =  /*Constants.DELAY_MORNING_QUESTIONNAIRE +*/ Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(0,2));
+            result[0] =  Constants.DELAY_MORNING_QUESTIONNAIRE + Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(0,2));
             result[1] =  Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(3,5));
         }
 

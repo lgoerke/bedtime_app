@@ -77,7 +77,7 @@ public class UserIDActivity extends AppCompatActivity {
                 e.putInt("userID", ID);
 
                 // Put start date to preferences
-                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Calendar currentDateCal = Calendar.getInstance();
                 String startDate = format1.format(currentDateCal.getTime());
                 e.putString("startDate", startDate);

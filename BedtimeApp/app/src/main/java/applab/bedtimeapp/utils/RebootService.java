@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import applab.bedtimeapp.MainDrawerActivity;
 import applab.bedtimeapp.QuestionnaireActivity;
 import applab.bedtimeapp.db.ResultOperations;
 
@@ -55,15 +56,17 @@ public class RebootService extends IntentService {
     }
 
     // TODO:  control all notifications
-    public void createNotifications() {
+    public  void createNotifications() {
 
         ResultOperations feedbackData;
         feedbackData = new ResultOperations(this);
+        feedbackData.open();
 
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         int userID = getPrefs.getInt("userID", 0);
-        int hourMinute[] = feedbackData.getNotificationTime(userID) ;
+        int hourMinute[] = feedbackData.getNotificationTime(userID, getBaseContext()) ;
+        feedbackData.close();
 
         if(hourMinute[0] != -1) {
             int delayForNotification = utils.getDelay(hourMinute[0], hourMinute[1]);
@@ -72,5 +75,7 @@ public class RebootService extends IntentService {
         }
 
     }
+
+
 
 }

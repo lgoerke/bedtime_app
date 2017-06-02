@@ -99,7 +99,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(prog);
 
-            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Calendar currentDateCal = Calendar.getInstance();
             String currentDate = format1.format(currentDateCal.getTime());
 
@@ -153,10 +153,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             ((AlarmDrawerActivity) getActivity()).changeSleepDuration(p);
 
             // set morning alarm
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Calendar currentDateCal = Calendar.getInstance();
+            String currentDate = format1.format(currentDateCal.getTime());
+
             Result newAlarm = new Result();
-            newAlarm.setUpdateType('M'); //evening alarm
-
-
+            newAlarm.setAlarmDate(currentDate);
+            newAlarm.setUpdateType('M'); //motning  alarm
             // todo check whether similar 9 to 09 conversion is needed
             newAlarm.setMorningAlarm(String.format("%02d", Integer.valueOf(hourOfDay).intValue()) +
                     ":" + String.format("%02d", Integer.valueOf(minute).intValue()));

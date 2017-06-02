@@ -180,7 +180,7 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
                 newAlarm.setSleepRate(starsMorning);
                 newAlarm.setNumberOfSnoozes(starsMorning);
                 alarmData.open();
-                alarmData.updateResult(newAlarm, alarmData.getSleepRateDayId(userID));
+                alarmData.updateResult(newAlarm, alarmData.getSleepRateDayId(getBaseContext()));
                 alarmData.close();                //Send data to database here
                 finish();
             }
