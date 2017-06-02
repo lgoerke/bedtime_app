@@ -1,5 +1,7 @@
 package applab.bedtimeapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,28 +18,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.loopj.android.http.*;
 import com.scalified.fab.ActionButton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Calendar;
 
-import java.util.List;
-
-import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
-import applab.bedtimeapp.model.Result;
-import applab.bedtimeapp.model.SelfEfficacy;
+import applab.bedtimeapp.utils.AlarmReceiver;
 import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.NotificationHelper;
-import applab.bedtimeapp.utils.RestClient;
 import applab.bedtimeapp.utils.utils;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.message.BasicHeader;
-import cz.msebera.android.httpclient.protocol.HTTP;
 
 
 public class MainDrawerActivity extends AppCompatActivity
@@ -354,6 +344,6 @@ public class MainDrawerActivity extends AppCompatActivity
     public void dailyEveningNotifications() {
         int delayForNotification = utils.getDelay(Constants.EVENING_NOTIFICATION_HOUR, Constants.EVENING_NOTIFICATION_MINUTE);
         Log.d("Delay: ", String.valueOf(delayForNotification));
-        NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this, "Please set your bed time and alarm time", TimePickerFragment.class), delayForNotification, 24);
+        NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this, "Please set your bed time and alarm time", MainDrawerActivity.class), delayForNotification, 24);
     }
 }

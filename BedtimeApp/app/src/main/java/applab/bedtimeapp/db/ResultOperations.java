@@ -420,12 +420,31 @@ public class ResultOperations {
     }
 
     // get the times for alarm
-    public int[] getAlarmTime(int userID) {
+    public int[] getAlarmTime(int userID, Context context) {
         int result[] = new int[2];
         result[0] = -1;
         result[1] = -1;
 
+        if(userID == 0)
+            return result;
 
+        int dayId = (int)(utils.getDayId(context)) -1;
+
+        if(dayId < 1)
+            dayId = 1;
+
+        if(dayId > 13)
+            dayId = 14;
+
+        Cursor cursor = database.rawQuery("SELECT MORNING_ALARM FROM result WHERE MORNING_ALARM IS NOT NULL AND DAY_ID = "+ dayId + " AND USER_ID= " +String.valueOf(userID), null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            result[0] =  Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(0,2));
+            result[1] =  Integer.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MORNING_ALARM)).substring(3,5));
+        }
+
+        // Constants.DELAY_MORNING_QUESTIONNAIRE
         return result;
     }
 }

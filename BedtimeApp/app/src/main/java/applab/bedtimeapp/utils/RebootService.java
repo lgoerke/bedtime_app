@@ -38,21 +38,25 @@ public class RebootService extends IntentService {
     private void createAlarms() {
         ResultOperations alarmData;
         alarmData = new ResultOperations(this);
-
+        alarmData.open();
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         int userID = getPrefs.getInt("userID", 0);
 
-        int hourMinute[] = alarmData.getAlarmTime(userID) ;
+        int hourMinute[] = alarmData.getAlarmTime(userID, getBaseContext()) ;
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hourMinute[0]);
-        calendar.set(Calendar.MINUTE, hourMinute[1]);
-        Intent myIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+        alarmData.close();
 
-        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        if(hourMinute[0] != -1) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, hourMinute[0]);
+            calendar.set(Calendar.MINUTE, hourMinute[1]);
+            Intent myIntent = new Intent(this, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+
+            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        }
     }
 
     // TODO:  control all notifications

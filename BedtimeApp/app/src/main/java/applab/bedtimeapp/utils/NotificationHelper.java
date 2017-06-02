@@ -42,9 +42,10 @@ public class NotificationHelper {
         Calendar calendar =  Calendar.getInstance();
         //calendar.set(2014,Calendar.getInstance().get(Calendar.MONTH),Calendar.SUNDAY , 8, 00, 00);
 
-        long when = calendar.getTimeInMillis();         // notification time
+        long when = calendar.getTimeInMillis() + delay;         // notification time
         alarmManager.setRepeating(AlarmManager.RTC, when, AlarmManager.INTERVAL_HOUR * repeatingInHours, pendingIntent);
         //alarmManager.setRepeating(AlarmManager.RTC, when, 60000, pendingIntent);
+
     }
 
     public static Notification getNotification(Context context,String content, Class activityClass) {
@@ -52,7 +53,7 @@ public class NotificationHelper {
         builder.setContentTitle("Scheduled Notification");
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.icon);
-        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder.setSound(uri);
 
         // pending activity to call when the notification is clicked

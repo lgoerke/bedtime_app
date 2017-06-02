@@ -13,8 +13,7 @@ public final class Constants {
     public static final int MILLISECONDS_IN_A_SECOND = 1000;
     public static final int DELAY_MORNING_QUESTIONNAIRE = 1;
     public static final int EVENING_NOTIFICATION_HOUR = 18;
-    public static final int EVENING_NOTIFICATION_MINUTE = 00;
-
+    public static final int EVENING_NOTIFICATION_MINUTE = 18;
 
 
 }
