@@ -344,6 +344,6 @@ public class MainDrawerActivity extends AppCompatActivity
     public void dailyEveningNotifications() {
         int delayForNotification = utils.getDelay(Constants.EVENING_NOTIFICATION_HOUR, Constants.EVENING_NOTIFICATION_MINUTE);
         Log.d("Delay: ", String.valueOf(delayForNotification));
-        NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this, "Please set your bed time and alarm time", MainDrawerActivity.class), delayForNotification, 24);
+        NotificationHelper.scheduleNotification(this, NotificationHelper.getNotification(this, "Please set your bed time and alarm time", AlarmDrawerActivity.class), delayForNotification, 24);
     }
 }
