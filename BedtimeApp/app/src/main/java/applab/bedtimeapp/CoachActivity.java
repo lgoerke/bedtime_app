@@ -135,7 +135,7 @@ public class CoachActivity extends AppCompatActivity {
                 if (significance.get(i) <= 0.05) {
                     String s = null;
                     if (slopes.get(i) > 0) {
-                        s = "Last week your " + pairs1.get(i) + " had a positive influence on your " + pairs2.get(i);
+                        s = "Keep up the good work! Last week your " + pairs1.get(i) + " had a positive influence on your " + pairs2.get(i);
                     } else if (slopes.get(i) < 0) {
                         s = "Last week your " + pairs1.get(i) + " had a negative influence on your " + pairs2.get(i);
                     }

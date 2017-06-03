@@ -54,8 +54,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
 
         setContentView(R.layout.drawer_activity_main);
-        showDailyAlert = checkForTodaysQuestionnaire();
-        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
+
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
             @Override
@@ -111,6 +110,9 @@ public class MainDrawerActivity extends AppCompatActivity
                 }
             }
         }
+
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
 
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager

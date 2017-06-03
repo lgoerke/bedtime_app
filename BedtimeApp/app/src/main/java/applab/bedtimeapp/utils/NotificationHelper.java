@@ -52,7 +52,7 @@ public class NotificationHelper {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle("Scheduled Notification");
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.icon);
+        builder.setSmallIcon(R.drawable.notification_icon);
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder.setSound(uri);
 
