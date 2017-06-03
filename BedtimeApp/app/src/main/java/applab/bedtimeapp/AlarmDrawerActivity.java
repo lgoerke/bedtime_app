@@ -23,6 +23,7 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.scalified.fab.ActionButton;
 
 import applab.bedtimeapp.db.DatabaseHelper;
+import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.utils.utils;
 
 
@@ -95,6 +96,9 @@ public class AlarmDrawerActivity extends AppCompatActivity
                 }
             }
         }
+
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -188,6 +192,15 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+        if (checkForSecondWeek()){
+            Intent intent_settings = new Intent(this, CoachActivity.class);
+            intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_settings.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_settings.putExtra("showDailyAlert", showDailyAlert);
+            intent_settings.putExtra("whichLanding", whichLanding);
+            intent_settings.putExtra("whichIcon", whichIcon);
+            startActivity(intent_settings);
+        }
 
     }
 
@@ -369,6 +382,53 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
         //  Apply changes
         e.apply();
+    }
+
+    private boolean checkForTodaysQuestionnaire() {
+        boolean result;
+        ResultOperations fbOp = new ResultOperations(this);
+        fbOp.open();
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        result = !fbOp.isFeedbackGivenToday(userID, getBaseContext());
+
+        fbOp.close();
+
+        //return true;
+        return result;
+    }
+
+    private boolean checkForSecondWeek() {
+
+        if (utils.getDayId(this) < 8)
+            return false;
+        else
+            return true;
+    }
+
+    private boolean checkForThisWeeksSelfEfficacy() {
+
+        if (utils.getDayId(this) < 8)
+            return false;
+
+        boolean result;
+        ResultOperations selfEfficacyOperations = new ResultOperations(this);
+        selfEfficacyOperations.open();
+        //  Initialize SharedPreferences
+
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        result = !selfEfficacyOperations.isQuestionairreFilled(userID);
+        selfEfficacyOperations.close();
+
+        return result;
     }
 
     public void openSelfEfficacy() {

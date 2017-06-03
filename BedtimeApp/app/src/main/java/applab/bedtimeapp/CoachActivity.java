@@ -23,6 +23,7 @@ import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.model.Alarm;
 import applab.bedtimeapp.model.Feedback;
 import applab.bedtimeapp.model.Result;
+import applab.bedtimeapp.utils.utils;
 
 
 public class CoachActivity extends AppCompatActivity {
@@ -194,10 +195,10 @@ public class CoachActivity extends AppCompatActivity {
 
         Log.e("complete list",shuffled_advicese.toString());
 
-        int currentDayIdDummy = 10;
-        //TODO change to real day id
+        int currentDayId = (int) utils.getDayId(this);
+        //TODO is this the correct way to get integer day id?
         TextView tv = (TextView) findViewById(R.id.advice);
-        tv.setText(shuffled_advicese.get(currentDayIdDummy-DURATION_FIRST_PERIOD));
+        tv.setText(shuffled_advicese.get(currentDayId-DURATION_FIRST_PERIOD));
 
 
 //
