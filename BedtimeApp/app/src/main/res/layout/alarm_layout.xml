@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:background="@drawable/alarm_circle">
+            android:background="@drawable/alarm_circle2">
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/progressBar"
@@ -118,8 +118,8 @@
                     android:layout_weight="1"
                     android:gravity="center|top"
                     android:shadowColor="@color/black"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
                     android:shadowRadius="1"
                     android:text="12"
                     android:textAppearance="@android:style/TextAppearance.Large"
@@ -132,8 +132,8 @@
                     android:layout_weight="1"
                     android:gravity="center|bottom"
                     android:shadowColor="@color/black"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
                     android:shadowRadius="1"
                     android:text="6"
                     android:textAppearance="@android:style/TextAppearance.Large"

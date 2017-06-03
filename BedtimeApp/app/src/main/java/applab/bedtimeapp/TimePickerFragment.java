@@ -123,10 +123,14 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
 
+            Log.e("Calendar",calendar.toString());
+
             Calendar now = Calendar.getInstance();
             if (calendar.before(now)){
                 calendar.add(Calendar.DATE, 1);
             }
+            Log.e("Calendar",calendar.toString());
+            Log.e("Now",now.toString());
 
             Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
 

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -60,6 +62,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
     String extraReason = "";
     int extraDuration = 0;
 
+    private boolean successfulSending = false;
+
     private ResultOperations feedbackData;
 
     private static int REQUEST_CODE = 1;
@@ -71,7 +75,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questionnaire);
 
         feedbackData = new ResultOperations(this);
-        feedbackData.open();
 
         RatingBar mBar = (RatingBar) findViewById(R.id.ratingBarRested);
         mBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -129,6 +132,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                feedbackData.open();
                 newFeedback = new Result();
                 newFeedback.setUpdateType('F');
                 newFeedback.setFeedbackDate(utils.getCurrentTimeString("yyyy-MM-dd HH:mm"));
@@ -150,16 +154,23 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
                 utils.showDB(getBaseContext());
 
-                sendData();
-
-                goToMain(v);
+                if (!sendData()){
+                    displayError();
+                } else{
+                    goToMain(v);
+                }
 
             }
         });
 
     }
 
-    public void sendData(){
+    private void displayError() {
+        TextView tv = (TextView) findViewById(R.id.errormessage);
+        tv.setText("Please check your internet connection and try again.");
+    }
+
+    public boolean sendData(){
         DatabaseHelper database = new DatabaseHelper(this);
         JSONObject ary = null;
         try {
@@ -173,26 +184,29 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             } catch (Exception e) {
                 //Exception
+                successfulSending = false;
             }
 
             RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    // If the response is JSONObject instead of expected JSONArray
-                    Log.d("Response", response.toString());
+                    successfulSending = true;
                 }
 
                 // When the response returned by REST has Http response code other than '200'
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    Log.d("Response", errorResponse.toString());
+                    successfulSending = false;
                 }
             });
 
 
         } catch (JSONException e) {
             e.printStackTrace();
+            successfulSending = false;
         }
+
+        return successfulSending;
 
     }
 

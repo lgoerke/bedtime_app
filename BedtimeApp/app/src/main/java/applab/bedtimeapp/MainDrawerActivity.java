@@ -165,6 +165,7 @@ public class MainDrawerActivity extends AppCompatActivity
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         LinearLayout hv = (LinearLayout) nv.getHeaderView(0);
         TextView tv = (TextView) hv.findViewById(R.id.textViewName);
+        tv.setText((userID>0)?String.valueOf(userID):"");
 
         ImageView iv = (ImageView) hv.findViewById(R.id.avatarIcon);
         if (whichIcon == 1) {
@@ -321,13 +322,21 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         } else if (id == R.id.nav_coach) {
-            finish();
             Intent intent_alarm = new Intent(this, SelfEfficacyActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_alarm.putExtra("showDailyAlert", showDailyAlert);
             intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
+        } else if(id == R.id.nav){
+            Intent intent_alarm = new Intent(this, QuestionnaireActivity.class);
+            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
+            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_alarm.putExtra("whichLanding", whichLanding);
+            startActivity(intent_alarm);
+        } else if (id == R.id.nav_home) {
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

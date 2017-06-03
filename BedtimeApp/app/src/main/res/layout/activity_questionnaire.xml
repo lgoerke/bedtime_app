@@ -246,8 +246,12 @@
                 android:textAppearance="@android:style/TextAppearance.Medium" />
 
             <TextView
+                android:id="@+id/errormessage"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/alert"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center"
                 android:layout_marginLeft="@dimen/fab_margin"
                 android:layout_marginRight="@dimen/fab_margin" />
 

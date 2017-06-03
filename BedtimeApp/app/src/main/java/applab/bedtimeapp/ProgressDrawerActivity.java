@@ -144,6 +144,17 @@ public class ProgressDrawerActivity extends AppCompatActivity
         feedbackOperations.open();
         List entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_MOOD);
         entries = reverse(entries);
+        entries = decrementRange(entries,1);
+
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 4.0f));
+//        entries.add(new Entry(1, 3.0f));
+//        entries.add(new Entry(2, 4.0f));
+//        entries.add(new Entry(3, 4.0f));
+//        entries.add(new Entry(4, 2.0f));
+//        entries.add(new Entry(5, 3.0f));
+//        entries.add(new Entry(6, 3.0f));
 
         LineDataSet dataSet = new LineDataSet(entries, "Mood"); // add entries to dataset
 
@@ -154,6 +165,18 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* START example concentraition */
         entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_CONCENTRATION);
         entries = reverse(entries);
+        entries = decrementRange(entries,1);
+
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 3.0f));
+//        entries.add(new Entry(1, 1.0f));
+//        entries.add(new Entry(2, 4.0f));
+//        entries.add(new Entry(3, 3.0f));
+//        entries.add(new Entry(4, 2.0f));
+//        entries.add(new Entry(5, 2.0f));
+//        entries.add(new Entry(6, 3.0f));
+
         dataSet = new LineDataSet(entries, "Concentration"); // add entries to dataset
 
         putStyleDataSet(dataSet, getResources().getColor(R.color.backgroundMountain));
@@ -162,21 +185,24 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
 
         /* Example duration data */
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 3.5f));
-//        entries.add(new Entry(1, 3.0f));
-//        entries.add(new Entry(2, 2.5f));
-//        entries.add(new Entry(3, 3.0f));
-//        entries.add(new Entry(4, 2.5f));
-//        entries.add(new Entry(5, 3.5f));
-//        entries.add(new Entry(6, 3.0f));
 
         entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.PROCRASTINATION_DURATION);
         entries = reverse(entries);
         Log.e("proc b", entries.toString());
         entries = changeRange(entries, 120, 4);
         Log.e("proc a", entries.toString());
+
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 3.25f));
+//        entries.add(new Entry(1, 1.0f));
+//        entries.add(new Entry(2, 0.5f));
+//        entries.add(new Entry(3, 1.1f));
+//        entries.add(new Entry(4, 2.1f));
+//        entries.add(new Entry(5, 0.2f));
+//        entries.add(new Entry(6, 0.0f));
+
+
         dataSet = new LineDataSet(entries, "Procrastination duration"); // add entries to dataset
 
         dataSet = putStyleDataSet(dataSet, getResources().getColor(R.color.alert));
@@ -261,7 +287,17 @@ public class ProgressDrawerActivity extends AppCompatActivity
         // get mood data from the db
         entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_RESTED);
         entries = reverse(entries);
-        // Collections.reverse(entries);
+        entries = decrementRange(entries,1);
+
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 4.0f));
+//        entries.add(new Entry(1, 4.0f));
+//        entries.add(new Entry(2, 4.0f));
+//        entries.add(new Entry(3, 3.0f));
+//        entries.add(new Entry(4, 2.0f));
+//        entries.add(new Entry(5, 2.0f));
+//        entries.add(new Entry(6, 4.0f));
 
         dataSet = new LineDataSet(entries, "Restedness"); // add entries to dataset
 
@@ -272,6 +308,18 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* START example quality */
         entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.SLEEP_RATE);
         entries = reverse(entries);
+        entries = decrementRange(entries,1);
+
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 5.0f));
+//        entries.add(new Entry(1, 4.0f));
+//        entries.add(new Entry(2, 2.0f));
+//        entries.add(new Entry(3, 2.0f));
+//        entries.add(new Entry(4, 3.0f));
+//        entries.add(new Entry(5, 4.0f));
+//        entries.add(new Entry(6, 3.0f));
+
         dataSet = new LineDataSet(entries, "Sleep quality"); // add entries to dataset
 
         putStyleDataSet(dataSet, getResources().getColor(R.color.colorPrimaryDark));
@@ -306,6 +354,18 @@ public class ProgressDrawerActivity extends AppCompatActivity
         //  procentries = reverse(procentries);
         entries = getSleepDuration(alarmentries, bedtimeentries, procentries);
         entries = reverse(entries);
+        entries = changeRange(entries, 10, 4);
+
+//        entries = new ArrayList<Entry>();
+//
+//        entries.add(new Entry(0, 3.2f));
+//        entries.add(new Entry(1, 2.4f));
+//        entries.add(new Entry(2, 3.5f));
+//        entries.add(new Entry(3, 3.2f));
+//        entries.add(new Entry(4, 2.3f));
+//        entries.add(new Entry(5, 2.1f));
+//        entries.add(new Entry(6, 3.6f));
+
         dataSet = new LineDataSet(entries, "Sleep duration"); // add entries to dataset
 
         putStyleDataSet(dataSet, getResources().getColor(R.color.alert));
@@ -470,6 +530,14 @@ public class ProgressDrawerActivity extends AppCompatActivity
         return result;
     }
 
+    private List decrementRange(List entries, float byHowMuch){
+        List result = new ArrayList();
+        for (int i = 0; i < entries.size(); i++) {
+            float newY = ((((Entry) entries.get(i)).getY()) - byHowMuch );
+            result.add(new Entry(i, newY));
+        }
+        return result;
+    }
 
     private List changeRange(List entries, float rangeBefore, float rangeAfter) {
         List result = new ArrayList();
@@ -558,6 +626,15 @@ public class ProgressDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("whichLanding", whichLanding);
             intent_alarm.putExtra("whichIcon", whichIcon);
             startActivity(intent_alarm);
+        } else if (id == R.id.nav_home) {
+            finish();
+            Intent intent_settings = new Intent(this, MainDrawerActivity.class);
+            intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_settings.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_settings.putExtra("showDailyAlert", showDailyAlert);
+            intent_settings.putExtra("whichLanding", whichLanding);
+            intent_settings.putExtra("whichIcon", whichIcon);
+            startActivity(intent_settings);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -261,6 +261,15 @@ public class AlarmDrawerActivity extends AppCompatActivity
             intent_settings.putExtra("whichIcon", whichIcon);
             startActivity(intent_settings);
 
+        } else if (id == R.id.nav_home) {
+            finish();
+            Intent intent_settings = new Intent(this, MainDrawerActivity.class);
+            intent_settings.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent_settings.putExtra("showWeeklyAlert", showWeeklyAlert);
+            intent_settings.putExtra("showDailyAlert", showDailyAlert);
+            intent_settings.putExtra("whichLanding", whichLanding);
+            intent_settings.putExtra("whichIcon", whichIcon);
+            startActivity(intent_settings);
         }
 
 
