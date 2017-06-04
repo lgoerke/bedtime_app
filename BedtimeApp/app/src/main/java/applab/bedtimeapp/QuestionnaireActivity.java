@@ -62,7 +62,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     String extraReason = "";
     int extraDuration = 0;
 
-    private boolean successfulSending = false;
+    private boolean successfulSending;
 
     private ResultOperations feedbackData;
 
@@ -154,15 +154,24 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
                 utils.showDB(getBaseContext());
 
-                if (!sendData()){
-                    displayError();
-                } else{
-                    goToMain(v);
-                }
+                sendData();
+//                if (!sendData()){
+//                    displayError();
+//                } else{
+//                    goToMain(v);
+//                }
 
             }
         });
 
+    }
+
+    private void goBack(boolean successfulSending){
+        if (successfulSending){
+            goToMain();
+        } else {
+            displayError();
+        }
     }
 
     private void displayError() {
@@ -170,7 +179,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
         tv.setText("Please check your internet connection and try again.");
     }
 
-    public boolean sendData(){
+    public void sendData(){
+        successfulSending = false;
+        Log.e("successfulSending", successfulSending?"true":"false");
         DatabaseHelper database = new DatabaseHelper(this);
         JSONObject ary = null;
         try {
@@ -184,29 +195,45 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             } catch (Exception e) {
                 //Exception
+                Log.e("no","4");
                 successfulSending = false;
+                goBack(successfulSending);
             }
 
+            Log.e("successfulSending", successfulSending?"true":"false");
             RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.e("yes","yes");
                     successfulSending = true;
+                    goBack(successfulSending);
                 }
 
                 // When the response returned by REST has Http response code other than '200'
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.e("yes","1");
                     successfulSending = false;
+                    goBack(successfulSending);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.e("yes","2");
+                    successfulSending = true;
+                    goBack(successfulSending);
                 }
             });
 
-
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("no","3");
             successfulSending = false;
+            goBack(successfulSending);
         }
-
-        return successfulSending;
+//
+//        Log.e("Final successfulSending", successfulSending?"true":"false");
+//        return successfulSending;
 
     }
 
@@ -275,9 +302,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
     /**
      * Finish this activity and return to main activity
      *
-     * @param view
+     * @param
      */
-    public void goToMain(View view) {
+    public void goToMain() {
         // Create intent to deliver some kind of result data
         Intent output = new Intent();
         setResult(RESULT_OK, output);

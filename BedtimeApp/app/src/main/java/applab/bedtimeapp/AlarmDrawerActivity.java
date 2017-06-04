@@ -1,7 +1,9 @@
 package applab.bedtimeapp;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,8 +24,11 @@ import android.widget.TextView;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.scalified.fab.ActionButton;
 
+import java.util.Calendar;
+
 import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.utils.AlarmReceiver;
 import applab.bedtimeapp.utils.utils;
 
 
@@ -58,6 +63,7 @@ public class AlarmDrawerActivity extends AppCompatActivity
     private static int LANDING_PROGRESS = 2;
     private static int LANDING_HOME = 3;
 
+    private PendingIntent alarmIntent;
 
     private static AlarmDrawerActivity inst;
 
@@ -166,6 +172,16 @@ public class AlarmDrawerActivity extends AppCompatActivity
             startActivity(intent_settings);
         }
 
+    }
+
+    public void setAlarm(Calendar calendar){
+        alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
+//
+//        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 
     public void changeSleepDuration(int prog) {

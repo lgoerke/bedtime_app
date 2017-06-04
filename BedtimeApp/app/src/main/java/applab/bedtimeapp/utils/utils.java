@@ -144,7 +144,8 @@ public class utils {
 
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         String startDate = getPrefs.getString("startDate", currentDate);
-
+        Log.e("startDate",startDate);
+        Log.e("currentDate",currentDate);
 
         Date date1 = null;
         Date date2 = null;

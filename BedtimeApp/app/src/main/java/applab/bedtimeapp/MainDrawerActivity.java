@@ -207,25 +207,35 @@ public class MainDrawerActivity extends AppCompatActivity
                 entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             } catch (Exception e) {
                 //Exception
+                Log.e("no","4");
                 successfulSending = false;
             }
 
             RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.e("yes","yes");
                     successfulSending = true;
                 }
 
                 // When the response returned by REST has Http response code other than '200'
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.e("yes","1");
                     successfulSending = false;
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Log.e("yes","2");
+                    successfulSending = true;
                 }
             });
 
 
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("no","3");
             successfulSending = false;
         }
 
@@ -243,6 +253,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         Log.d("btn", actionButton.toString());
+        Log.d("daily bool", showDailyAlert==true?"true":"false");
         // to test buttons
         //showDailyAlert = true;
         //showWeeklyAlert = true;
@@ -263,6 +274,7 @@ public class MainDrawerActivity extends AppCompatActivity
 
         final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
         Log.d("weeklybtn", weeklyAlertButton.toString());
+        Log.d("weekly bool", showWeeklyAlert==true?"true":"false");
         if (showWeeklyAlert) {
             weeklyAlertButton.setVisibility(View.VISIBLE);
             weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
@@ -382,19 +394,6 @@ public class MainDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_alarm) {
             finish();
             Intent intent_alarm = new Intent(this, AlarmDrawerActivity.class);
-            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
-            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
-            intent_alarm.putExtra("whichLanding", whichLanding);
-            startActivity(intent_alarm);
-        } else if (id == R.id.nav_coach) {
-            if (sendData()){
-                Toast.makeText(this,"Success", Toast.LENGTH_SHORT);
-            } else {
-                Toast.makeText(this,"Failure", Toast.LENGTH_SHORT);
-            }
-        } else if(id == R.id.nav){
-            Intent intent_alarm = new Intent(this, QuestionnaireActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent_alarm.putExtra("showDailyAlert", showDailyAlert);
             intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);

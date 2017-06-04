@@ -453,9 +453,22 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         lv.setAdapter(arrayAdapter);
 
-        /* Connect FAB to opening the pending questionnaire */
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
+
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn",actionButton.toString());
+        Log.d("btn", actionButton.toString());
+        Log.d("daily bool", showDailyAlert==true?"true":"false");
+        // to test buttons
+        //showDailyAlert = true;
+        //showWeeklyAlert = true;
         if (showDailyAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
@@ -473,6 +486,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
         Log.d("weeklybtn", weeklyAlertButton.toString());
+        Log.d("weekly bool", showWeeklyAlert==true?"true":"false");
         if (showWeeklyAlert) {
             weeklyAlertButton.setVisibility(View.VISIBLE);
             weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
@@ -487,8 +501,46 @@ public class ProgressDrawerActivity extends AppCompatActivity
         } else {
             weeklyAlertButton.setVisibility(View.INVISIBLE);
         }
-        /* END Connect FAB */
 
+    }
+
+    private boolean checkForTodaysQuestionnaire() {
+        boolean result;
+        ResultOperations fbOp = new ResultOperations(this);
+        fbOp.open();
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        result = !fbOp.isFeedbackGivenToday(userID, getBaseContext());
+
+        fbOp.close();
+
+        //return true;
+        return result;
+    }
+
+    private boolean checkForThisWeeksSelfEfficacy() {
+
+        if (utils.getDayId(this) < 8)
+            return false;
+
+        boolean result;
+        ResultOperations selfEfficacyOperations = new ResultOperations(this);
+        selfEfficacyOperations.open();
+        //  Initialize SharedPreferences
+
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        result = !selfEfficacyOperations.isQuestionairreFilled(userID);
+        selfEfficacyOperations.close();
+
+        return result;
     }
 
     private List<Entry> getSleepDuration(List alarmentries, List bedtimeentries, List procentries) {

@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import com.scalified.fab.ActionButton;
 
+import applab.bedtimeapp.db.ResultOperations;
+import applab.bedtimeapp.utils.utils;
+
 public class SettingsDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -135,8 +138,22 @@ public class SettingsDrawerActivity extends AppCompatActivity
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
+
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn",actionButton.toString());
+        Log.d("btn", actionButton.toString());
+        Log.d("daily bool", showDailyAlert==true?"true":"false");
+        // to test buttons
+        //showDailyAlert = true;
+        //showWeeklyAlert = true;
         if (showDailyAlert) {
             actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +171,7 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
         final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
         Log.d("weeklybtn", weeklyAlertButton.toString());
+        Log.d("weekly bool", showWeeklyAlert==true?"true":"false");
         if (showWeeklyAlert) {
             weeklyAlertButton.setVisibility(View.VISIBLE);
             weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
@@ -168,8 +186,46 @@ public class SettingsDrawerActivity extends AppCompatActivity
         } else {
             weeklyAlertButton.setVisibility(View.INVISIBLE);
         }
-        /* END Connect FAB */
 
+    }
+
+    private boolean checkForTodaysQuestionnaire() {
+        boolean result;
+        ResultOperations fbOp = new ResultOperations(this);
+        fbOp.open();
+        //  Initialize SharedPreferences
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        result = !fbOp.isFeedbackGivenToday(userID, getBaseContext());
+
+        fbOp.close();
+
+        //return true;
+        return result;
+    }
+
+    private boolean checkForThisWeeksSelfEfficacy() {
+
+        if (utils.getDayId(this) < 8)
+            return false;
+
+        boolean result;
+        ResultOperations selfEfficacyOperations = new ResultOperations(this);
+        selfEfficacyOperations.open();
+        //  Initialize SharedPreferences
+
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //  Create a new boolean and preference and set it to true
+        int userID = getPrefs.getInt("userID", 0);
+
+        result = !selfEfficacyOperations.isQuestionairreFilled(userID);
+        selfEfficacyOperations.close();
+
+        return result;
     }
 
     public void openQuestionnaire() {

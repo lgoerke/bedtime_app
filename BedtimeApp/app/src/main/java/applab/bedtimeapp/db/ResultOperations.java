@@ -336,7 +336,7 @@ public class ResultOperations {
             cursor.moveToNext();
             dayId =  cursor.getInt(cursor.getColumnIndex(DatabaseHelper.DAY_ID));
         }*/
-        int dayId = (int)(utils.getDayId(context)) -1;
+        int dayId = (int)(utils.getDayId(context)) - 1;
 
         if(dayId < 1)
             dayId = 1;
@@ -349,6 +349,8 @@ public class ResultOperations {
     }
 
     public boolean isFeedbackGivenToday(int userID,Context context){
+
+        Log.e("Day", Integer.toString((int)utils.getDayId(context)));
 
         // CHECK FOR THE DAY 1
         int currentFeedbackDay = (int)utils.getDayId(context) -1;
@@ -399,7 +401,7 @@ public class ResultOperations {
         if(userID == 0)
             return result;
 
-        int dayId = (int)(utils.getDayId(context)) -1;
+        int dayId = (int)(utils.getDayId(context)) - 1;
 
         if(dayId < 1)
             dayId = 1;
@@ -428,7 +430,7 @@ public class ResultOperations {
         if(userID == 0)
             return result;
 
-        int dayId = (int)(utils.getDayId(context)) -1;
+        int dayId = (int)(utils.getDayId(context)) - 1;
 
         if(dayId < 1)
             dayId = 1;
