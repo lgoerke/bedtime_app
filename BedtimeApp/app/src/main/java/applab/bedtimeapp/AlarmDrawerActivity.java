@@ -56,6 +56,8 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
+    private static int LANDING_HOME = 3;
+
 
     private static AlarmDrawerActivity inst;
 
@@ -96,9 +98,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
                 }
             }
         }
-
-        showDailyAlert = checkForTodaysQuestionnaire();
-        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -153,41 +152,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
 //        pb.setStartingDegree(180);
 //        pb.setProgress(270);
-
-
-        final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
-        Log.d("btn", actionButton.toString());
-        if (showDailyAlert) {
-            actionButton.setVisibility(View.VISIBLE);
-            actionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    actionButton.setVisibility(View.INVISIBLE);
-                    showDailyAlert = false;
-                    openQuestionnaire();
-
-                }
-            });
-        } else {
-            actionButton.setVisibility(View.INVISIBLE);
-        }
-
-        final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
-        Log.d("weeklybtn", weeklyAlertButton.toString());
-        if (showWeeklyAlert) {
-            weeklyAlertButton.setVisibility(View.VISIBLE);
-            weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    weeklyAlertButton.setVisibility(View.INVISIBLE);
-                    showWeeklyAlert = false;
-                    openSelfEfficacy();
-
-                }
-            });
-        } else {
-            weeklyAlertButton.setVisibility(View.INVISIBLE);
-        }
 
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -382,6 +346,52 @@ public class AlarmDrawerActivity extends AppCompatActivity
 
         //  Apply changes
         e.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
+
+        final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
+        Log.d("btn", actionButton.toString());
+        // to test buttons
+        //showDailyAlert = true;
+        //showWeeklyAlert = true;
+        if (showDailyAlert) {
+            actionButton.setVisibility(View.VISIBLE);
+            actionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    actionButton.setVisibility(View.INVISIBLE);
+                    showDailyAlert = false;
+                    openQuestionnaire();
+
+                }
+            });
+        } else {
+            actionButton.setVisibility(View.INVISIBLE);
+        }
+
+        final ActionButton weeklyAlertButton = (ActionButton) findViewById(R.id.alertWeekly);
+        Log.d("weeklybtn", weeklyAlertButton.toString());
+        if (showWeeklyAlert) {
+            weeklyAlertButton.setVisibility(View.VISIBLE);
+            weeklyAlertButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    weeklyAlertButton.setVisibility(View.INVISIBLE);
+                    showWeeklyAlert = false;
+                    openSelfEfficacy();
+
+                }
+            });
+        } else {
+            weeklyAlertButton.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private boolean checkForTodaysQuestionnaire() {

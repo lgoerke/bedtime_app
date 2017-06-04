@@ -38,6 +38,7 @@ public class SettingsDrawerActivity extends AppCompatActivity
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
+    private static int LANDING_HOME = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,9 @@ public class SettingsDrawerActivity extends AppCompatActivity
             cb.setChecked(true);
         } else if (whichLanding == LANDING_PROGRESS){
             cb = (CheckBox) findViewById(R.id.checkBoxProgress);
+            cb.setChecked(true);
+        } else if (whichLanding == LANDING_HOME) {
+            cb = (CheckBox) findViewById(R.id.checkBoxHome);
             cb.setChecked(true);
         }
 
@@ -195,6 +199,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
                 if (checked) {
                     CheckBox cb = (CheckBox) findViewById(R.id.checkBoxAlarm);
                     cb.setChecked(false);
+                    cb = (CheckBox) findViewById(R.id.checkBoxHome);
+                    cb.setChecked(false);
                     whichLanding = LANDING_PROGRESS;
                     setLandingPreference(LANDING_PROGRESS);
                     //  Initialize SharedPreferences
@@ -212,6 +218,8 @@ public class SettingsDrawerActivity extends AppCompatActivity
                 if (checked) {
                     CheckBox cb = (CheckBox) findViewById(R.id.checkBoxProgress);
                     cb.setChecked(false);
+                    cb = (CheckBox) findViewById(R.id.checkBoxHome);
+                    cb.setChecked(false);
                     whichLanding = LANDING_ALARM;
                     setLandingPreference(LANDING_ALARM);
                     //  Initialize SharedPreferences
@@ -222,6 +230,25 @@ public class SettingsDrawerActivity extends AppCompatActivity
                     int savedLanding = getPrefs.getInt("whichLanding", 0);
                 } else {
                     CheckBox cb = (CheckBox) findViewById(R.id.checkBoxAlarm);
+                    cb.setChecked(true);
+                }
+                break;
+            case R.id.checkBoxHome:
+                if (checked) {
+                    CheckBox cb = (CheckBox) findViewById(R.id.checkBoxProgress);
+                    cb.setChecked(false);
+                    cb = (CheckBox) findViewById(R.id.checkBoxAlarm);
+                    cb.setChecked(false);
+                    whichLanding = LANDING_HOME;
+                    setLandingPreference(LANDING_HOME);
+                    //  Initialize SharedPreferences
+                    SharedPreferences getPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getBaseContext());
+
+                    //  Create a new boolean and preference and set it to true
+                    int savedLanding = getPrefs.getInt("whichLanding", 0);
+                } else {
+                    CheckBox cb = (CheckBox) findViewById(R.id.checkBoxHome);
                     cb.setChecked(true);
                 }
                 break;

@@ -18,16 +18,27 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.scalified.fab.ActionButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
+import applab.bedtimeapp.db.DatabaseHelper;
 import applab.bedtimeapp.db.ResultOperations;
 import applab.bedtimeapp.utils.AlarmReceiver;
 import applab.bedtimeapp.utils.Constants;
 import applab.bedtimeapp.utils.NotificationHelper;
+import applab.bedtimeapp.utils.RestClient;
 import applab.bedtimeapp.utils.utils;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 
 public class MainDrawerActivity extends AppCompatActivity
@@ -42,7 +53,10 @@ public class MainDrawerActivity extends AppCompatActivity
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
+    private static int LANDING_HOME = 3;
     private static int REQUEST_CODE = 1;
+
+    private boolean successfulSending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,9 +190,59 @@ public class MainDrawerActivity extends AppCompatActivity
             iv.setImageResource(R.drawable.cat);
         }
 
+
+    }
+
+    public boolean sendData(){
+        DatabaseHelper database = new DatabaseHelper(this);
+        JSONObject ary = null;
+        try {
+            ary = database.getResults(this);
+            String str = ary.toString();
+            String str_komma = str + ",";
+
+            StringEntity entity = null;
+            try {
+                entity = new StringEntity(str_komma);
+                entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            } catch (Exception e) {
+                //Exception
+                successfulSending = false;
+            }
+
+            RestClient.post(null, "/test", entity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    successfulSending = true;
+                }
+
+                // When the response returned by REST has Http response code other than '200'
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    successfulSending = false;
+                }
+            });
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            successfulSending = false;
+        }
+
+        return successfulSending;
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showDailyAlert = checkForTodaysQuestionnaire();
+        showWeeklyAlert = checkForThisWeeksSelfEfficacy();
+
         final ActionButton actionButton = (ActionButton) findViewById(R.id.alert);
         Log.d("btn", actionButton.toString());
-
         // to test buttons
         //showDailyAlert = true;
         //showWeeklyAlert = true;
@@ -324,12 +388,11 @@ public class MainDrawerActivity extends AppCompatActivity
             intent_alarm.putExtra("whichLanding", whichLanding);
             startActivity(intent_alarm);
         } else if (id == R.id.nav_coach) {
-            Intent intent_alarm = new Intent(this, SelfEfficacyActivity.class);
-            intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent_alarm.putExtra("showDailyAlert", showDailyAlert);
-            intent_alarm.putExtra("showWeeklyAlert", showWeeklyAlert);
-            intent_alarm.putExtra("whichLanding", whichLanding);
-            startActivity(intent_alarm);
+            if (sendData()){
+                Toast.makeText(this,"Success", Toast.LENGTH_SHORT);
+            } else {
+                Toast.makeText(this,"Failure", Toast.LENGTH_SHORT);
+            }
         } else if(id == R.id.nav){
             Intent intent_alarm = new Intent(this, QuestionnaireActivity.class);
             intent_alarm.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

@@ -61,6 +61,7 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
     private static int LANDING_ALARM = 1;
     private static int LANDING_PROGRESS = 2;
+    private static int LANDING_HOME = 3;
 
     private static int REQUEST_CODE = 1;
     private ResultOperations reasonData;
