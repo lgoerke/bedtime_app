@@ -30,10 +30,6 @@ import applab.bedtimeapp.model.Result;
 import applab.bedtimeapp.utils.AlarmReceiver;
 import applab.bedtimeapp.utils.utils;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class AlarmFeedbackActivity extends AppCompatActivity {
 
     private static final String TAG = "AlarmFeedbackActivity";
@@ -156,9 +152,6 @@ public class AlarmFeedbackActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 starsMorning = Math.round(v);
-
-//                Log.d("bar", Float.toString(Math.round(v)));
-//                Toast.makeText(AlarmFeedbackActivity.this,"I feel " + Integer.toString(starsMorning),Toast.LENGTH_SHORT);
                 btn.setEnabled(true);
             }
         });

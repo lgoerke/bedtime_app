@@ -155,11 +155,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
         int prog = Math.round(pb.getProgress());
         changeSleepDuration(prog);
 
-
-//        pb.setStartingDegree(180);
-//        pb.setProgress(270);
-
-
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         if (checkForSecondWeek()){
@@ -178,9 +173,6 @@ public class AlarmDrawerActivity extends AppCompatActivity
         alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        Intent myIntent = new Intent(getActivity(), AlarmReceiver.class);
-//
-//        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 

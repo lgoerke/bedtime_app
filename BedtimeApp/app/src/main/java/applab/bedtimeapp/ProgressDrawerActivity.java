@@ -147,16 +147,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         entries = reverse(entries);
         entries = decrementRange(entries,1);
 
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 4.0f));
-//        entries.add(new Entry(1, 3.0f));
-//        entries.add(new Entry(2, 4.0f));
-//        entries.add(new Entry(3, 4.0f));
-//        entries.add(new Entry(4, 2.0f));
-//        entries.add(new Entry(5, 3.0f));
-//        entries.add(new Entry(6, 3.0f));
-
         LineDataSet dataSet = new LineDataSet(entries, "Mood"); // add entries to dataset
 
         putStyleDataSet(dataSet, getResources().getColor(R.color.foregroundMountain));
@@ -167,16 +157,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_CONCENTRATION);
         entries = reverse(entries);
         entries = decrementRange(entries,1);
-
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 3.0f));
-//        entries.add(new Entry(1, 1.0f));
-//        entries.add(new Entry(2, 4.0f));
-//        entries.add(new Entry(3, 3.0f));
-//        entries.add(new Entry(4, 2.0f));
-//        entries.add(new Entry(5, 2.0f));
-//        entries.add(new Entry(6, 3.0f));
 
         dataSet = new LineDataSet(entries, "Concentration"); // add entries to dataset
 
@@ -192,17 +172,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         Log.e("proc b", entries.toString());
         entries = changeRange(entries, 120, 4);
         Log.e("proc a", entries.toString());
-
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 3.25f));
-//        entries.add(new Entry(1, 1.0f));
-//        entries.add(new Entry(2, 0.5f));
-//        entries.add(new Entry(3, 1.1f));
-//        entries.add(new Entry(4, 2.1f));
-//        entries.add(new Entry(5, 0.2f));
-//        entries.add(new Entry(6, 0.0f));
-
 
         dataSet = new LineDataSet(entries, "Procrastination duration"); // add entries to dataset
 
@@ -269,19 +238,8 @@ public class ProgressDrawerActivity extends AppCompatActivity
         /* Create chart */
         chart = (LineChart) findViewById(R.id.sleep_quality_busy);
         /* END Create chart */
-
-        /* Example sleep quality data */
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 1));
-//        entries.add(new Entry(1, 0));
-//        entries.add(new Entry(2, 2));
-//        entries.add(new Entry(3, 1));
-//        entries.add(new Entry(4, 3));
-//        entries.add(new Entry(5, 4));
-//        entries.add(new Entry(6, 2));
-
-          /* Add to data set */
+        
+        /* Add to data set */
         lineData = new ArrayList<ILineDataSet>();
         /* END add data set */
 
@@ -289,16 +247,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         entries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.QUESTION_RESTED);
         entries = reverse(entries);
         entries = decrementRange(entries,1);
-
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 4.0f));
-//        entries.add(new Entry(1, 4.0f));
-//        entries.add(new Entry(2, 4.0f));
-//        entries.add(new Entry(3, 3.0f));
-//        entries.add(new Entry(4, 2.0f));
-//        entries.add(new Entry(5, 2.0f));
-//        entries.add(new Entry(6, 4.0f));
 
         dataSet = new LineDataSet(entries, "Restedness"); // add entries to dataset
 
@@ -311,16 +259,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
         entries = reverse(entries);
         entries = decrementRange(entries,1);
 
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 5.0f));
-//        entries.add(new Entry(1, 4.0f));
-//        entries.add(new Entry(2, 2.0f));
-//        entries.add(new Entry(3, 2.0f));
-//        entries.add(new Entry(4, 3.0f));
-//        entries.add(new Entry(5, 4.0f));
-//        entries.add(new Entry(6, 3.0f));
-
         dataSet = new LineDataSet(entries, "Sleep quality"); // add entries to dataset
 
         putStyleDataSet(dataSet, getResources().getColor(R.color.colorPrimaryDark));
@@ -329,19 +267,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
 
         /* Example busy-ness data */
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, (7.5f/10f)*4f));
-//        entries.add(new Entry(1, (7f/10f)*4f));
-//        entries.add(new Entry(2, (8f/10f)*4f));
-//        entries.add(new Entry(3, (6f/10f)*4f));
-//        entries.add(new Entry(4, (6f/10f)*4f));
-//        entries.add(new Entry(5, (8.5f/10f)*4f));
-//        entries.add(new Entry(6, (7f/10f)*4f));
-//
-//        Log.d("duration", entries.toString());
-        //here
-
         List alarmentries = feedbackOperations.getFieldString(userID, utils.getDayId(this), DatabaseHelper.MORNING_ALARM);
         List bedtimeentries = feedbackOperations.getFieldString(userID, utils.getDayId(this), DatabaseHelper.EVENING_ALARM);
         List<Entry> procentries = feedbackOperations.getField(userID, utils.getDayId(this), DatabaseHelper.PROCRASTINATION_DURATION);
@@ -350,22 +275,9 @@ public class ProgressDrawerActivity extends AppCompatActivity
         Log.d("bed", bedtimeentries.toString());
         Log.d("proc", procentries.toString());
 
-        // entries = reverse(entries);
-        // bedtimeentries = reverse(bedtimeentries);
-        //  procentries = reverse(procentries);
         entries = getSleepDuration(alarmentries, bedtimeentries, procentries);
         entries = reverse(entries);
         entries = changeRange(entries, 10, 4);
-
-//        entries = new ArrayList<Entry>();
-//
-//        entries.add(new Entry(0, 3.2f));
-//        entries.add(new Entry(1, 2.4f));
-//        entries.add(new Entry(2, 3.5f));
-//        entries.add(new Entry(3, 3.2f));
-//        entries.add(new Entry(4, 2.3f));
-//        entries.add(new Entry(5, 2.1f));
-//        entries.add(new Entry(6, 3.6f));
 
         dataSet = new LineDataSet(entries, "Sleep duration"); // add entries to dataset
 
@@ -443,9 +355,6 @@ public class ProgressDrawerActivity extends AppCompatActivity
 
         ListView lv = (ListView) findViewById(R.id.lv_reasons);
 
-        // This is the array adapter, it takes the context of the activity as a
-        // first parameter, the type of list view as a second parameter and your
-        // array as a third parameter.
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 R.layout.reason_item,

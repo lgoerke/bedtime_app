@@ -35,15 +35,6 @@ public class ReasonsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reasons);
 
-//        TextThumbSeekBar ttsb = (TextThumbSeekBar) findViewById(R.id.thumbseekbar);
-//        ttsb.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                minutes  = ((TextThumbSeekBar) view).getProgress();
-//                return true;
-//            }
-//        });
-
         EditText et = (EditText) findViewById(R.id.editReason);
         et.setHint("Type here...");
 
@@ -62,11 +53,6 @@ public class ReasonsActivity extends AppCompatActivity {
         Log.e("rL",rL.toString());
 
         ArrayList<String> ary = new ArrayList<String>();
-
-//        for (int i = 0; i < rL.size(); i++) {
-//            ary.add(rL.get(i));
-//            Log.e("log",rL.get(i).toString());
-//        }
 
         HashSet<String> uniques = new HashSet<>(ary);
         ary = new ArrayList<String>(uniques);

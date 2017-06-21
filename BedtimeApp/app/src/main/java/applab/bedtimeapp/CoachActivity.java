@@ -200,73 +200,6 @@ public class CoachActivity extends AppCompatActivity {
         TextView tv = (TextView) findViewById(R.id.advice);
         tv.setText(shuffled_advicese.get(currentDayId-DURATION_FIRST_PERIOD));
 
-
-//
-//        alarmData = new ResultOperations(this);
-//        alarmData.open();
-//
-//
-//
-//
-//        ArrayList<Alarm> alarms = new ArrayList<>(alarmData.getAllAlarms(userID));
-//        ArrayList<Date> datesA = new ArrayList<Date>();
-//        ArrayList<Integer> sleeprates = new ArrayList<Integer>();
-//        alarmData.close();
-//
-//        for (int i = 0; i < alarms.size(); i++) {
-//            datesA.add(getDateFromString(alarms.get(i).getDate()));
-//            sleeprates.add(alarms.get(i).getSleepRate());
-//        }
-//
-////        ArrayList<Date> datesACleaned = (ArrayList<Date>) cleanData(datesA, sleeprates, DATES);
-////        ArrayList<Integer> sleepratesCleaned = (ArrayList<Integer>) cleanData(datesA, sleeprates, RATING);
-//
-//        ArrayList<Date> datesFCleaned = (ArrayList<Date>) cleanData(datesF, restednesses, DATES);
-//        ArrayList<Integer> restednessCleaned = (ArrayList<Integer>) cleanData(datesF, restednesses, RATING);
-//        ArrayList<Integer> busynessCleaned = (ArrayList<Integer>) cleanData(datesF, busynesses, RATING);
-//        ArrayList<Integer> moodsCleaned = (ArrayList<Integer>) cleanData(datesF, moods, RATING);
-//        ArrayList<Integer> concentrationCleaned = (ArrayList<Integer>) cleanData(datesF, concentrations, RATING);
-//
-//
-//        Log.e("Busy", busynessCleaned.toString());
-//        Log.e("Rested",restednessCleaned.toString());
-//
-//        SimpleRegression regr = getRegression(restednessCleaned,busynessCleaned);
-//        Log.e("Slope",Double.toString(regr.getSlope()));
-//        Log.e("Significance",Double.toString(regr.getSignificance()));
-//        Log.e("MSE",Double.toString(regr.getMeanSquareError()));
-
-//        RelativeLayout rl = (RelativeLayout) findViewById(R.id.coach_view);
-//        final ImageView iv = (ImageView) rl.findViewById(R.id.owl);
-//
-//
-//        iv.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener() {
-//                    public boolean onPreDraw() {
-//                        height = iv.getMeasuredHeight();
-//                        Log.d("height",Integer.toString(height));
-//                        // Do your work here
-//                        return true;
-//                    }
-//                });
-//
-//        final TextView tv = (TextView) rl.findViewById(R.id.advice);
-//
-//        tv.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener(){
-//                    public boolean onPreDraw(){
-//                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-//                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                                RelativeLayout.LayoutParams.WRAP_CONTENT
-//                        );
-//                        params.setMargins(16,height*(2/3),16,0);
-//                        tv.setLayoutParams(params);
-//
-//                        return true;
-//                    }
-//                });
-
-
     }
 
     public SimpleRegression getRegression(ArrayList<Integer> firstList, ArrayList<Integer> secondList) {
@@ -287,10 +220,6 @@ public class CoachActivity extends AppCompatActivity {
      * @param view
      */
     public void goToMain(View view) {
-        // TODO are we going to the right activity
-        //TODO set notification to first go to the coach and then to alarm
-        //TODO set coach as start screen for second week
-
         finish();
     }
 

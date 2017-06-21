@@ -34,7 +34,6 @@ public class RebootService extends IntentService {
 
     }
 
-    // TODO  GET THE ALARM TIME AND SET THEM AGAIN AFTER REBOOT
     private void createAlarms() {
         ResultOperations alarmData;
         alarmData = new ResultOperations(this);
@@ -59,7 +58,6 @@ public class RebootService extends IntentService {
         }
     }
 
-    // TODO:  control all notifications
     public  void createNotifications() {
 
         ResultOperations feedbackData;

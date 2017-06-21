@@ -406,14 +406,7 @@ public class MainDrawerActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.notification_menu, menu);
-//        return true;
-//    }
 
-    // TODO WHY ALWAYS EXECUTES WHEN IT OPENS
     public void dailyEveningNotifications() {
         int delayForNotification = utils.getDelay(Constants.EVENING_NOTIFICATION_HOUR, Constants.EVENING_NOTIFICATION_MINUTE);
         Log.d("Delay: ", String.valueOf(delayForNotification));

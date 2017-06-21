@@ -155,12 +155,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 utils.showDB(getBaseContext());
 
                 sendData();
-//                if (!sendData()){
-//                    displayError();
-//                } else{
-//                    goToMain(v);
-//                }
-
             }
         });
 
@@ -231,9 +225,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
             successfulSending = false;
             goBack(successfulSending);
         }
-//
-//        Log.e("Final successfulSending", successfulSending?"true":"false");
-//        return successfulSending;
 
     }
 
@@ -250,8 +241,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 metBedtime = true;
                 time = true;
                 reasons = true;
-//                SQLiteDatabase db_write = database.getWritableDatabase();
-                // do stuff to write question3 information in database
 
                 checkComplete();
                 break;

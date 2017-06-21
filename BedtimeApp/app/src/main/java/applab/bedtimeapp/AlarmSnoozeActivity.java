@@ -24,10 +24,6 @@ import java.util.Calendar;
 
 import applab.bedtimeapp.utils.AlarmReceiver;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class AlarmSnoozeActivity extends AppCompatActivity {
 
     private static final String TAG = "AlarmSnoozeActivity";
@@ -35,12 +31,6 @@ public class AlarmSnoozeActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     public Ringtone ringtone;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//        setContentView(R.layout.activity_alarm_snooze);
-//}
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.

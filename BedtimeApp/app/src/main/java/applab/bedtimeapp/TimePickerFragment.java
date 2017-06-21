@@ -134,8 +134,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             ((AlarmDrawerActivity) getActivity()).setAlarm(calendar);
 
-            //TODO check if alarmmanager also works after reboot
-
             if (hourOfDay == 0) {
                 hourOfDay = 24;
             }
@@ -161,8 +159,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
             Result newAlarm = new Result();
             newAlarm.setAlarmDate(currentDate);
-            newAlarm.setUpdateType('M'); //motning  alarm
-            // todo check whether similar 9 to 09 conversion is needed
+            newAlarm.setUpdateType('M'); //morning  alarm
             newAlarm.setMorningAlarm(String.format("%02d", Integer.valueOf(hourOfDay).intValue()) +
                     ":" + String.format("%02d", Integer.valueOf(minute).intValue()));
             alarmData.open();
@@ -175,8 +172,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             int delayForNotification = utils.getDelay(hourOfDay+ Constants.DELAY_MORNING_QUESTIONNAIRE,minute);
             Log.d("Delay: ",String.valueOf(delayForNotification));
             NotificationHelper.scheduleNotification(getActivity(), NotificationHelper.getNotification(getActivity(),"Please fill in the Questionnaire", QuestionnaireActivity.class), delayForNotification);
-
-//          pb.setProgress(utils.getProgressFromTime(hourOfDay, minute));
         }
 
     }
